@@ -45,3 +45,7 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 
 extern SpriteCenter sprPlayer;
+//extern SpriteCenter P_Up;
+//extern SpriteCenter P_Down;
+//extern SpriteCenter P_Left;
+//extern SpriteCenter P_Right;
