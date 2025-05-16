@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "SpriteData.h"
 
-static constexpr float PLAYER_SPEED = 5.0f;
+static constexpr float PLAYER_SPEED = 100.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
