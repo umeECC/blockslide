@@ -45,7 +45,7 @@ void MapManager::switchToStage(int stageNumber) {
 }
 void MapManager::init() {
     // マップチップの読み込み   
-    block = sprite_load(L"./Data/Images/block.png");
+    block = sprite_load(L"./Data/Images/wall.png");
     ugoku = sprite_load(L"./Data/Images/ugoku.png");
     hako = sprite_load(L"./Data/Images/hako.png");
 }

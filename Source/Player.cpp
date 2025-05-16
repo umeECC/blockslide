@@ -112,4 +112,5 @@ void direction_reset(OBJ2D* obj)
 {
     obj->isMoving = false;
     obj->direction = { 0,0 };
+    obj->direction = { 0,0 };
 }

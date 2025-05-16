@@ -111,6 +111,7 @@
     <ClCompile Include="Source\SceneTuto.cpp" />
     <ClCompile Include="Source\SpriteData.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
+    <ClCompile Include="Source\Wall.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Source\map.h" />
     <ClInclude Include="Source\Obj2d.h" />
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\player_sd.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneClear.h" />
     <ClInclude Include="Source\SceneGame.h" />
@@ -152,6 +154,7 @@
     <ClInclude Include="Source\Statge1.h" />
     <ClInclude Include="Source\Statge2.h" />
     <ClInclude Include="Source\Template.h" />
+    <ClInclude Include="Source\Wall.h" />
     <ClInclude Include="Source\WinMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

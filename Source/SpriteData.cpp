@@ -13,3 +13,4 @@ SpriteUpperLeft sprBack(TEXNO::BACK01, 0, 0, 1280, 720);
 SpriteUpperLeft sprTitle(TEXNO::TITLE0, 0, 0, 1280, 720);
 
 SpriteCenter sprPlayer(TEXNO::PLAYER, 0, 0, 64, 64);
+//SpriteCenter sprWall(TEXNO::WALL, 0, 0, 64, 64);

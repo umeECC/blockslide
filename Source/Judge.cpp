@@ -3,80 +3,163 @@
 #include <iostream>
 #include "Effect.h"
 
-static constexpr float PLAYER_RADIUS = 64 * 0.8f;
-static constexpr float LAGE_PLAYER_RAD = 64 * 1.2f;
-//static constexpr float ITEM_RADIUS = 32 * 0.8f;
-//static constexpr float ENEMY_RADIUS = 32;
+#include "Judge.h"
+#include "WinMain.h"
+#include "Player.h"
+#include "Player_sd.h"
+#include <iostream>
+#include "Effect.h"
+#include "Wall.h"
+
+
+class JudgeRect
+{
+	float left, top, right, bottom;
+
+public:
+	JudgeRect(float l, float t, float r, float b)
+	{
+		left = l;
+		top = t;
+		right = r;
+		bottom = b;
+	}
+	JudgeRect(const VECTOR2& position, const VECTOR2& hSize)
+		:JudgeRect(position.x - hSize.x, position.y - hSize.y,
+			position.x + hSize.x, position.y + hSize.y) {}
+
+	bool isHit(const JudgeRect& other)
+	{
+		if (right < other.left) return false;
+		if (left > other.right) return false;
+		if (bottom < other.top) return false;
+		if (top > other.bottom) return false;
+		return true;
+	}
+
+};
+
+// プロトタイプ宣言
+void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2);
+//void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
+void judgePvP(OBJ2DManager& manager);
+
+
+JudgeRect screenRect = {
+	64, 64, SCREEN_WIDTH - 64, SCREEN_HEIGHT - 64,
+};
 
 void judge()
 {
-	/*//プレイヤーVS壁
-	for (auto& player : PlayerRManager::getInstance()) {		//すべてのプレイヤーに対して
-		if (!player.mover)continue;							//プレイヤーが存在しないときは次のプレイヤーへ
+	//プレイヤーVS壁
+	judgeSub(PlayerManager::getInstance(), WallManager::getInstance());
 
-		for (auto& item : ItemManager::getInstance()) {	//すべてのアイテムに対して
-			if (!item.mover) continue;						//アイテムが存在しないときは次のアイテムへ
-			//item->playerへの当たり判定
-			VECTOR2 pe_vector = item.position - player.position;
-			float LengthSq = vec2LengthSq(pe_vector);
+	//// プレイヤー2VS壁
+	//judgeSub(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
-			float R = PLAYER_RADIUS + ITEM_RADIUS;
-			if (item_range) {
-				R = LAGE_PLAYER_RAD + ITEM_RADIUS;
-			}
-			if (LengthSq <= R * R)
+	// プレイヤーVSプレイヤー2
+	judgePvP(PlayerManager::getInstance());
+
+
+}
+
+
+void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
+{
+	for (auto& item1 : manager1)
+	{
+		if (!item1.mover) continue;
+
+		JudgeRect rect1(item1.position, item1.hSize);
+		// rect1があたり判定エリア外のとき、次のitem1へ
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager2)
+		{
+			if (!item2.mover) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			// rect2があたり判定エリア外のとき、次のitem2へ
+			if (!screenRect.isHit(rect2)) continue;
+
+			if (rect1.isHit(rect2))
 			{
-				switch (item.item)
-				{
-				case PLAYER_POWER_UP:
-					item_power = true;
-					break;
-				case PLAYER_SPEED_UP:
-					item_speed = true;
-					break;
-				case PLAYER_RANGE_UP:
-					item_range = true;
-					break;
-				}
+				// 押し戻す方向を計算
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
 
-				item.clear();
+				if (lenSq > 0.01f)
+				{
+					VECTOR2 normal = vec2Normalize(pushDir);
+					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
+
+					//overlapX = 1.0;
+					//overlapY = 1.0;
+
+					// より重なりが大きい方向に補正（軸ごとにずらす）
+					if (overlapX < overlapY)
+						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;//0.1f,ここで壁の隙間を増やす
+					else
+						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
+				}
+				direction_reset(&item1);
+
+				break;
 			}
 		}
 	}
-	//プレイヤーVS壁
-	for (auto& player : PlayerRManager::getInstance()) {		//すべてのプレイヤーに対して
-		if (!player.mover)continue;							//プレイヤーが存在しないときは次のプレイヤーへ
+}
 
-		for (auto& enemy : EnemyManager::getInstance()) {	//すべてのアイテムに対して
-			if (!enemy.mover) continue;						//アイテムが存在しないときは次のアイテムへ
-			//enemy->playerへの当たり判定
-			VECTOR2 pe_vector = enemy.position - player.position;
-			float LengthSq = vec2LengthSq(pe_vector);
+void judgePvP(OBJ2DManager& manager)
+{
+	for (auto& item1 : manager)
+	{
+		if (!item1.mover) continue;
 
-			float R = PLAYER_RADIUS + ENEMY_RADIUS;
-			if (item_range) {
-				R = LAGE_PLAYER_RAD + ENEMY_RADIUS;
-			}
-			if (LengthSq <= R * R)
+		JudgeRect rect1(item1.position, item1.hSize);
+		// rect1があたり判定エリア外のとき、次のitem1へ
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager)
+		{
+			if (!item2.mover) continue;
+			if (&item1 == &item2) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			// rect2があたり判定エリア外のとき、次のitem2へ
+			if (!screenRect.isHit(rect2)) continue;
+
+			if (rect1.isHit(rect2))
 			{
-				if (enemy.index == 0)
+				// 押し戻す方向を計算
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
+
+				if (lenSq > 0.01f)
 				{
-					EffectManager::getInstance().searchSet(effectExplos, enemy.position);
-					enemy.clear();
-					enemy.mover = enemyUpdate;
-					player.score += 100;
-				}
-				if (enemy.index == 2)
-				{
-					dualenemyR = true;
-				}
-				else
-				{
-					dualenemyR = false;
+					VECTOR2 normal = vec2Normalize(pushDir);
+					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
+
+					//overlapX = 1.0;
+					//overlapY = 1.0;
+
+					// より重なりが大きい方向に補正（軸ごとにずらす）
+					if (overlapX < overlapY)
+						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;//0.1f,ここで壁の隙間を増やす
+					else
+						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
 				}
 
+				direction_reset(&item1);
+				direction_reset(&item2);
+
+				break; // 一つに対してのみ反応（必要ならcontinueに変更）
 			}
 		}
-	}*/
-	
+	}
 }
+

@@ -2,10 +2,13 @@
 
 #include "../GameLib/game_lib.h"
 #include "../GameLib/obj2d_data.h"
-
+inline constexpr int JUDGE_PLAYER = 0x01;
+inline constexpr int JUDGE_BLOCK = 0x02;
+inline constexpr int JUDGE_GOAL = 0x04;
 inline constexpr int PLAYER_POWER_UP = 0x01;
 inline constexpr int PLAYER_SPEED_UP = 0x02;
 inline constexpr int PLAYER_RANGE_UP = 0x04;
+inline constexpr int JUDGE_ALL = (JUDGE_PLAYER);
 
 class OBJ2D
 {
@@ -79,10 +82,12 @@ public:
 class OBJ2DManager
 {
 private:
-    virtual OBJ2D* begin() = 0;
-    virtual OBJ2D* end() = 0;
+    
+   
 
 public:
+    virtual OBJ2D* end() = 0;
+    virtual OBJ2D* begin() = 0;
     virtual void init();
     void update();
     void draw();
