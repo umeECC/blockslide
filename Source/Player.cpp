@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "player_sd.h"
 #include "SpriteData.h"
 
 static constexpr float PLAYER_SPEED = 6.0f;
@@ -14,6 +15,23 @@ void PlayerManager::init()
     OBJ2DManager::init();
     searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });////////
     searchSet(playerUpdate, { 32 + 64 * 9, 32 + 64 * 5 });
+}
+void PlayerManager::update()
+{
+
+    this->isMove = false;
+    for (auto& item : *this)
+    {
+        if (item.isMoving)
+        {
+            this->isMove = true;
+            break;
+        }
+    }
+
+
+
+    OBJ2DManager::update();
 }
 
 //-----------------------------------------------------------------------------------

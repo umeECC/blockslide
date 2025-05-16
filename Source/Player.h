@@ -16,12 +16,30 @@ private:
 	static constexpr int OBJ_MAX = 1;
 	OBJ2D objWork[OBJ_MAX];
 
+	bool isMove = false;
+
+	// true...プレイヤーの１が動いている
+	bool isPlayerOneMove = false;
+
+	// true...プレイヤーの２が動いている
+	bool isPlayerSecondMove = false;
+
+public:
+	void setIsPlayerOneMove(bool flag) { isPlayerOneMove = flag; }
+	void setIsPlayerSecondMove(bool flag) { isPlayerSecondMove = flag; }
+
 public:
 	OBJ2D* begin() override { return &objWork[0]; }
 	OBJ2D* end() override { return &objWork[OBJ_MAX]; }
 
 	void init() override;
 
+	void update() override;
+
+	// true...どちらかが動いている	false...両方止まっている
+	//bool isMoving() { return isPlayerOneMove || isPlayerSecondMove; }
+
+	bool isMoving() { return isMove; }
 };
 
 
