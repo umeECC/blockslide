@@ -84,7 +84,7 @@ void playerUpdate(OBJ2D* obj)
     {
     case 0:
         obj->sprData = &sprPlayer;
-        obj->color = { 1,0.32f,0.32f,1 };
+        obj->color = { 0,0,0,1 };
         obj->scale = { 0.8f,0.8f };
         obj->speed = 1;
         obj->direction = { 0,0 };
