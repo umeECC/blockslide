@@ -19,6 +19,7 @@ void PlayerManager::init()
 //-----------------------------------------------------------------------------------
 //player
 
+#if fasel
 void playerMove(OBJ2D* obj)
 {
     if (!obj->isMoving) //WASDが押されていないとき
@@ -33,11 +34,12 @@ void playerMove(OBJ2D* obj)
         obj->position += obj->direction;
     }
 }
+#endif
 static bool isColliding = false;  // 衝突状態を管理
 
 const int INPUT_COOLDOWN = 100; // 衝突後のクールタイム（フレーム）
 
-#if fasel
+
 //-----------------------------------------------------------------------------------
 void playerMove(OBJ2D* obj)
 {
@@ -52,7 +54,7 @@ void playerMove(OBJ2D* obj)
     }
 
     //if (!obj->isMoving) //WASDが押されていないとき
-    if (!PlayerManager::getInstance().isMoving()) //WASDが押されていないとき
+    if (!obj->isMoving) //WASDが押されていないとき
     {
         bool up = GameLib::input::STATE(0) & GameLib::input::PAD_UP;
         bool down = GameLib::input::STATE(0) & GameLib::input::PAD_DOWN;
@@ -63,10 +65,10 @@ void playerMove(OBJ2D* obj)
 
         if (keyCount == 1) //「1つだけ押されている場合」に限定
         {
-            if (up) { obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
-            if (down) { obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
-            if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
-            if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+            if (up){ /*obj->sprData = &P_Up;*/ obj->direction.y = -PLAYER_SPEED; }
+            if (down){ /*obj->sprData = &P_Down;*/ obj->direction.y = PLAYER_SPEED; }
+            if (left){ /*obj->sprData = &P_Left;*/ obj->direction.x = -PLAYER_SPEED; }
+            if (right){ /*obj->sprData = &P_Right;*/ obj->direction.x = PLAYER_SPEED; }
 
             obj->isMoving = true;
 
@@ -77,14 +79,14 @@ void playerMove(OBJ2D* obj)
         obj->position += obj->direction;
     }
 }
-#endif
+
 void playerUpdate(OBJ2D* obj)
 {
     switch (obj->state)
     {
     case 0:
         obj->sprData = &sprPlayer;
-        obj->color = { 0,0,0,1 };
+        obj->color = { 1,1,1,1 };
         obj->scale = { 0.8f,0.8f };
         obj->speed = 1;
         obj->direction = { 0,0 };

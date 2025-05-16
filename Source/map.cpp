@@ -82,8 +82,10 @@ void MapManager::draw() {
                 break;
             case 2:
                 sprite_render(ugoku, pixelX, pixelY, 1, 1);
+                break;
             case 3:
                 sprite_render(hako, pixelX, pixelY, 1, 1);
+                break;
             }
 
         }
