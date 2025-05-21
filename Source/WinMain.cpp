@@ -2,13 +2,14 @@
 #include "WinMain.h"
 #include "../GameLib/game_lib.h"
 #include "SceneTitle.h"
-#include"SceneTuto.h"
+#include "SceneTuto.h"
 #include "SceneGame.h"
 #include "SceneClear.h"
+#include "SceneStageSelect.h"
 
 // é¿ëÃêÈåæ
 SceneTitle sceneTitle;
-SceneTuto sceneTuto;
+SceneSelect sceneSelect;
 SceneGame sceneGame;
 SceneClear sceneClear;
 Scene *pScene, *pNextScene;
@@ -61,7 +62,7 @@ void setScene(int nextScene)
 {
     Scene* scenes[] = {
         &sceneTitle,
-        &sceneTuto,
+        &sceneSelect,
         &sceneGame,
         &sceneClear,
     };

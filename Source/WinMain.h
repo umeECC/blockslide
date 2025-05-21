@@ -5,7 +5,7 @@ inline constexpr int SCREEN_HEIGHT = 720;
 enum SCENE
 {
     TITLE = 0,
-    SLECT,
+    STAGESEL,
     GAME,
     OVER,
     CLEAR,

@@ -6,7 +6,7 @@
 #include "Obj2d.h"
 #include "Audio.h"
 
-int Selpos;
+//int Selpos;
 VECTOR2 pos;
 bool wasWKeyPressed = false;
 bool wasSKeyPressed = false;
@@ -16,7 +16,7 @@ OBJ2D title_back;
 void SceneTitle::init()
 {
     timer = 0;
-    Selpos = 0;
+    //Selpos = 0;
     pos = { 90,250 };
 
     // テクスチャのロード
@@ -80,7 +80,7 @@ void SceneTitle::update()
     if (TRG(0) & PAD_START)
     {
         AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
-        setScene(SCENE::GAME);
+        setScene(SCENE::STAGESEL);
     }
 
     AudioManager::getInstance().update();

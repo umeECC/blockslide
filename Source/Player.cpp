@@ -79,10 +79,16 @@ void playerMove(OBJ2D* obj)
         obj->position += obj->direction;
     }
 
+    //---------------------------------------------------------------
+    //ŠJ”­—p
+    //---------------------------------------------------------------
+
     if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
     {
         direction_reset(obj);
     }
+
+    //---------------------------------------------------------------
 }
 
 void playerUpdate(OBJ2D* obj)
