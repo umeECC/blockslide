@@ -8,8 +8,6 @@
 
 //int Selpos;
 VECTOR2 pos;
-bool wasWKeyPressed = false;
-bool wasSKeyPressed = false;
 
 OBJ2D title_back;
 
