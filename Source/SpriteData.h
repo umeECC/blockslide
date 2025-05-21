@@ -7,7 +7,7 @@ enum TEXNO
     BACK01,
     TITLE0,
     PLAYER,
-   
+    SELECT,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -42,10 +42,11 @@ extern GameLib::LoadTexture loadTexture[];
 
 extern SpriteUpperLeft sprBack;
 extern SpriteUpperLeft sprTitle;
+extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprStart;
 
 extern SpriteCenter sprPlayer;
-//extern SpriteCenter P_Up;
-//extern SpriteCenter P_Down;
-//extern SpriteCenter P_Left;
-//extern SpriteCenter P_Right;
+extern SpriteCenter P_Up;
+extern SpriteCenter P_Down;
+extern SpriteCenter P_Left;
+extern SpriteCenter P_Right;

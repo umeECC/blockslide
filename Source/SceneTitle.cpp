@@ -12,7 +12,6 @@ bool wasWKeyPressed = false;
 bool wasSKeyPressed = false;
 
 OBJ2D title_back;
-OBJ2D title_back2;
 
 void SceneTitle::init()
 {
@@ -43,7 +42,7 @@ void SceneTitle::deinit()
 void SceneTitle::update()
 {
     using namespace GameLib::input;
-    // 現在のキーの状態を取得
+    /*// 現在のキーの状態を取得
     bool isWKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
     bool isSKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
 
@@ -65,9 +64,9 @@ void SceneTitle::update()
 
     // 現在の状態を次のフレームのために保存
     wasWKeyPressed = isWKeyPressed;
-    wasSKeyPressed = isSKeyPressed;
+    wasSKeyPressed = isSKeyPressed;*/
 
-    switch (Selpos)
+    /*switch (Selpos)
     {
     case 0:
         pos = { 90,440 };
@@ -77,6 +76,11 @@ void SceneTitle::update()
             setScene(SCENE::GAME);
         }
         break;
+    }*/
+    if (TRG(0) & PAD_START)
+    {
+        AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
+        setScene(SCENE::GAME);
     }
 
     AudioManager::getInstance().update();
@@ -89,37 +93,38 @@ void SceneTitle::draw()
     GameLib::clear(0, 0, 0);
 
     //背景描画
+    title_back.draw();
 
     /*GameLib::font::textOut(4, "C++ Shooting", { 640, 360 }, { 5, 5 },
        { 1, 1, 1, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
 
     GameLib::primitive::rect({ pos }, { 600, 120 }, { 0, 0 }, 0, { 1, 0, 0, 0.7f });
     */
-    switch (Selpos)
+    /*switch (Selpos)
     {
     case 0:
-        /*if (timer & 0x20)
+        if (timer & 0x20)
         {
-            GameLib::font::textOut(4, "Game Start", { 390,500 }, { 3, 3 },
-                { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
+            gamelib::font::textout(4, "game start", { 390,500 }, { 3, 3 },
+                { 1, 1, 0, 1 }, gamelib::text_align::middle);
         }
 
-        GameLib::font::textOut(4, "Tutorial", { 900,610 }, { 3, 3 },
-            { 0, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);*/
-        title_back.draw();
+        gamelib::font::textout(4, "tutorial", { 900,610 }, { 3, 3 },
+            { 0, 1, 0, 1 }, gamelib::text_align::middle);
+        
 
         break;
     case 1:
-        /*GameLib::font::textOut(4, "Game Start", { 390,500 }, { 3, 3 },
+        GameLib::font::textOut(4, "Game Start", { 390,500 }, { 3, 3 },
             { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
 
         if (timer & 0x20)
         {
             GameLib::font::textOut(4, "Tutorial", { 900,610 }, { 3, 3 },
                 { 0, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
-        }*/
+        }
         title_back2.draw();
 
         break;
-    }
+    }*/
 }

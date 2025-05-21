@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "SpriteData.h"
 
-static constexpr float PLAYER_SPEED = 5.0f;
+static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
@@ -65,10 +65,10 @@ void playerMove(OBJ2D* obj)
 
         if (keyCount == 1) //「1つだけ押されている場合」に限定
         {
-            if (up){ /*obj->sprData = &P_Up;*/ obj->direction.y = -PLAYER_SPEED; }
-            if (down){ /*obj->sprData = &P_Down;*/ obj->direction.y = PLAYER_SPEED; }
-            if (left){ /*obj->sprData = &P_Left;*/ obj->direction.x = -PLAYER_SPEED; }
-            if (right){ /*obj->sprData = &P_Right;*/ obj->direction.x = PLAYER_SPEED; }
+            if (up){ obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
+            if (down){ obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
+            if (left){ obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
+            if (right){ obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
             obj->isMoving = true;
 
@@ -77,6 +77,11 @@ void playerMove(OBJ2D* obj)
     if (obj->isMoving)
     {
         obj->position += obj->direction;
+    }
+
+    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
+    {
+        direction_reset(obj);
     }
 }
 
@@ -87,7 +92,7 @@ void playerUpdate(OBJ2D* obj)
     case 0:
         obj->sprData = &sprPlayer;
         obj->color = { 1,1,1,1 };
-        obj->scale = { 0.8f,0.8f };
+        obj->scale = { 1.0f,1.0f };
         obj->speed = 1;
         obj->direction = { 0,0 };
         obj->isMoving = false;
@@ -101,9 +106,9 @@ void playerUpdate(OBJ2D* obj)
         playerMove(obj);
 
         // 移動範囲チェック
-        if (obj->position.x < PLAYER_LIMIT_L) {obj->position.x = PLAYER_LIMIT_L; direction_reset(obj);}
-        if (obj->position.x > PLAYER_LIMIT_R) {obj->position.x = PLAYER_LIMIT_R; direction_reset(obj);}
-        if (obj->position.y < PLAYER_LIMIT_U) {obj->position.y = PLAYER_LIMIT_U; direction_reset(obj);}
+        if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; direction_reset(obj); }
+        if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
+        if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
         if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
         break;
     }
@@ -113,6 +118,6 @@ void playerUpdate(OBJ2D* obj)
 void direction_reset(OBJ2D* obj)
 {
     obj->isMoving = false;
-    obj->direction = { 0,0 };
+    obj->sprData = &sprPlayer;
     obj->direction = { 0,0 };
 }

@@ -16,7 +16,7 @@ Scene *pScene, *pNextScene;
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
     // 初期設定
-    GameLib::init(L"分ポロ土井は", 1280, 720, true);
+    GameLib::init(L"Brock Slide", 1280, 720, true);
 
     // ブレンドモードの設定
     GameLib::setBlendMode(GameLib::Blender::BS_ALPHA);
