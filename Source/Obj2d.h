@@ -5,9 +5,6 @@
 inline constexpr int JUDGE_PLAYER = 0x01;
 inline constexpr int JUDGE_BLOCK = 0x02;
 inline constexpr int JUDGE_GOAL = 0x04;
-inline constexpr int PLAYER_POWER_UP = 0x01;
-inline constexpr int PLAYER_SPEED_UP = 0x02;
-inline constexpr int PLAYER_RANGE_UP = 0x04;
 inline constexpr int JUDGE_ALL = (JUDGE_PLAYER);
 
 class OBJ2D

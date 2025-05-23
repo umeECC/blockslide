@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "SpriteData.h"
 
-static constexpr float PLAYER_SPEED = 100.0f;
+static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
@@ -19,6 +19,7 @@ void PlayerManager::init()
 //-----------------------------------------------------------------------------------
 //player
 
+#if fasel
 void playerMove(OBJ2D* obj)
 {
     if (!obj->isMoving) //WASDが押されていないとき
@@ -33,11 +34,12 @@ void playerMove(OBJ2D* obj)
         obj->position += obj->direction;
     }
 }
+#endif
 static bool isColliding = false;  // 衝突状態を管理
 
 const int INPUT_COOLDOWN = 100; // 衝突後のクールタイム（フレーム）
 
-#if fasel
+
 //-----------------------------------------------------------------------------------
 void playerMove(OBJ2D* obj)
 {
@@ -52,7 +54,7 @@ void playerMove(OBJ2D* obj)
     }
 
     //if (!obj->isMoving) //WASDが押されていないとき
-    if (!PlayerManager::getInstance().isMoving()) //WASDが押されていないとき
+    if (!obj->isMoving) //WASDが押されていないとき
     {
         bool up = GameLib::input::STATE(0) & GameLib::input::PAD_UP;
         bool down = GameLib::input::STATE(0) & GameLib::input::PAD_DOWN;
@@ -63,10 +65,10 @@ void playerMove(OBJ2D* obj)
 
         if (keyCount == 1) //「1つだけ押されている場合」に限定
         {
-            if (up) { obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
-            if (down) { obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
-            if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
-            if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+            if (up){ obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
+            if (down){ obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
+            if (left){ obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
+            if (right){ obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
             obj->isMoving = true;
 
@@ -76,16 +78,27 @@ void playerMove(OBJ2D* obj)
     {
         obj->position += obj->direction;
     }
+
+    //---------------------------------------------------------------
+    //開発用
+    //---------------------------------------------------------------
+
+    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
+    {
+        direction_reset(obj);
+    }
+
+    //---------------------------------------------------------------
 }
-#endif
+
 void playerUpdate(OBJ2D* obj)
 {
     switch (obj->state)
     {
     case 0:
         obj->sprData = &sprPlayer;
-        obj->color = { 1,0.32f,0.32f,1 };
-        obj->scale = { 0.8f,0.8f };
+        obj->color = { 1,1,1,1 };
+        obj->scale = { 1.0f,1.0f };
         obj->speed = 1;
         obj->direction = { 0,0 };
         obj->isMoving = false;
@@ -99,9 +112,9 @@ void playerUpdate(OBJ2D* obj)
         playerMove(obj);
 
         // 移動範囲チェック
-        if (obj->position.x < PLAYER_LIMIT_L) {obj->position.x = PLAYER_LIMIT_L; direction_reset(obj);}
-        if (obj->position.x > PLAYER_LIMIT_R) {obj->position.x = PLAYER_LIMIT_R; direction_reset(obj);}
-        if (obj->position.y < PLAYER_LIMIT_U) {obj->position.y = PLAYER_LIMIT_U; direction_reset(obj);}
+        if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; direction_reset(obj); }
+        if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
+        if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
         if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
         break;
     }
@@ -111,7 +124,7 @@ void playerUpdate(OBJ2D* obj)
 void direction_reset(OBJ2D* obj)
 {
     obj->isMoving = false;
-    obj->direction = { 0,0 };
+    obj->sprData = &sprPlayer;
     obj->direction = { 0,0 };
    // obj->position = { 64,64 };
 }

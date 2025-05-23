@@ -2,14 +2,6 @@
 #include "Obj2d.h"
 #include "Template.h"
 
-enum MOVING
-{
-	UP = 0, 
-	DOWN,
-	LEFT,
-	RIGHT,
-};
-
 class PlayerManager :public OBJ2DManager, public Singleton<PlayerManager>
 {
 private:
