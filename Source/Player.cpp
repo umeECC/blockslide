@@ -103,7 +103,7 @@ void playerUpdate(OBJ2D* obj)
         obj->direction = { 0,0 };
         obj->isMoving = false;
         obj->position = { 660,360 };
-        obj->hSize = { 64 / 2,64 / 2 };
+        obj->hSize = { 32 / 2,32 / 2 };
         //obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];

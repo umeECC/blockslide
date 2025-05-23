@@ -55,7 +55,7 @@ JudgeRect screenRect = {
 void judge()
 {
 	//プレイヤーVS壁
-	judgeSub(PlayerManager::getInstance(), MapManager::getInstance());
+	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
 	judgeMapchip(PlayerManager::getInstance(),MapManager::getInstance());
 	//// プレイヤー2VS壁
 	//judgeSub(PlayerManager_sd::getInstance(), WallManager::getInstance());
@@ -73,58 +73,112 @@ bool isBlocked(float x, float y) {
 	int tileY = static_cast<int>(y) / 64;
 
 	if (tileX < 0 || tileY < 0 || tileX >= MapManager::MAP_WIDTH || tileY >= MapManager::MAP_HEIGHT)
-		return true; // マップ外はブロックとみなす
+		return true;
 
 	int tileID = mapData[tileY][tileX];
-
-	// tileIDがブロックのIDリストに含まれているか？
-	return BLOCK_TILE_IDS.count(tileID) > 0;
+	return BLOCK_TILE_IDS.count(tileID) > 0;  // ← ここが本来使いたかった判定！
 }
-
 void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
 	for (auto& item1 : manager1) {
-		bool blockedX = false;
-		bool blockedY = false;
-
-		// 現在の方向を保存しておく（補正用）
 		float dirX = item1.direction.x;
 		float dirY = item1.direction.y;
 
-		// 次の位置
-		float nextX = item1.position.x + dirX;
-		float nextY = item1.position.y + dirY;
+		// 移動前の位置を保存
+		float posX = item1.position.x;
+		float posY = item1.position.y;
 
-		// --- X方向の判定 ---
-		if (isBlocked(nextX, item1.position.y)) {
-			blockedX = true;
-			item1.direction.x = 0;
+		// X方向の衝突判定
+		if (dirX != 0) {
+			float nextX = posX + dirX;
+			// オブジェクトの左端と右端を計算
+			float leftX = nextX - item1.hSize.x;
+			float rightX = nextX + item1.hSize.x;
+			float topY = posY - item1.hSize.y;
+			float bottomY = posY + item1.hSize.y;
 
-			if (dirX > 0) {
-				item1.position.x = static_cast<int>(item1.position.x / 64) * 64;
+			// 左端と右端、それぞれのタイル座標を計算して
+			// Y方向は上端から下端までの範囲をカバーするよう複数チェックするのが理想
+
+			bool blocked = false;
+
+			// Y方向に複数点をチェック（上下の端＋中央）
+			std::vector<float> checkYs = { topY, posY, bottomY };
+
+			for (float yCheck : checkYs) {
+				float checkX = (dirX > 0) ? rightX : leftX;
+				if (isBlocked(checkX, yCheck)) {
+					blocked = true;
+					break;
+				}
 			}
-			else if (dirX < 0) {
-				item1.position.x = static_cast<int>(item1.position.x / 64 + 1) * 64;
+
+			if (blocked) {
+				item1.direction.x = 0;
+				if (dirX > 0) {
+					// 右方向なので右端を壁タイルの左端に合わせる
+					int tileX = static_cast<int>(rightX) / 64;
+					item1.position.x = tileX * 64 - item1.hSize.x - 0.01f;
+				}
+				else {
+					// 左方向
+					int tileX = static_cast<int>(leftX) / 64;
+					item1.position.x = (tileX + 1) * 64 + item1.hSize.x + 0.01f;
+				}
+			}
+			else {
+				item1.position.x = nextX;
 			}
 		}
-
-		// --- Y方向の判定 ---
-		if (isBlocked(item1.position.x, nextY)) {
-			blockedY = true;
-			item1.direction.y = 0;
-
-			if (dirY > 0) {
-				item1.position.y = static_cast<int>(item1.position.y / 64) * 64;
-			}
-			else if (dirY < 0) {
-				item1.position.y = static_cast<int>(item1.position.y / 64 + 1) * 64;
-			}
+		else {
+			// X移動なし
+			item1.position.x = posX;
 		}
 
-		// 移動継続フラグ
+		// Y方向の衝突判定
+		if (dirY != 0) {
+			float nextY = posY + dirY;
+			float leftX = item1.position.x - item1.hSize.x;
+			float rightX = item1.position.x + item1.hSize.x;
+			float topY = nextY - item1.hSize.y;
+			float bottomY = nextY + item1.hSize.y;
+
+			bool blocked = false;
+
+			// X方向に複数点チェック（左右の端＋中央）
+			std::vector<float> checkXs = { leftX, item1.position.x, rightX };
+
+			for (float xCheck : checkXs) {
+				float checkY = (dirY > 0) ? bottomY : topY;
+				if (isBlocked(xCheck, checkY)) {
+					blocked = true;
+					break;
+				}
+			}
+
+			if (blocked) {
+				item1.direction.y = 0;
+				if (dirY > 0) {
+					int tileY = static_cast<int>(bottomY) / 64;
+					item1.position.y = tileY * 64 - item1.hSize.y - 0.01f;
+				}
+				else {
+					int tileY = static_cast<int>(topY) / 64;
+					item1.position.y = (tileY + 1) * 64 + item1.hSize.y + 0.01f;
+				}
+			}
+			else {
+				item1.position.y = nextY;
+			}
+		}
+		else {
+			// Y移動なし
+			item1.position.y = posY;
+		}
+
+		// 移動フラグ
 		item1.isMoving = (item1.direction.x != 0 || item1.direction.y != 0);
 	}
 }
-
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
 	for (auto& item1 : manager1)
