@@ -12,6 +12,7 @@
 #include"Stage.h"
 #include "Statge1.h"
 #include"SpriteData.h"
+#include <set>
 extern int mapData[MapManager::MAP_HEIGHT][MapManager::MAP_WIDTH];
 class JudgeRect
 {
@@ -65,15 +66,19 @@ void judge()
 	//judgeMapchip(PlayerManager::getInstance());
 
 }
+std::set<int> BLOCK_TILE_IDS = { 1, 2, 3 }; // 例えば1, 2, 3は壁
 
 bool isBlocked(float x, float y) {
 	int tileX = static_cast<int>(x) / 64;
 	int tileY = static_cast<int>(y) / 64;
 
 	if (tileX < 0 || tileY < 0 || tileX >= MapManager::MAP_WIDTH || tileY >= MapManager::MAP_HEIGHT)
-		return true;
+		return true; // マップ外はブロックとみなす
 
-	return mapData[tileY][tileX] >= 1;
+	int tileID = mapData[tileY][tileX];
+
+	// tileIDがブロックのIDリストに含まれているか？
+	return BLOCK_TILE_IDS.count(tileID) > 0;
 }
 
 void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
@@ -81,21 +86,23 @@ void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
 		bool blockedX = false;
 		bool blockedY = false;
 
+		// 現在の方向を保存しておく（補正用）
+		float dirX = item1.direction.x;
+		float dirY = item1.direction.y;
+
 		// 次の位置
-		float nextX = item1.position.x + item1.direction.x;
-		float nextY = item1.position.y + item1.direction.y;
+		float nextX = item1.position.x + dirX;
+		float nextY = item1.position.y + dirY;
 
 		// --- X方向の判定 ---
 		if (isBlocked(nextX, item1.position.y)) {
 			blockedX = true;
-			// X方向を止める
 			item1.direction.x = 0;
 
-			// X位置補正
-			if (item1.direction.x > 0) {
+			if (dirX > 0) {
 				item1.position.x = static_cast<int>(item1.position.x / 64) * 64;
 			}
-			else if (item1.direction.x < 0) {
+			else if (dirX < 0) {
 				item1.position.x = static_cast<int>(item1.position.x / 64 + 1) * 64;
 			}
 		}
@@ -103,14 +110,12 @@ void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
 		// --- Y方向の判定 ---
 		if (isBlocked(item1.position.x, nextY)) {
 			blockedY = true;
-			// Y方向を止める
 			item1.direction.y = 0;
 
-			// Y位置補正
-			if (item1.direction.y > 0) {
+			if (dirY > 0) {
 				item1.position.y = static_cast<int>(item1.position.y / 64) * 64;
 			}
-			else if (item1.direction.y < 0) {
+			else if (dirY < 0) {
 				item1.position.y = static_cast<int>(item1.position.y / 64 + 1) * 64;
 			}
 		}
@@ -119,6 +124,7 @@ void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
 		item1.isMoving = (item1.direction.x != 0 || item1.direction.y != 0);
 	}
 }
+
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
 	for (auto& item1 : manager1)
@@ -166,6 +172,7 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 		}
 	}
 }
+
 
 void judgePvP(OBJ2DManager& manager)
 {
