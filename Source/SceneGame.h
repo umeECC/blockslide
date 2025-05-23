@@ -3,6 +3,8 @@
 
 class SceneGame : public Scene
 {
+    //MapManager mapmanager;
+
 private:
     void init() override;
     void deinit() override;

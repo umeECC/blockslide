@@ -42,7 +42,10 @@ public:
 
     int stage;          //現在のステージ数
 
+   
+
     OBJ2D() { init(); }
+
 
     void init()
     {
@@ -90,7 +93,7 @@ public:
     virtual OBJ2D* begin() = 0;
     virtual void init();
     void update();
-    void draw();
-
+    virtual void draw();
+    virtual void switchToStage(int stageNumber);
     OBJ2D* searchSet(OBJ2D::MOVER mover, const VECTOR2& position);
 };

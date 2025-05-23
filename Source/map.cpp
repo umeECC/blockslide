@@ -8,10 +8,16 @@
 #include "SceneGame.h"
 #include"map.h"
 #include"Stage.h"
-#include "map.h"
+//#include "map.h"
 #include "Statge1.h"
+#include"SpriteData.h"
+#include <iostream>
 
+void kabeUpdate(OBJ2D* obj);
+void ugokuobjectUpdate(OBJ2D* obj);
+void hakoUpdate(OBJ2D* obj);
 using namespace GameLib;
+
 int mapData[MapManager::MAP_HEIGHT][MapManager::MAP_WIDTH] = {0};
 int gimickMap[MapManager::MAP_HEIGHT][MapManager::MAP_WIDTH];
 
@@ -44,11 +50,50 @@ void MapManager::switchToStage(int stageNumber) {
     }
 }
 void MapManager::init() {
+    OBJ2DManager::init();
+
     // マップチップの読み込み   
-    block = sprite_load(L"./Data/Images/wall.png");
+    /*block = sprite_load(L"./Data/Images/wall.png");
     ugoku = sprite_load(L"./Data/Images/ugoku.png");
-    hako = sprite_load(L"./Data/Images/hako.png");
+    hako = sprite_load(L"./Data/Images/hako.png");*/
+
+
+
+    //searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });////////
+    //searchSet(playerUpdate, { 32 + 64 * 9, 32 + 64 * 5 });
+
+
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            int tile = mapData[y][x];  // マップデータを取得
+
+            // マップの座標をピクセル座標に変換する（例：64x64サイズのタイル）
+            int pixelX = x * 64;
+            int pixelY = y * 64;
+
+            // マップチップを描画
+            switch (tile) {
+            case 0:
+                break; // 空白: 何も描画しない 
+            case 1:
+                searchSet(kabeUpdate, { static_cast<float>(pixelX), static_cast<float>(pixelY) });// ブロック（壁）の描画
+                break;
+            case 2:
+                // 動くオブジェクトの描画
+                searchSet(ugokuobjectUpdate, { static_cast<float>(pixelX), static_cast<float>(pixelY) });
+                break;
+            case 3:
+                // 箱の描画
+                searchSet(hakoUpdate, { static_cast<float>(pixelX), static_cast<float>(pixelY) });
+                break;
+                // 必要に応じて他のマップタイプを追加できます
+            }
+        }
+    }
 }
+
+
+
 
 void MapManager::deinit() {
     // マップチップスプライトの解放
@@ -59,37 +104,109 @@ void MapManager::deinit() {
     memset(gimickMap, 0, sizeof(gimickMap));  // ギミックマップも初期化
 }
 
+
+
+
+#if false
 void MapManager::draw() {
     // マップチップの描画
-    for (int y = 0; y < MAP_HEIGHT; y++)
-    {
-        for (int x = 0; x < MAP_WIDTH; x++)
-        {
-            int tile = mapData[y][x];
 
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            int tile = mapData[y][x];  // マップデータを取得
 
             // マップの座標をピクセル座標に変換する（例：64x64サイズのタイル）
             int pixelX = x * 64;
             int pixelY = y * 64;
-
+            
             // マップチップを描画
-            switch (tile)
-            {
+            switch (tile) {
             case 0:
-                break;                                            // 空白: 何も描画しない 
-            case 1:                                                  // dirtのマップチップを描画     
-                sprite_render(block, pixelX, pixelY, 1,1);
+                break; // 空白: 何も描画しない 
+            case 1:
+                sprite_render(block, pixelX, pixelY, 1, 1); // ブロック（壁）の描画
                 break;
             case 2:
-                sprite_render(ugoku, pixelX, pixelY, 1, 1);
+                sprite_render(ugoku, pixelX, pixelY, 1, 1); // 動くオブジェクトの描画
+                break;
             case 3:
-                sprite_render(hako, pixelX, pixelY, 1, 1);
+                sprite_render(hako, pixelX, pixelY, 1, 1);  // 箱の描画
+                break;
+                // 必要に応じて他のマップタイプを追加できます
             }
-
         }
     }
 }
+#endif
 
 
 
+void kabeUpdate(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->sprData = &sprblock;
+        ;
+        
+        obj->color = { 1,1.1,1,1 };
+        obj->scale = { 1.0f,1.0f };
+        /*obj->speed = 1;
+        obj->direction = { 0,0 };
+        obj->isMoving = false;*/
+        //obj->position = { 660,360 };
+        obj->hSize = { 64 / 2,64 / 2 };
+        //obj->judge = JUDGE_ALL;
+        obj->state++;
+        [[fallthrough]];
+    case 1:
 
+        break;
+    }
+}
+
+void ugokuobjectUpdate(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->sprData = &sprugoku;
+
+        obj->color = { 1,1,1,1 };
+        obj->scale = { 1.0,1.0 };
+        obj->speed = 1;
+        obj->direction = { 0,0 };
+        obj->isMoving = false;
+        //obj->position = { 660,360 };
+        obj->hSize = { 64 / 2,64 / 2 };
+        //obj->judge = JUDGE_ALL;
+        obj->state++;
+        [[fallthrough]];
+    case 1:
+
+        break;
+    }
+}
+
+void hakoUpdate(OBJ2D* obj)
+{
+    switch (obj->state)
+    {
+    case 0:
+        obj->sprData = &sprhako;
+
+        obj->color = { 1,1,1,1 };
+        obj->scale = { 1.0f,1.0f };
+        obj->speed = 1;
+        obj->direction = { 0,0 };
+        obj->isMoving = false;
+        //obj->position = { 660,360 };
+        obj->hSize = { 64 / 2,64 / 2 };
+        //obj->judge = JUDGE_ALL;
+        obj->state++;
+        [[fallthrough]];
+    case 1:
+
+        break;
+    }
+}

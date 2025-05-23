@@ -7,6 +7,9 @@ enum TEXNO
     BACK01,
     TITLE0,
     PLAYER,
+    BLOCK,
+    UGOKU,
+    HAKO
    
 };
 
@@ -45,3 +48,8 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 
 extern SpriteCenter sprPlayer;
+
+// マップの block と uboku と hako の SpriteCenter の extern をここに用意
+extern SpriteCenter sprhako;
+extern SpriteCenter sprugoku;
+extern SpriteCenter sprblock;

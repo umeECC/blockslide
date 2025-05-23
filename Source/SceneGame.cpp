@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Stage.h"
 #include "Audio.h"
+#include "map.h"
 
 // ’è”éŒ¾
 
@@ -16,6 +17,9 @@ void enemy(OBJ2D* obj);
 
 void SceneGame::init()
 {
+    MapManager mapmanager;
+     mapmanager.init();
+    mapmanager.switchToStage(0);
     Stage::getInstance().init();
 }
 
@@ -41,8 +45,15 @@ void enemy(OBJ2D* obj)
 
 void SceneGame::draw()
 {
+   
+    
     // ‰æ–Ê‚ğƒNƒŠƒA
     GameLib::clear(0, 0, 0);
 
     Stage::getInstance().draw();
+
+    //MapManager mapmanager;
+    //mapmanager.draw();
+
+    
 }

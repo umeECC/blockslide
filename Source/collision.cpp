@@ -65,5 +65,5 @@ bool checkCollision(float x, float y) {
     }
 
 
-    return isCollision; // Õ“Ë”»’è‚ÌŒ‹‰Ê‚ğ•Ô‚·
+    //return isCollision; // Õ“Ë”»’è‚ÌŒ‹‰Ê‚ğ•Ô‚·
 }

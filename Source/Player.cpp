@@ -89,7 +89,7 @@ void playerUpdate(OBJ2D* obj)
         obj->speed = 1;
         obj->direction = { 0,0 };
         obj->isMoving = false;
-        //obj->position = { 660,360 };
+        obj->position = { 660,360 };
         obj->hSize = { 64 / 2,64 / 2 };
         //obj->judge = JUDGE_ALL;
         obj->state++;
@@ -113,4 +113,5 @@ void direction_reset(OBJ2D* obj)
     obj->isMoving = false;
     obj->direction = { 0,0 };
     obj->direction = { 0,0 };
+   // obj->position = { 64,64 };
 }

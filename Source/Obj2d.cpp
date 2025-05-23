@@ -8,7 +8,7 @@ void OBJ2D::update()
 void OBJ2D::draw()
 {
     if (sprData)
-    {
+    { 
         auto oldState = GameLib::getBlendMode();
         GameLib::setBlendMode(blendState);
         sprData->draw(position, scale, rotation, color);
@@ -38,6 +38,10 @@ void OBJ2DManager::draw()
     {
         obj.draw();
     }
+}
+
+void OBJ2DManager::switchToStage(int stageNumber)
+{
 }
 
 OBJ2D* OBJ2DManager::searchSet(OBJ2D::MOVER mover, const VECTOR2& position)

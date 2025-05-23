@@ -58,7 +58,8 @@ void Stage::update()
     PlayerManager::getInstance().update();
 
     // マップの更新
-    
+    MapManager::getInstance().update();
+
     // エフェクト更新
     EffectManager::getInstance().update();
 
