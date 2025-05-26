@@ -45,7 +45,7 @@ public:
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2);
 //void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgePvP(OBJ2DManager& manager);
-void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2);
+void judgeMapchip(OBJ2DManager& manager1);
 
 
 JudgeRect screenRect = {
@@ -55,8 +55,10 @@ JudgeRect screenRect = {
 void judge()
 {
 	//プレイヤーVS壁
+
+	judgeMapchip(PlayerManager::getInstance());
 	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
-	judgeMapchip(PlayerManager::getInstance(),MapManager::getInstance());
+	
 	//// プレイヤー2VS壁
 	//judgeSub(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
@@ -72,111 +74,86 @@ bool isBlocked(float x, float y) {
 	int tileX = static_cast<int>(x) / 64;
 	int tileY = static_cast<int>(y) / 64;
 
-	if (tileX < 0 || tileY < 0 || tileX >= MapManager::MAP_WIDTH || tileY >= MapManager::MAP_HEIGHT)
+	if (tileX < 0 || tileY < 0 || tileX >= MapManager::MAP_WIDTH || tileY >= MapManager::MAP_HEIGHT) {
+		std::cout << "Out of bounds: (" << tileX << "," << tileY << ") → blocked" << std::endl;
 		return true;
+	}
 
 	int tileID = mapData[tileY][tileX];
-	return BLOCK_TILE_IDS.count(tileID) > 0;  // ← ここが本来使いたかった判定！
+	bool result = BLOCK_TILE_IDS.count(tileID) > 0;
+
+	std::cout << "Check tile (" << tileX << "," << tileY << ") = " << tileID
+		<< " → " << (result ? "blocked" : "free") << std::endl;
+
+	return result;
 }
-void judgeMapchip(OBJ2DManager& manager1, OBJ2DManager& manager2) {
-	for (auto& item1 : manager1) {
-		float dirX = item1.direction.x;
-		float dirY = item1.direction.y;
 
-		// 移動前の位置を保存
-		float posX = item1.position.x;
-		float posY = item1.position.y;
 
-		// X方向の衝突判定
+bool isBlockedArea(float centerX, float centerY, const VECTOR2& hSize) {
+	// 左上座標
+	float left = centerX - hSize.x;
+	float right = centerX + hSize.x;
+	float top = centerY - hSize.y;
+	float bottom = centerY + hSize.y;
+
+	// 矩形内のマス全てチェック
+	int leftTile = static_cast<int>(left) / 64;
+	int rightTile = static_cast<int>(right) / 64;
+	int topTile = static_cast<int>(top) / 64;
+	int bottomTile = static_cast<int>(bottom) / 64;
+
+	for (int y = topTile; y <= bottomTile; y++) {
+		for (int x = leftTile; x <= rightTile; x++) {
+			if (isBlocked(x * 64 + 32, y * 64 + 32)) { // タイル中心座標で判定
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void judgeMapchip(OBJ2DManager& manager) {
+	for (auto& item : manager) {
+		float dirX = item.direction.x;
+		float dirY = item.direction.y;
+
+		float newX = item.position.x;
+		float newY = item.position.y;
+
+		// --- X方向 ---
 		if (dirX != 0) {
-			float nextX = posX + dirX;
-			// オブジェクトの左端と右端を計算
-			float leftX = nextX - item1.hSize.x;
-			float rightX = nextX + item1.hSize.x;
-			float topY = posY - item1.hSize.y;
-			float bottomY = posY + item1.hSize.y;
+			float tryX = newX + dirX;
+			if (isBlockedArea(tryX, newY, item.hSize)) {
+				item.direction.x = 0;
 
-			// 左端と右端、それぞれのタイル座標を計算して
-			// Y方向は上端から下端までの範囲をカバーするよう複数チェックするのが理想
-
-			bool blocked = false;
-
-			// Y方向に複数点をチェック（上下の端＋中央）
-			std::vector<float> checkYs = { topY, posY, bottomY };
-
-			for (float yCheck : checkYs) {
-				float checkX = (dirX > 0) ? rightX : leftX;
-				if (isBlocked(checkX, yCheck)) {
-					blocked = true;
-					break;
-				}
-			}
-
-			if (blocked) {
-				item1.direction.x = 0;
-				if (dirX > 0) {
-					// 右方向なので右端を壁タイルの左端に合わせる
-					int tileX = static_cast<int>(rightX) / 64;
-					item1.position.x = tileX * 64 - item1.hSize.x - 0.01f;
-				}
-				else {
-					// 左方向
-					int tileX = static_cast<int>(leftX) / 64;
-					item1.position.x = (tileX + 1) * 64 + item1.hSize.x + 0.01f;
-				}
+				if (dirX > 0)
+					newX = (int)((tryX + item.hSize.x) / 64) * 64 - item.hSize.x - 0.1f;
+				else
+					newX = (int)((tryX - item.hSize.x) / 64 + 1) * 64 + item.hSize.x + 0.1f;
 			}
 			else {
-				item1.position.x = nextX;
+				newX = tryX;
 			}
 		}
-		else {
-			// X移動なし
-			item1.position.x = posX;
-		}
 
-		// Y方向の衝突判定
+		// --- Y方向 ---
 		if (dirY != 0) {
-			float nextY = posY + dirY;
-			float leftX = item1.position.x - item1.hSize.x;
-			float rightX = item1.position.x + item1.hSize.x;
-			float topY = nextY - item1.hSize.y;
-			float bottomY = nextY + item1.hSize.y;
+			float tryY = newY + dirY;
+			if (isBlockedArea(newX, tryY, item.hSize)) {
+				item.direction.y = 0;
 
-			bool blocked = false;
-
-			// X方向に複数点チェック（左右の端＋中央）
-			std::vector<float> checkXs = { leftX, item1.position.x, rightX };
-
-			for (float xCheck : checkXs) {
-				float checkY = (dirY > 0) ? bottomY : topY;
-				if (isBlocked(xCheck, checkY)) {
-					blocked = true;
-					break;
-				}
-			}
-
-			if (blocked) {
-				item1.direction.y = 0;
-				if (dirY > 0) {
-					int tileY = static_cast<int>(bottomY) / 64;
-					item1.position.y = tileY * 64 - item1.hSize.y - 0.01f;
-				}
-				else {
-					int tileY = static_cast<int>(topY) / 64;
-					item1.position.y = (tileY + 1) * 64 + item1.hSize.y + 0.01f;
-				}
+				if (dirY > 0)
+					newY = (int)((tryY + item.hSize.y) / 64) * 64 - item.hSize.y - 0.1f;
+				else
+					newY = (int)((tryY - item.hSize.y) / 64 + 1) * 64 + item.hSize.y + 0.1f;
 			}
 			else {
-				item1.position.y = nextY;
+				newY = tryY;
 			}
 		}
-		else {
-			// Y移動なし
-			item1.position.y = posY;
-		}
 
-		// 移動フラグ
-		item1.isMoving = (item1.direction.x != 0 || item1.direction.y != 0);
+		item.position = { newX, newY };
+		item.isMoving = (item.direction.x != 0 || item.direction.y != 0);
 	}
 }
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)

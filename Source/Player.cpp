@@ -43,18 +43,15 @@ const int INPUT_COOLDOWN = 100; // 衝突後のクールタイム（フレーム）
 //-----------------------------------------------------------------------------------
 void playerMove(OBJ2D* obj)
 {
-
     static int inputCooldown = 0;
 
-    // クールタイム中は操作を受け付けない
     if (inputCooldown > 0)
     {
         inputCooldown--;
         return;
     }
 
-    //if (!obj->isMoving) //WASDが押されていないとき
-    if (!obj->isMoving) //WASDが押されていないとき
+    if (!obj->isMoving)
     {
         bool up = GameLib::input::STATE(0) & GameLib::input::PAD_UP;
         bool down = GameLib::input::STATE(0) & GameLib::input::PAD_DOWN;
@@ -63,33 +60,21 @@ void playerMove(OBJ2D* obj)
 
         int keyCount = up + down + left + right;
 
-        if (keyCount == 1) //「1つだけ押されている場合」に限定
+        if (keyCount == 1)
         {
-            if (up){ obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
-            if (down){ obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
-            if (left){ obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
-            if (right){ obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+            if (up) { obj->sprData = &P_Up;    obj->direction.y = -PLAYER_SPEED; }
+            if (down) { obj->sprData = &P_Down;  obj->direction.y = PLAYER_SPEED; }
+            if (left) { obj->sprData = &P_Left;  obj->direction.x = -PLAYER_SPEED; }
+            if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
             obj->isMoving = true;
-
         }
     }
-    if (obj->isMoving)
-    {
-        obj->position += obj->direction;
-    }
 
-    //---------------------------------------------------------------
-    //開発用
-    //---------------------------------------------------------------
-
-    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
-    {
-        direction_reset(obj);
-    }
-
-    //---------------------------------------------------------------
+    // 位置更新は削除する！
+    // obj->position += obj->direction; ← これが原因でめり込み・ズレが起きてる
 }
+
 
 void playerUpdate(OBJ2D* obj)
 {
@@ -103,7 +88,7 @@ void playerUpdate(OBJ2D* obj)
         obj->direction = { 0,0 };
         obj->isMoving = false;
         obj->position = { 660,360 };
-        obj->hSize = { 32 / 2,32 / 2 };
+        obj->hSize = { 12 / 2,12 / 2 };
         //obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];
