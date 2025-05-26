@@ -3,7 +3,7 @@
 GameLib::LoadTexture loadTexture[] = {
     { TEXNO::BACK01, L"./Data/Images/BACK01.png", 4U },
     { TEXNO::TITLE0, L"./Data/Images/title.png",  4U},
-    { TEXNO::PLAYER, L"./Data/Images/player.png", 4U},
+    { TEXNO::PLAYER, L"./Data/Images/player1.png", 4U},
     { TEXNO::PLAYERSD, L"./Data/Images/kabe1.png", 4U},
     {TEXNO::WALL, L"./Data/Images/wall.png", 4U},
 

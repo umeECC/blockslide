@@ -89,7 +89,7 @@ public:
     virtual OBJ2D* end() = 0;
     virtual OBJ2D* begin() = 0;
     virtual void init();
-    virtual  void update();
+    virtual void update();
     virtual void draw();
 
     OBJ2D* searchSet(OBJ2D::MOVER mover, const VECTOR2& position);

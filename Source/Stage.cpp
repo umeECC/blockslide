@@ -2,6 +2,7 @@
 #include"Obj2d.h"
 #include "Back.h"
 #include "Player.h"
+#include "Player_sd.h"
 #include "Judge.h"
 #include "Audio.h"
 #include "Effect.h"
@@ -21,8 +22,10 @@ void Stage::init()
     // プレイヤー初期設定
     PlayerManager::getInstance().init();
 
+    PlayerManager_sd::getInstance().init();
     // マップ初期設定(map_init())
     MapManager::getInstance().init();
+
     MapManager::getInstance().switchToStage(0);
 
     // エフェクト初期設定
@@ -57,6 +60,7 @@ void Stage::update()
     // プレイヤー更新
     PlayerManager::getInstance().update();
 
+    PlayerManager_sd::getInstance().update();
     // マップの更新
     
     // エフェクト更新
@@ -95,6 +99,7 @@ void Stage::draw()
     // プレイヤー描画
     PlayerManager::getInstance().draw();
     
+    PlayerManager_sd::getInstance().draw();
 
     // UI描画
     
