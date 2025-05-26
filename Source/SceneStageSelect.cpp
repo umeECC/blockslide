@@ -6,6 +6,8 @@
 #include "Obj2d.h"
 #include "Player.h" 
 
+static constexpr int STAGE_MAX = 8 ; // 最大ステージ数
+
 OBJ2D select_back;
 int stage_number;
 
@@ -55,7 +57,7 @@ void SceneSelect::update()
             // 押された瞬間
             AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
             stage_number--;
-            if (stage_number < -1) stage_number = -1;
+            if (stage_number < 0) stage_number = 0;
 
             AKeyHoldTimer = 0; // タイマーリセット
         }
@@ -67,7 +69,7 @@ void SceneSelect::update()
             {
                 AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
                 stage_number--;
-                if (stage_number < -1) stage_number = -1;
+                if (stage_number < 0) stage_number = 0;
                 AKeyHoldTimer = 0; // タイマーリセットして連続反応させる
             }
         }
@@ -84,7 +86,7 @@ void SceneSelect::update()
         {
             AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
             stage_number++;
-            if (stage_number > 10) stage_number = 10;
+            if (stage_number > STAGE_MAX) stage_number = STAGE_MAX;
 
             DKeyHoldTimer = 0;
         }
@@ -95,7 +97,7 @@ void SceneSelect::update()
             {
                 AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
                 stage_number++;
-                if (stage_number > 10) stage_number = 10;
+                if (stage_number > STAGE_MAX) stage_number = STAGE_MAX;
                 DKeyHoldTimer = 0;
             }
         }
