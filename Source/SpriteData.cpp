@@ -6,12 +6,14 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::PLAYER, L"./Data/Images/player1.png", 4U},
     { TEXNO::PLAYERSD, L"./Data/Images/kabe1.png", 4U},
     {TEXNO::WALL, L"./Data/Images/wall.png", 4U},
+    { TEXNO::ENDO, L"./Data/Images/end.png", 4U},
 
     { -1, nullptr, }, // 終了フラグ
 };
 
 SpriteUpperLeft sprBack(TEXNO::BACK01, 0, 0, 1280, 720);
 SpriteUpperLeft sprTitle(TEXNO::TITLE0, 0, 0, 1280, 720);
+SpriteUpperLeft sprEnd(TEXNO::ENDO, 0, 0, 1280, 720);
 
 
 //プレイヤー

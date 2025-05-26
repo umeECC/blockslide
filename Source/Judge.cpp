@@ -3,12 +3,11 @@
 #include <iostream>
 #include "Effect.h"
 
-#include "Judge.h"
+
 #include "WinMain.h"
-#include "Player.h"
+
 #include "Player_sd.h"
-#include <iostream>
-#include "Effect.h"
+
 #include "Wall.h"
 
 

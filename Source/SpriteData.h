@@ -9,6 +9,7 @@ enum TEXNO
     PLAYER,
     PLAYERSD,
     WALL,
+    ENDO,
 
 };
 
@@ -45,6 +46,7 @@ extern GameLib::LoadTexture loadTexture[];
 extern SpriteUpperLeft sprBack;
 extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
+extern SpriteUpperLeft sprEnd;
 
 extern SpriteCenter sprPlayer;
 extern SpriteCenter P_Up;

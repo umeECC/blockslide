@@ -5,12 +5,16 @@
 #include"SceneTuto.h"
 #include "SceneGame.h"
 #include "SceneClear.h"
+#include "SceneEnd.h"
+
 
 // é¿ëÃêÈåæ
 SceneTitle sceneTitle;
 SceneTuto sceneTuto;
 SceneGame sceneGame;
 SceneClear sceneClear;
+SceneEnd sceneEnd;
+
 Scene *pScene, *pNextScene;
 
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
@@ -61,7 +65,7 @@ void setScene(int nextScene)
 {
     Scene* scenes[] = {
         &sceneTitle,
-        &sceneTuto,
+        &sceneEnd,
         &sceneGame,
         &sceneClear,
     };

@@ -107,6 +107,7 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\player_sd.cpp" />
     <ClCompile Include="Source\SceneClear.cpp" />
+    <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneTuto.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Source\player_sd.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneClear.h" />
+    <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SceneTuto.h" />
