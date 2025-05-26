@@ -11,6 +11,7 @@ enum TEXNO
     UGOKU,
     HAKO,
     SELECT,
+    ENDO,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -47,6 +48,7 @@ extern SpriteUpperLeft sprBack;
 extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 extern SpriteUpperLeft sprStageSelect;
+extern SpriteUpperLeft sprEnd;
 
 extern SpriteCenter sprPlayer;
 extern SpriteCenter P_Up;

@@ -8,6 +8,7 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::HAKO,L"./Data/Images/hako.png", 4U },
     { TEXNO::UGOKU,L"./Data/Images/ugoku.png", 4U},
     { TEXNO::SELECT, L"./Data/Images/stage_select.png",4U},
+    { TEXNO::ENDO, L"./Data/Images/end.png", 4U},
     // マップの block と ugoku と hako をここに用意
     
 
@@ -17,6 +18,7 @@ GameLib::LoadTexture loadTexture[] = {
 SpriteUpperLeft sprBack(TEXNO::BACK01, 0, 0, 1280, 720);
 SpriteUpperLeft sprTitle(TEXNO::TITLE0, 0, 0, 1280, 720);
 SpriteUpperLeft sprStageSelect(TEXNO::SELECT, 0, 0, 1280, 720);
+SpriteUpperLeft sprEnd(TEXNO::ENDO, 0, 0, 1280, 720);
 
 SpriteCenter sprPlayer(TEXNO::PLAYER, 0, 0, 64, 64);
 SpriteCenter P_Down(TEXNO::PLAYER, 64, 0, 64, 64);

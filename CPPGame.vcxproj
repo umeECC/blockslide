@@ -110,6 +110,7 @@
     <ClCompile Include="Source\SceneStageSelect.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneTuto.cpp" />
+    <ClCompile Include="Source\Scene_sd.cpp" />
     <ClCompile Include="Source\SpriteData.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\Wall.cpp" />

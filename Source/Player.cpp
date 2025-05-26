@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "player_sd.h"
 #include "SpriteData.h"
 
 static constexpr float PLAYER_SPEED = 10.0f;
@@ -13,7 +14,7 @@ void PlayerManager::init()
 {
     OBJ2DManager::init();
     searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });////////
-    searchSet(playerUpdate, { 32 + 64 * 9, 32 + 64 * 5 });
+   
 }
 
 //-----------------------------------------------------------------------------------
@@ -39,6 +40,23 @@ static bool isColliding = false;  // 衝突状態を管理
 
 const int INPUT_COOLDOWN = 100; // 衝突後のクールタイム（フレーム）
 
+void PlayerManager::update()
+{
+
+    this->isMove = false;
+    for (auto& item : *this)
+    {
+        if (item.isMoving)
+        {
+            this->isMove = true;
+            break;
+        }
+    }
+
+
+
+    OBJ2DManager::update();
+}
 
 //-----------------------------------------------------------------------------------
 void playerMove(OBJ2D* obj)
@@ -51,7 +69,7 @@ void playerMove(OBJ2D* obj)
         return;
     }
 
-    if (!obj->isMoving)
+    if (!(PlayerManager::getInstance().isMoving() || PlayerManager_sd::getInstance().isMoving()))
     {
         bool up = GameLib::input::STATE(0) & GameLib::input::PAD_UP;
         bool down = GameLib::input::STATE(0) & GameLib::input::PAD_DOWN;
@@ -66,6 +84,11 @@ void playerMove(OBJ2D* obj)
             if (down) { obj->sprData = &P_Down;  obj->direction.y = PLAYER_SPEED; }
             if (left) { obj->sprData = &P_Left;  obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+
+
+            PlayerManager::getInstance().clearHit();
+            PlayerManager_sd::getInstance().clearHit();
+
 
             obj->isMoving = true;
         }
@@ -89,7 +112,7 @@ void playerUpdate(OBJ2D* obj)
         obj->isMoving = false;
         obj->position = { 660,360 };
         obj->hSize = { 12 / 2,12 / 2 };
-        //obj->judge = JUDGE_ALL;
+        obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];
     case 1:
