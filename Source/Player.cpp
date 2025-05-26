@@ -73,7 +73,7 @@ void playerMove(OBJ2D* obj)
 }
 
 //-----------------------------------------------------------------------------------
-
+void state;
 void playerUpdate(OBJ2D* obj)
 {
     switch (obj->state)
