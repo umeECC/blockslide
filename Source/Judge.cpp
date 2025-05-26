@@ -54,18 +54,11 @@ JudgeRect screenRect = {
 
 void judge()
 {
-	//プレイヤーVS壁
-
+	// プレイヤーVS壁
 	judgeMapchip(PlayerManager::getInstance());
 	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
-	
-	//// プレイヤー2VS壁
-	//judgeSub(PlayerManager_sd::getInstance(), WallManager::getInstance());
-
 	// プレイヤーVSプレイヤー2
 	judgePvP(PlayerManager::getInstance());
-
-	//judgeMapchip(PlayerManager::getInstance());
 
 }
 std::set<int> BLOCK_TILE_IDS = { 1, 2, 3 }; // 例えば1, 2, 3は壁
@@ -75,7 +68,7 @@ bool isBlocked(float x, float y) {
 	int tileY = static_cast<int>(y) / 64;
 
 	if (tileX < 0 || tileY < 0 || tileX >= MapManager::MAP_WIDTH || tileY >= MapManager::MAP_HEIGHT) {
-		std::cout << "Out of bounds: (" << tileX << "," << tileY << ") → blocked" << std::endl;
+		// 範囲外はぶつかっている（壁）
 		return true;
 	}
 
@@ -90,27 +83,27 @@ bool isBlocked(float x, float y) {
 
 
 bool isBlockedArea(float centerX, float centerY, const VECTOR2& hSize) {
-	// 左上座標
 	float left = centerX - hSize.x;
 	float right = centerX + hSize.x;
 	float top = centerY - hSize.y;
 	float bottom = centerY + hSize.y;
 
-	// 矩形内のマス全てチェック
-	int leftTile = static_cast<int>(left) / 64;
-	int rightTile = static_cast<int>(right) / 64;
-	int topTile = static_cast<int>(top) / 64;
-	int bottomTile = static_cast<int>(bottom) / 64;
+	// 微小な誤差を含めて、完全に端まで含めるように
+	int leftTile = static_cast<int>(std::floor(left / 64.0f));
+	int rightTile = static_cast<int>(std::floor((right - 0.001f) / 64.0f));
+	int topTile = static_cast<int>(std::floor(top / 64.0f));
+	int bottomTile = static_cast<int>(std::floor((bottom - 0.001f) / 64.0f));
 
 	for (int y = topTile; y <= bottomTile; y++) {
 		for (int x = leftTile; x <= rightTile; x++) {
-			if (isBlocked(x * 64 + 32, y * 64 + 32)) { // タイル中心座標で判定
+			if (isBlocked(x * 64 + 32, y * 64 + 32)) {
 				return true;
 			}
 		}
 	}
 	return false;
 }
+
 
 void judgeMapchip(OBJ2DManager& manager) {
 	for (auto& item : manager) {
@@ -124,12 +117,17 @@ void judgeMapchip(OBJ2DManager& manager) {
 		if (dirX != 0) {
 			float tryX = newX + dirX;
 			if (isBlockedArea(tryX, newY, item.hSize)) {
+				// 衝突判定したのでX方向の移動停止
 				item.direction.x = 0;
 
-				if (dirX > 0)
-					newX = (int)((tryX + item.hSize.x) / 64) * 64 - item.hSize.x - 0.1f;
-				else
-					newX = (int)((tryX - item.hSize.x) / 64 + 1) * 64 + item.hSize.x + 0.1f;
+				if (dirX > 0) {
+					// 右側の壁の端に移動
+					newX = (int)((tryX + item.hSize.x) / 64) * 64 - item.hSize.x - 0.2f; // 余裕0.2fに増やし
+				}
+				else {
+					// 左側の壁の端に移動
+					newX = (int)((tryX - item.hSize.x) / 64 + 1) * 64 + item.hSize.x + 0.2f;
+				}
 			}
 			else {
 				newX = tryX;
@@ -140,12 +138,17 @@ void judgeMapchip(OBJ2DManager& manager) {
 		if (dirY != 0) {
 			float tryY = newY + dirY;
 			if (isBlockedArea(newX, tryY, item.hSize)) {
+				// 衝突判定したのでY方向の移動停止
 				item.direction.y = 0;
 
-				if (dirY > 0)
-					newY = (int)((tryY + item.hSize.y) / 64) * 64 - item.hSize.y - 0.1f;
-				else
-					newY = (int)((tryY - item.hSize.y) / 64 + 1) * 64 + item.hSize.y + 0.1f;
+				if (dirY > 0) {
+					// 下側の壁の端に移動
+					newY = (int)((tryY + item.hSize.y) / 64) * 64 - item.hSize.y - 0.2f; // 余裕0.2fに増やし
+				}
+				else {
+					// 上側の壁の端に移動
+					newY = (int)((tryY - item.hSize.y) / 64 + 1) * 64 + item.hSize.y + 0.2f;
+				}
 			}
 			else {
 				newY = tryY;
