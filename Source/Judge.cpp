@@ -54,8 +54,7 @@ JudgeRect screenRect = {
 
 void judge()
 {
-	// プレイヤーVSプレイヤー2
-	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
+	
 
 	// プレイヤーVS壁
 	judgeMapchip(PlayerManager::getInstance());
@@ -66,11 +65,13 @@ void judge()
 
 	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
 	
+	// プレイヤーVSプレイヤー2
+	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 
 	// 挟まれチェック：上下 + 左右の両方が埋まっていたら
 	if (PlayerManager::getInstance().checkpress())
 	{
-		setScene(SCENE::TITLE);// ←ゲームオーバー画面に切り替える関数
+		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
 		return; // 以降の処理不要
 	}
 }
@@ -170,6 +171,9 @@ void judgeMapchip(OBJ2DManager& manager) {
 
 		item.position = { newX, newY };
 		item.isMoving = (item.direction.x != 0 || item.direction.y != 0);
+	
+	
+	
 	}
 }
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
@@ -342,7 +346,7 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2)
 		{
 			if (!item2.mover) continue;
 			
-			if ((item1.judge & item2.judge) == 0) continue;
+			//if ((item1.judge & item2.judge) == 0) continue;
 
 			JudgeRect rect2(item2.position, item2.hSize);
 			// rect2があたり判定エリア外のとき、次のitem2へ
