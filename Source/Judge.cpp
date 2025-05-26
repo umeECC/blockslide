@@ -46,6 +46,7 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgeMapchip(OBJ2DManager& manager1);
+void judgeMapchip_sd(OBJ2DManager& manager1);
 
 
 JudgeRect screenRect = {
@@ -58,12 +59,12 @@ void judge()
 
 	// プレイヤーVS壁
 	judgeMapchip(PlayerManager::getInstance());
-	judgeMapchip(PlayerManager_sd::getInstance());
+	judgeMapchip_sd(PlayerManager_sd::getInstance());
 
 	// プレイヤー2VS壁
-	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
+	//judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
-	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
+	//judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
 	
 	// プレイヤーVSプレイヤー2
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
@@ -346,7 +347,7 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2)
 		{
 			if (!item2.mover) continue;
 			
-			//if ((item1.judge & item2.judge) == 0) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
 
 			JudgeRect rect2(item2.position, item2.hSize);
 			// rect2があたり判定エリア外のとき、次のitem2へ
