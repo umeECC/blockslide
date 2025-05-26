@@ -33,6 +33,24 @@ public:
     VECTOR2 direction;
     bool isMoving;
 
+    bool hitLeft;
+    bool hitRight;
+    bool hitTop;
+    bool hitBottom;
+
+    /////////////当たったら終わりのコード
+    void clearHit()
+    {
+        hitLeft = false;
+        hitRight = false;
+        hitTop = false;
+        hitBottom = false;
+    }
+
+    bool checkpress();
+
+    ////////
+
     VECTOR2 hSize;
     int judge;
 
@@ -71,6 +89,7 @@ public:
         speed = 0; //速度
         stage = 0;
 
+        clearHit();
     }
 
     void clear() { init(); }
@@ -93,4 +112,11 @@ public:
     virtual void draw();
 
     OBJ2D* searchSet(OBJ2D::MOVER mover, const VECTOR2& position);
+
+    ///////////
+    void clearHit();
+
+    bool checkpress();
+    ///////////
+
 };

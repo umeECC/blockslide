@@ -58,6 +58,9 @@ void playerMove(OBJ2D* obj)
             if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
+            PlayerManager::getInstance().clearHit();
+            PlayerManager_sd::getInstance().clearHit();
+
             obj->isMoving = true;
             //PlayerManager::getInstance().setIsPlayerOneMove(true);
         }
