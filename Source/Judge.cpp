@@ -61,23 +61,6 @@ JudgeRect screenRect = {
 
 void judge()
 {
-//<<<<<<< HEAD
-	//プレイヤーVS壁
-
-	
-	judgeMapchip(PlayerManager::getInstance());
-	judgeSub(MapManager::getInstance(), PlayerManager::getInstance());
-	
-	//// プレイヤー2VS壁
-	//judgeSub(PlayerManager_sd::getInstance(), WallManager::getInstance());
-
-	// プレイヤーVSプレイヤー2
-	//judgePvP(PlayerManager::getInstance());
-
-	//judgeMapchip(PlayerManager::getInstance());
-//=======
-	
-
 	// プレイヤーVS壁
 	judgeMapchip(PlayerManager::getInstance());
 	judgeMapchip_sd(PlayerManager_sd::getInstance());
