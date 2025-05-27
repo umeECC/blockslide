@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "player_sd.h"
 #include "SpriteData.h"
+#include "WinMain.h"
 
 static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
@@ -8,7 +9,8 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
-//bool isGrounded;
+int currentSceneID;
+int stage_number;
 
 void PlayerManager::init()
 {
@@ -101,29 +103,93 @@ void playerMove(OBJ2D* obj)
 
 void playerUpdate(OBJ2D* obj)
 {
-    switch (obj->state)
+    switch (currentSceneID)
     {
-    case 0:
-        obj->sprData = &sprPlayer;
-        obj->color = { 1,1,1,1 };
-        obj->scale = { 1.0f,1.0f };
-        obj->speed = 1;
-        obj->direction = { 0,0 };
-        obj->isMoving = false;
-        obj->position = { 660,360 };
-        obj->hSize = { 12 / 2,12 / 2 };
-        obj->judge = JUDGE_ALL;
-        obj->state++;
-        [[fallthrough]];
-    case 1:
-        // プレイヤー移動
-        playerMove(obj);
+    case SCENE::TITLE:
+        switch (obj->state)
+        {
+        case 0:
+            obj->sprData = &sprPlayer;
+            obj->color = { 1,1,1,1 };
+            obj->scale = { 1.3f,1.3f };
+            obj->speed = 10;
+            obj->direction = { 0,0 };
+            obj->isMoving = false;
+            obj->position = { 950,660 };
+            obj->hSize = { 62 / 2,62 / 2 };
+            obj->timer = 0;
+            obj->state++;
+            [[fallthrough]];
+        case 1:
+            if (obj->timer > 30)
+            {
+                obj->position.x += -obj->speed;
+                obj->sprData = &P_Left;
+                if (obj->position.x <= 500)
+                {
+                    direction_reset(obj);
+                    obj->timer = 0;
+                    obj->state++;
+                }
+            }
+            obj->timer++;
+            break;
 
-        // 移動範囲チェック
-        if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; direction_reset(obj); }
-        if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
-        if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
-        if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
+        case 2:
+            if (obj->timer > 10)
+            {
+                obj->state++;
+            }
+            obj->timer++;
+            break;
+
+        case 3:
+            obj->position.y += -obj->speed;
+            obj->sprData = &P_Up;
+            if (obj->position.y <= 100)
+            {
+                direction_reset(obj);
+                obj->timer = 0;
+                obj->state++;
+            }
+            obj->timer++;
+            break;
+
+        case 4:
+            goal_moving(obj);
+            obj->timer++;
+            break;
+        }
+        break;
+    case SCENE::STAGESEL:
+
+        break;
+    case SCENE::GAME:
+        switch (obj->state)
+        {
+        case 0:
+            obj->sprData = &sprPlayer;
+            obj->color = { 1,1,1,1 };
+            obj->scale = { 1.0f,1.0f };
+            obj->speed = 1;
+            obj->direction = { 0,0 };
+            obj->isMoving = false;
+            obj->position = { 660,360 };
+            obj->hSize = { 12 / 2,12 / 2 };
+            obj->judge = JUDGE_ALL;
+            obj->state++;
+            [[fallthrough]];
+        case 1:
+            // プレイヤー移動
+            playerMove(obj);
+
+            // 移動範囲チェック
+            if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; direction_reset(obj); }
+            if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
+            if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
+            if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
+            break;
+        }
         break;
     }
 }
@@ -136,3 +202,23 @@ void direction_reset(OBJ2D* obj)
     obj->direction = { 0,0 };
    // obj->position = { 64,64 };
 }
+
+void goal_moving(OBJ2D* obj)
+{
+    obj->isMoving = false;
+
+    obj->direction = { 0,0 };
+
+    int frame = (obj->timer / 5);
+    //ここにアニメーションをいれるんだよ
+
+    if (frame > 7)
+    {
+        obj->sprData = &PlayerGoal[7];
+    }
+    else
+    {
+        obj->sprData = &PlayerGoal[frame];
+    }
+}
+

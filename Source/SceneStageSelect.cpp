@@ -9,7 +9,7 @@
 static constexpr int STAGE_MAX = 8 ; // 最大ステージ数
 
 OBJ2D select_back;
-int stage_number;
+extern int stage_number;
 
 // キーが押されていたかどうか
 bool wasAKeyPressed = false;

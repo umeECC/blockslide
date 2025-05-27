@@ -17,6 +17,8 @@ SceneEnd sceneEnd;
 
 Scene *pScene, *pNextScene;
 
+extern int currentSceneID;
+
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
     // èâä˙ê›íË
@@ -72,4 +74,5 @@ void setScene(int nextScene)
     };
 
     pNextScene = scenes[nextScene];
+    currentSceneID = nextScene;
 }

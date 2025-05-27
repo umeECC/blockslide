@@ -5,11 +5,13 @@
 #include "SpriteData.h"
 #include "Obj2d.h"
 #include "Audio.h"
+#include "Player.h"
 
 //int Selpos;
 VECTOR2 pos;
 
 OBJ2D title_back;
+OBJ2D push_space;
 
 void SceneTitle::init()
 {
@@ -22,6 +24,11 @@ void SceneTitle::init()
 
     title_back.position = { 0, 0 };
     title_back.sprData = &sprTitle;
+
+    push_space.position = { SCREEN_WIDTH / 2 + 10, 600 };
+    push_space.sprData = &sprPush;
+
+    PlayerManager::getInstance().init();
 
     // オーディオエンジンの初期化
     AudioManager::getInstance().init();
@@ -81,6 +88,8 @@ void SceneTitle::update()
         setScene(SCENE::STAGESEL);
     }
 
+    PlayerManager::getInstance().update();
+
     AudioManager::getInstance().update();
 
     timer++;
@@ -125,4 +134,14 @@ void SceneTitle::draw()
 
         break;
     }*/
+
+    if (timer > 220) //スペースキーを押せ!!ってやつ
+    {
+        if (timer / 2 & 0x20)
+        {
+            push_space.draw();
+        }
+    }
+
+    PlayerManager::getInstance().draw();
 }
