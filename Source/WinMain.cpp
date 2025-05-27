@@ -65,9 +65,10 @@ void setScene(int nextScene)
 {
     Scene* scenes[] = {
         &sceneTitle,
+        &sceneSelect,
         &sceneGame,
-        &sceneClear,
         &sceneEnd,
+        &sceneClear,
     };
 
     pNextScene = scenes[nextScene];

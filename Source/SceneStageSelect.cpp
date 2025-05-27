@@ -110,7 +110,7 @@ void SceneSelect::update()
     // Œ»Ý‚Ìó‘Ô‚ðŽŸ‚ÌƒtƒŒ[ƒ€‚Ì‚½‚ß‚É•Û‘¶
     wasAKeyPressed = isAKeyPressed;
     wasDKeyPressed = isDKeyPressed;
-    if (timer > 0x40 && GameLib::input::TRG(0)& GameLib::input::PAD_START)
+    if (/*timer > 0x40 && */ GameLib::input::TRG(0) & GameLib::input::PAD_START)
     {
         setScene(SCENE::GAME);
     }
