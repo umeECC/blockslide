@@ -16,6 +16,18 @@ void OBJ2D::draw()
     }
 }
 
+/// 
+bool OBJ2D::checkpress()
+{
+    //// 挟まれチェック：上下 + 左右の両方が埋まっていたら
+    if ((hitLeft && hitRight) || (hitTop && hitBottom))
+    {
+
+        return true;
+    }
+    return false;
+}
+
 void OBJ2DManager::init()
 {
     for (auto& obj : *this)
@@ -56,4 +68,29 @@ OBJ2D* OBJ2DManager::searchSet(OBJ2D::MOVER mover, const VECTOR2& position)
         return &obj;
     }
     return nullptr;
+}
+
+
+/// </summary>
+void OBJ2DManager::clearHit()
+{
+    for (auto& obj : *this)
+    {
+        obj.clearHit();
+    }
+}
+
+bool OBJ2DManager::checkpress()
+{
+    bool press = false;
+
+    for (auto& obj : *this)
+    {
+        if (obj.checkpress())
+        {
+            press = true;
+        }
+
+    }
+    return press;
 }

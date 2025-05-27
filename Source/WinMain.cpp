@@ -6,12 +6,15 @@
 #include "SceneGame.h"
 #include "SceneClear.h"
 #include "SceneStageSelect.h"
+#include "SceneEnd.h"
 
 // é¿ëÃêÈåæ
 SceneTitle sceneTitle;
 SceneSelect sceneSelect;
 SceneGame sceneGame;
 SceneClear sceneClear;
+SceneEnd sceneEnd;
+
 Scene *pScene, *pNextScene;
 
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
@@ -62,9 +65,9 @@ void setScene(int nextScene)
 {
     Scene* scenes[] = {
         &sceneTitle,
-        &sceneSelect,
         &sceneGame,
         &sceneClear,
+        &sceneEnd,
     };
 
     pNextScene = scenes[nextScene];

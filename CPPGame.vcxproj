@@ -106,10 +106,12 @@
     <ClCompile Include="Source\Obj2d.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneClear.cpp" />
+    <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneStageSelect.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneTuto.cpp" />
+    <ClCompile Include="Source\Scene_sd.cpp" />
     <ClCompile Include="Source\SpriteData.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Source\player_sd.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneClear.h" />
+    <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SceneStageSelect.h" />
     <ClInclude Include="Source\SceneTitle.h" />
