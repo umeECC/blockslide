@@ -120,7 +120,7 @@
     <ClCompile Include="Source\SceneStageSelect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene_sd.cpp">
+    <ClCompile Include="Source\Player_sd.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneEnd.cpp">
