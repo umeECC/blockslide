@@ -110,8 +110,10 @@ void ssPlayerMove(OBJ2D* obj) //ステージセレクトシーンでの動き
 
     if (keyCount == 1)
     {
-        if (GameLib::input::STATE(0) & GameLib::input::PAD_LEFT) {
-            obj->sprData = &P_Left; obj->state = 1;
+        if (!(stage_number == 0)) {
+            if (GameLib::input::STATE(0) & GameLib::input::PAD_LEFT) {
+                obj->sprData = &P_Left; obj->state = 1;
+            }
         }
         if (GameLib::input::STATE(0) & GameLib::input::PAD_RIGHT) {
             obj->sprData = &P_Right; obj->state = 1;
@@ -236,23 +238,17 @@ void playerUpdate(OBJ2D* obj)
         case 2:
             if (stage_number == 0)
             {
-                float radius = 300.0f;
+                // ランダムカラー
+                if (obj->timer % 10 == 0)
+                {
+                    obj->color = {
+                        static_cast<float>(rand()) / RAND_MAX,
+                        static_cast<float>(rand()) / RAND_MAX,
+                        static_cast<float>(rand()) / RAND_MAX,
+                        1.0f
+                    };
+                }
 
-                // 回転角（ラジアン）を時間で増やす
-                float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
-
-                obj->position.x = 640 + std::cos(angle) * radius;
-                obj->position.y = 370 + std::sin(angle) * radius;
-
-                // ランダムカラー（毎フレームチカチカ）
-                obj->color = {
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    1.0f
-                };
-
-                obj->scale = { 2.0f, 2.0f };
                 obj->sprData = &sprPlayer;
 
                 obj->timer++;
