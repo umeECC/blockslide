@@ -241,8 +241,8 @@ void playerUpdate(OBJ2D* obj)
                 // 回転角（ラジアン）を時間で増やす
                 float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
 
-                obj->position.x = SCREEN_WIDTH / 2 + std::cos(angle) * radius;
-                obj->position.y = SCREEN_HEIGHT / 2 + std::sin(angle) * radius;
+                obj->position.x = 640 + std::cos(angle) * radius;
+                obj->position.y = 370 + std::sin(angle) * radius;
 
                 // ランダムカラー（毎フレームチカチカ）
                 obj->color = {
