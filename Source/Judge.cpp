@@ -47,6 +47,10 @@ public:
 //void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 //void judgePvP(OBJ2DManager& manager);
 //=======
+
+bool isBlocked(float x, float y);
+bool isBlockedArea(float centerX, float centerY, const VECTOR2& hSize);
+
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);

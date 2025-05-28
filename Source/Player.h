@@ -35,6 +35,7 @@ public:
 
 
 void playerMove(OBJ2D* obj);
+void ssPlayerMove(OBJ2D* obj);
 
 void playerUpdate(OBJ2D* obj);
 

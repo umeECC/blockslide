@@ -29,6 +29,8 @@ void SceneSelect::init()
 
     select_back.position = { 0, 0 };
     select_back.sprData = &sprStageSelect;
+
+    PlayerManager::getInstance().init();
 }
 
 void SceneSelect::deinit()
@@ -114,6 +116,9 @@ void SceneSelect::update()
     {
         setScene(SCENE::GAME);
     }
+
+    PlayerManager::getInstance().update();
+
     timer++;
 }
 
@@ -123,7 +128,5 @@ void SceneSelect::draw()
 
     select_back.draw();
 
-    std::string StageNumber = std::to_string(stage_number);
-    GameLib::font::textOut(4, StageNumber, { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, { 10, 10 },
-        { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE, 0.0f, false);
+    PlayerManager::getInstance().draw();
 }
