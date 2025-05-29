@@ -57,8 +57,7 @@ void playerMove(OBJ2D* obj)
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
             //////////
-            PlayerManager::getInstance().clearHit();
-            PlayerManager_sd::getInstance().clearHit();
+            
             /////////
             //WallManager::getInstance().clearHit();
 

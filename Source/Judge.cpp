@@ -47,15 +47,18 @@ JudgeRect screenRect = {
 
 void judge()
 {
+	// ここでいったんすべて（プレイヤー）のチェックをリセット
+	PlayerManager::getInstance().clearHit();
+	PlayerManager_sd::getInstance().clearHit();
 
 	///
 	//プレイヤーVS壁
 	judgeSub(PlayerManager::getInstance(), WallManager::getInstance());
 
-	// プレイヤー2VS壁
+	// プレイヤー2（動く壁）VS壁
 	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
-	// プレイヤーVSプレイヤー2
+	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 
 	// 挟まれチェック：上下 + 左右の両方が埋まっていたら
@@ -126,7 +129,9 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 								item2.hitLeft = true;
 							}
 							else
-							{
+
+							
+				            {
 								item1.hitLeft = true;
 								item2.hitRight = true;
 							}
@@ -202,7 +207,7 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 					// より重なりが大きい方向に補正（軸ごとにずらす）
 					if (overlapX < overlapY)
 					{
-						if (item1.position.x < item2.position.x)
+						/*if (item1.position.x < item2.position.x)
 						{
 							item1.hitRight = true;
 							item2.hitLeft = true;
@@ -211,12 +216,12 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 						{
 							item1.hitLeft = true;
 							item2.hitRight = true;
-						}
+						}*/
 						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
 					}
 					else
 					{
-						if (item1.position.y < item2.position.y)
+						/*if (item1.position.y < item2.position.y)
 						{
 							item1.hitBottom = true;
 							item2.hitTop = true;
@@ -226,7 +231,7 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 						{
 							item1.hitTop = true;
 							item2.hitBottom = true;
-						}
+						}*/
 						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
 						///////
 					}
