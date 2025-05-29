@@ -114,7 +114,9 @@
     <ClCompile Include="Source\Scene_sd.cpp" />
     <ClCompile Include="Source\SpriteData.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
+    <ClCompile Include="Source\StageData_1.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
+    <ClCompile Include="Source\Warp.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,10 +158,12 @@
     <ClInclude Include="Source\SceneTuto.h" />
     <ClInclude Include="Source\SpriteData.h" />
     <ClInclude Include="Source\Stage.h" />
+    <ClInclude Include="Source\StageData_1.h" />
     <ClInclude Include="Source\Statge1.h" />
     <ClInclude Include="Source\Statge2.h" />
     <ClInclude Include="Source\Template.h" />
     <ClInclude Include="Source\Wall.h" />
+    <ClInclude Include="Source\Warp.h" />
     <ClInclude Include="Source\WinMain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

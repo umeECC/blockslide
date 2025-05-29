@@ -11,8 +11,7 @@ struct StageScript
 };
 
 // スクリプトマクロ
-#define SET_ENEMY(time,x,y,mover)		{(time),(mover),{(x),(y)}}
-#define SET_ITEM(time,x,y,mover)		{(time),(mover),{(x),(y)}}
+#define SET_WALL(time,x,y,mover)		{(time),(mover),{(x),(y)}}
 #define SET_END						{0,0,{0,0}}
 
 // Stageクラス
@@ -26,4 +25,3 @@ public:
 	void update();
 	void draw();
 };
-

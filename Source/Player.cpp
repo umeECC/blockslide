@@ -2,44 +2,20 @@
 #include "player_sd.h"
 #include "SpriteData.h"
 
+
+
 static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
-//bool isGrounded;
 
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });////////
-   
+    searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });
 }
-
-//-----------------------------------------------------------------------------------
-//player
-
-#if fasel
-void playerMove(OBJ2D* obj)
-{
-    if (!obj->isMoving) //WASDが押されていないとき
-    {
-        if (GameLib::input::STATE(0) & GameLib::input::PAD_UP) { obj->direction.y = -PLAYER_SPEED; obj->isMoving = true; }
-        if (GameLib::input::STATE(0) & GameLib::input::PAD_DOWN) { obj->direction.y = PLAYER_SPEED; obj->isMoving = true;}
-        if (GameLib::input::STATE(0) & GameLib::input::PAD_LEFT) { obj->direction.x = -PLAYER_SPEED; obj->isMoving = true; }
-        if (GameLib::input::STATE(0) & GameLib::input::PAD_RIGHT) { obj->direction.x = PLAYER_SPEED; obj->isMoving = true; }
-    }
-    if (obj->isMoving)
-    {
-        obj->position += obj->direction;
-    }
-}
-#endif
-static bool isColliding = false;  // 衝突状態を管理
-
-const int INPUT_COOLDOWN = 100; // 衝突後のクールタイム（フレーム）
-
 void PlayerManager::update()
 {
 
@@ -57,19 +33,14 @@ void PlayerManager::update()
 
     OBJ2DManager::update();
 }
-
 //-----------------------------------------------------------------------------------
+//player
+static bool isColliding = false;
+
 void playerMove(OBJ2D* obj)
 {
-    static int inputCooldown = 0;
-
-    if (inputCooldown > 0)
-    {
-        inputCooldown--;
-        return;
-    }
-
-    if (!(PlayerManager::getInstance().isMoving() || PlayerManager_sd::getInstance().isMoving()))
+    //if (!obj->isMoving) //WASDが押されていないとき
+    if (!(PlayerManager::getInstance().isMoving() || PlayerManager_sd::getInstance().isMoving())) //WASDが押されていないとき
     {
         bool up = GameLib::input::STATE(0) & GameLib::input::PAD_UP;
         bool down = GameLib::input::STATE(0) & GameLib::input::PAD_DOWN;
@@ -78,26 +49,31 @@ void playerMove(OBJ2D* obj)
 
         int keyCount = up + down + left + right;
 
-        if (keyCount == 1)
+        if (keyCount == 1) //「1つだけ押されている場合」に限定
         {
-            if (up) { obj->sprData = &P_Up;    obj->direction.y = -PLAYER_SPEED; }
-            if (down) { obj->sprData = &P_Down;  obj->direction.y = PLAYER_SPEED; }
-            if (left) { obj->sprData = &P_Left;  obj->direction.x = -PLAYER_SPEED; }
+            if (up) { obj->sprData = &P_Up; obj->direction.y = -PLAYER_SPEED; }
+            if (down) { obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
+            if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
-
+            //////////
             PlayerManager::getInstance().clearHit();
             PlayerManager_sd::getInstance().clearHit();
-
+            /////////
+            //WallManager::getInstance().clearHit();
 
             obj->isMoving = true;
+            //PlayerManager::getInstance().setIsPlayerOneMove(true);
         }
-    }
 
-    // 位置更新は削除する！
-    // obj->position += obj->direction; ← これが原因でめり込み・ズレが起きてる
+    }
+    if (obj->isMoving)
+    {
+        obj->position += obj->direction;
+    }
 }
 
+//-----------------------------------------------------------------------------------
 
 void playerUpdate(OBJ2D* obj)
 {
@@ -111,7 +87,7 @@ void playerUpdate(OBJ2D* obj)
         obj->direction = { 0,0 };
         obj->isMoving = false;
         obj->position = { 660,360 };
-        obj->hSize = { 12 / 2,12 / 2 };
+        obj->hSize = { 64 / 2,64 / 2 };
         obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];
@@ -120,10 +96,10 @@ void playerUpdate(OBJ2D* obj)
         playerMove(obj);
 
         // 移動範囲チェック
-        if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; direction_reset(obj); }
-        if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
-        if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
-        if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
+        if (obj->position.x < PLAYER_LIMIT_L) { obj->position.x = PLAYER_LIMIT_L; obj->hitLeft = true; direction_reset(obj); }
+        if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; obj->hitRight = true;  direction_reset(obj); }
+        if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; obj->hitTop = true; direction_reset(obj); }
+        if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; obj->hitBottom = true; direction_reset(obj); }
         break;
     }
 }
@@ -134,5 +110,6 @@ void direction_reset(OBJ2D* obj)
     obj->isMoving = false;
     obj->sprData = &sprPlayer;
     obj->direction = { 0,0 };
-   // obj->position = { 64,64 };
+    //PlayerManager::getInstance().setIsPlayerOneMove(false);
 }
+

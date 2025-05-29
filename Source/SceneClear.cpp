@@ -5,6 +5,7 @@
 #include "SpriteData.h"
 #include "Obj2d.h"
 #include "Player.h" 
+#include "Player_sd.h"
 
 //void setScore(OBJ2D* obj);
 
@@ -47,6 +48,7 @@ void SceneClear::update()
     {
 
         setScene(SCENE::TITLE);
+
     }
     AudioManager::getInstance().update();
 

@@ -13,7 +13,7 @@ void set_wall(OBJ2D* obj)
 		obj->judge = JUDGE_ALL;
 
 		//各種データ
-		obj->sprData;
+		obj->sprData = &sprWall;
 
 		obj->state++;
 		[[fallthrough]];

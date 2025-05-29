@@ -8,8 +8,8 @@
 
 int SOelpos;
 VECTOR2 pos2;
-bool wasWKeyPressed = false;
-bool wasSKeyPressed = false;
+bool wasAKeyPressed = false;
+bool wasBKeyPressed = false;
 
 OBJ2D end_back;
 OBJ2D end_back2;
@@ -44,11 +44,11 @@ void SceneEnd::update()
 {
     using namespace GameLib::input;
     // 現在のキーの状態を取得
-    bool isWKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
-    bool isSKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
+    bool isAKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
+    bool isBKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
 
     // Wキーが押された瞬間を判定
-    if (isWKeyPressed && !wasWKeyPressed)
+    if (isAKeyPressed && !wasAKeyPressed)
     {
         AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
         SOelpos--;
@@ -56,7 +56,7 @@ void SceneEnd::update()
     }
 
     // Sキーが押された瞬間を判定
-    if (isSKeyPressed && !wasSKeyPressed)
+    if (isBKeyPressed && !wasBKeyPressed)
     {
         AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
         SOelpos++;
@@ -64,8 +64,8 @@ void SceneEnd::update()
     }
 
     // 現在の状態を次のフレームのために保存
-    wasWKeyPressed = isWKeyPressed;
-    wasSKeyPressed = isSKeyPressed;
+    wasAKeyPressed = isAKeyPressed;
+    wasBKeyPressed = isBKeyPressed;
 
     switch (SOelpos)
     {

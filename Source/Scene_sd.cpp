@@ -76,14 +76,14 @@ void player_sd_Update(OBJ2D* obj)
     switch (obj->state)
     {
     case 0:
-        obj->sprData = &sprugoku;
+        obj->sprData = &sprPlayer_sd;
         obj->color = { 1,1,1,1 };
         obj->scale = { 1.0f,1.0f };
         obj->speed = 1;
         obj->direction = { 0,0 };
         obj->isMoving = false;
-        obj->position = { 630,250 };
-        obj->hSize = { 12 / 2,12 / 2 };
+        obj->position = { 100,300 };
+        obj->hSize = { 64 / 2,64 / 2 };
         obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];
@@ -104,7 +104,7 @@ void player_sd_Update(OBJ2D* obj)
 void direction_sd_reset(OBJ2D* obj)
 {
     obj->isMoving = false;
-    obj->sprData = &sprugoku;
+    obj->sprData = &sprPlayer_sd;
     obj->direction = { 0,0 };
     //PlayerManager::getInstance().setIsPlayerSecondMove(false);
 }

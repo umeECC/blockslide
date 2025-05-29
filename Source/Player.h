@@ -4,11 +4,9 @@
 
 class PlayerManager :public OBJ2DManager, public Singleton<PlayerManager>
 {
-
 private:
 	static constexpr int OBJ_MAX = 1;
 	OBJ2D objWork[OBJ_MAX];
-
 
 	bool isMove = false;
 
@@ -17,6 +15,7 @@ private:
 
 	// true...ƒvƒŒƒCƒ„[‚Ì‚Q‚ª“®‚¢‚Ä‚¢‚é
 	bool isPlayerSecondMove = false;
+
 public:
 	void setIsPlayerOneMove(bool flag) { isPlayerOneMove = flag; }
 	void setIsPlayerSecondMove(bool flag) { isPlayerSecondMove = flag; }
@@ -29,6 +28,8 @@ public:
 
 	void update() override;
 
+	// true...‚Ç‚¿‚ç‚©‚ª“®‚¢‚Ä‚¢‚é	false...—¼•û~‚Ü‚Á‚Ä‚¢‚é
+	//bool isMoving() { return isPlayerOneMove || isPlayerSecondMove; }
 
 	bool isMoving() { return isMove; }
 };
@@ -40,3 +41,10 @@ void playerUpdate(OBJ2D* obj);
 
 void direction_reset(OBJ2D* obj);
 
+struct Vector2 {
+	float x, y;
+};
+
+struct Player {
+	Vector2 position;
+};

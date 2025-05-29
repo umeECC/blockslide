@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Obj2d.h"
 #include "Template.h"
 

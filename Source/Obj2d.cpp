@@ -1,5 +1,7 @@
 #include "Obj2d.h"
 
+
+
 void OBJ2D::update()
 {
     if (mover) mover(this);
@@ -8,7 +10,7 @@ void OBJ2D::update()
 void OBJ2D::draw()
 {
     if (sprData)
-    { 
+    {
         auto oldState = GameLib::getBlendMode();
         GameLib::setBlendMode(blendState);
         sprData->draw(position, scale, rotation, color);
@@ -16,6 +18,8 @@ void OBJ2D::draw()
     }
 }
 
+/// 
+/// /////////////////
 /// 
 bool OBJ2D::checkpress()
 {
@@ -52,10 +56,6 @@ void OBJ2DManager::draw()
     }
 }
 
-void OBJ2DManager::switchToStage(int stageNumber)
-{
-}
-
 OBJ2D* OBJ2DManager::searchSet(OBJ2D::MOVER mover, const VECTOR2& position)
 {
     for (auto& obj : *this)
@@ -70,7 +70,8 @@ OBJ2D* OBJ2DManager::searchSet(OBJ2D::MOVER mover, const VECTOR2& position)
     return nullptr;
 }
 
-
+/// <summary>
+/// //////////////
 /// </summary>
 void OBJ2DManager::clearHit()
 {

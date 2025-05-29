@@ -10,7 +10,7 @@ void backUpdate(OBJ2D* obj)
         obj->state++;
         break;
     case 1:
-        
+
         break;
     }
 }

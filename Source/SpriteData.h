@@ -7,11 +7,10 @@ enum TEXNO
     BACK01,
     TITLE0,
     PLAYER,
-    BLOCK,
-    UGOKU,
-    HAKO,
-    SELECT,
+    PLAYERSD,
+    WALL,
     ENDO,
+
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -47,7 +46,6 @@ extern GameLib::LoadTexture loadTexture[];
 extern SpriteUpperLeft sprBack;
 extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
-extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
 
 extern SpriteCenter sprPlayer;
@@ -55,8 +53,11 @@ extern SpriteCenter P_Up;
 extern SpriteCenter P_Down;
 extern SpriteCenter P_Left;
 extern SpriteCenter P_Right;
+extern SpriteCenter sprWall;
 
-// マップの block と uboku と hako の SpriteCenter の extern をここに用意
-extern SpriteCenter sprhako;
-extern SpriteCenter sprugoku;
-extern SpriteCenter sprblock;
+extern SpriteCenter sprPlayer_sd;
+extern SpriteCenter P_Up_sd;
+extern SpriteCenter P_Down_sd;
+extern SpriteCenter P_Left_sd;
+extern SpriteCenter P_Right_sd;
+extern SpriteCenter sprWall_sd;

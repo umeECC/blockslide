@@ -2,6 +2,7 @@
 
 #include "../GameLib/game_lib.h"
 #include "../GameLib/obj2d_data.h"
+
 inline constexpr int JUDGE_PLAYER = 0x01;
 inline constexpr int JUDGE_BLOCK = 0x02;
 inline constexpr int JUDGE_GOAL = 0x04;
@@ -46,7 +47,7 @@ public:
 
     bool checkpress();
 
-
+    ////////
     VECTOR2 hSize;
     int judge;
 
@@ -56,10 +57,7 @@ public:
 
     int stage;          //現在のステージ数
 
-   
-
     OBJ2D() { init(); }
-
 
     void init()
     {
@@ -82,17 +80,19 @@ public:
 
         hSize = {};
         judge = 0;
-        
+
         score = 0;
 
         speed = 0; //速度
         stage = 0;
 
+        //////////
         clearHit();
     }
 
+    ////////
     void clear() { init(); }
-
+    ////////
     void update();
     void draw();
 };
@@ -100,16 +100,14 @@ public:
 class OBJ2DManager
 {
 private:
-    
-   
-
 public:
-    virtual OBJ2D* end() = 0;
     virtual OBJ2D* begin() = 0;
+    virtual OBJ2D* end() = 0;
+
     virtual void init();
     virtual void update();
-    virtual void draw();
-    virtual void switchToStage(int stageNumber);
+    void draw();
+
     OBJ2D* searchSet(OBJ2D::MOVER mover, const VECTOR2& position);
 
     ///////////
