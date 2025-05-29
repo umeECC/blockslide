@@ -45,7 +45,7 @@ void SceneEnd::update()
 
     //------------------------------------------------------------
     //‰¼’u‚«
-    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
+    if (GameLib::input::TRG(0) & GameLib::input::PAD_START)
     {
         setScene(SCENE::STAGESEL);
     }
