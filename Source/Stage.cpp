@@ -7,6 +7,7 @@
 #include "Audio.h"
 #include "Effect.h"
 #include "Wall.h"
+#include "Goal.h"
 #include "SceneGame.h"
 #include "StageData_1.h"
 
@@ -27,7 +28,7 @@ void Stage::init()
 
     //オブジェクト初期設定
     WallManager::getInstance().init();
-
+    GoalManager::getInstance().init();
 
     // エフェクト初期設定
     EffectManager::getInstance().init();
@@ -65,6 +66,7 @@ void Stage::update()
 
     // オブジェクト更新
     WallManager::getInstance().update();
+    GoalManager::getInstance().update();
 
     // エフェクト更新
     EffectManager::getInstance().update();
@@ -90,6 +92,7 @@ void Stage::draw()
     BackManager::getInstance().draw();
 
     // オブジェクト描画
+    GoalManager::getInstance().draw();
 
     // プレイヤー描画
     PlayerManager::getInstance().draw();

@@ -29,7 +29,7 @@ void SceneGame::deinit()
 void SceneGame::update()
 {
     Stage::getInstance().update();
-    if (GameLib::input::STATE(0) & GameLib::input::PAD_SELECT)
+    if (GameLib::input::TRG(0) & GameLib::input::PAD_SELECT)
     {
         setScene(SCENE::STAGESEL);
     }

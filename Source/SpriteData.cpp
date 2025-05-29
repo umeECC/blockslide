@@ -45,3 +45,4 @@ SpriteCenter P_Left_sd(TEXNO::PLAYERSD, 192, 0, 64, 64);
 SpriteCenter P_Up_sd(TEXNO::PLAYERSD, 256, 0, 64, 64);
 
 SpriteCenter sprWall(TEXNO::WALL, 0, 0, 64, 64);
+SpriteCenter sprGoal(TEXNO::GOAL, 0, 0, 64, 64);

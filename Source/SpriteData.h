@@ -12,6 +12,7 @@ enum TEXNO
     ENDO,
     SELECT,
     PUSH,
+    GOAL,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -49,7 +50,6 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
-
 extern SpriteCenter sprPush;
 
 extern SpriteCenter sprPlayer;
@@ -58,11 +58,12 @@ extern SpriteCenter P_Up;
 extern SpriteCenter P_Down;
 extern SpriteCenter P_Left;
 extern SpriteCenter P_Right;
-extern SpriteCenter sprWall;
 
 extern SpriteCenter sprPlayer_sd;
 extern SpriteCenter P_Up_sd;
 extern SpriteCenter P_Down_sd;
 extern SpriteCenter P_Left_sd;
 extern SpriteCenter P_Right_sd;
-extern SpriteCenter sprWall_sd;
+
+extern SpriteCenter sprWall;
+extern SpriteCenter sprGoal;

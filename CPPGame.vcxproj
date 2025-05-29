@@ -101,6 +101,7 @@
     <ClCompile Include="Source\Back.cpp" />
     <ClCompile Include="Source\collision.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
+    <ClCompile Include="Source\Goal.cpp" />
     <ClCompile Include="Source\Judge.cpp" />
     <ClCompile Include="Source\map.cpp" />
     <ClCompile Include="Source\Obj2d.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Source\Back.h" />
     <ClInclude Include="Source\collision.h" />
     <ClInclude Include="Source\Effect.h" />
+    <ClInclude Include="Source\Goal.h" />
     <ClInclude Include="Source\Judge.h" />
     <ClInclude Include="Source\map.h" />
     <ClInclude Include="Source\Obj2d.h" />
