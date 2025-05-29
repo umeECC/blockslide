@@ -6,17 +6,21 @@
 #include "SceneGame.h"
 #include "SceneClear.h"
 #include "SceneEnd.h"
+#include "SceneStageSelect.h"
 #include "Player.h"
 #include "Warp.h"
 #include <iostream>
 
 // é¿ëÃêÈåæ
 SceneTitle sceneTitle;
-SceneTuto sceneTuto;
+SceneSelect sceneSelect;
 SceneGame sceneGame;
 SceneClear sceneClear;
 SceneEnd sceneEnd;
+
 Scene* pScene, * pNextScene;
+
+extern int currentSceneID;
 
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
@@ -68,12 +72,14 @@ void setScene(int nextScene)
 {
     Scene* scenes[] = {
         &sceneTitle,
+        &sceneSelect,
         &sceneGame,
         &sceneClear,
         &sceneEnd,
     };
 
     pNextScene = scenes[nextScene];
+    currentSceneID = nextScene;
 }
 
 

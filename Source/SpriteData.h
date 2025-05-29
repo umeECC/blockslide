@@ -10,6 +10,8 @@ enum TEXNO
     PLAYERSD,
     WALL,
     ENDO,
+    SELECT,
+    PUSH,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -45,6 +47,7 @@ extern GameLib::LoadTexture loadTexture[];
 extern SpriteUpperLeft sprBack;
 extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
+extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
 
 extern SpriteCenter sprPush;

@@ -5,19 +5,16 @@
 #include "SpriteData.h"
 #include "Obj2d.h"
 #include "Audio.h"
+#include "Player.h"
 
-int Selpos;
 VECTOR2 pos;
-bool wasWKeyPressed = false;
-bool wasSKeyPressed = false;
 
 OBJ2D title_back;
-OBJ2D title_back2;
+OBJ2D push_space;
 
 void SceneTitle::init()
 {
     timer = 0;
-    Selpos = 0;
     pos = { 90,250 };
 
     // テクスチャのロード
@@ -25,6 +22,11 @@ void SceneTitle::init()
 
     title_back.position = { 0, 0 };
     title_back.sprData = &sprTitle;
+
+    push_space.position = { SCREEN_WIDTH / 2 + 10, 600 };
+    push_space.sprData = &sprPush;
+
+    PlayerManager::getInstance().init();
 
     // オーディオエンジンの初期化
     AudioManager::getInstance().init();
@@ -43,45 +45,18 @@ void SceneTitle::deinit()
 void SceneTitle::update()
 {
     using namespace GameLib::input;
-    // 現在のキーの状態を取得
-    bool isWKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
-    bool isSKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
 
-    // Wキーが押された瞬間を判定
-    if (isWKeyPressed && !wasWKeyPressed)
+    if (TRG(0) & PAD_START)
     {
-        AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
-        Selpos--;
-        if (Selpos < 0) Selpos = 1;
+        AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
+        setScene(SCENE::STAGESEL);
     }
 
-    // Sキーが押された瞬間を判定
-    if (isSKeyPressed && !wasSKeyPressed)
-    {
-        AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
-        Selpos++;
-        if (Selpos >= 2) Selpos = 0;
-    }
-
-    // 現在の状態を次のフレームのために保存
-    wasWKeyPressed = isWKeyPressed;
-    wasSKeyPressed = isSKeyPressed;
-
-    switch (Selpos)
-    {
-    case 0:
-        pos = { 90,440 };
-        if (TRG(0) & PAD_START)
-        {
-            AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
-            setScene(SCENE::GAME);
-        }
-        break;
-    }
+    PlayerManager::getInstance().update();
 
     AudioManager::getInstance().update();
 
-
+    timer++;
 }
 
 void SceneTitle::draw()
@@ -89,37 +64,15 @@ void SceneTitle::draw()
     GameLib::clear(0, 0, 0);
 
     //背景描画
+    title_back.draw();
 
-    /*GameLib::font::textOut(4, "C++ Shooting", { 640, 360 }, { 5, 5 },
-       { 1, 1, 1, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
-
-    GameLib::primitive::rect({ pos }, { 600, 120 }, { 0, 0 }, 0, { 1, 0, 0, 0.7f });
-    */
-    switch (Selpos)
+    if (timer > 220) //スペースキーを押せ!!ってやつ
     {
-    case 0:
-        /*if (timer & 0x20)
+        if (timer / 2 & 0x20)
         {
-            GameLib::font::textOut(4, "Game Start", { 390,500 }, { 3, 3 },
-                { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
+            push_space.draw();
         }
-
-        GameLib::font::textOut(4, "Tutorial", { 900,610 }, { 3, 3 },
-            { 0, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);*/
-        title_back.draw();
-
-        break;
-    case 1:
-        /*GameLib::font::textOut(4, "Game Start", { 390,500 }, { 3, 3 },
-            { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
-
-        if (timer & 0x20)
-        {
-            GameLib::font::textOut(4, "Tutorial", { 900,610 }, { 3, 3 },
-                { 0, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE);
-        }*/
-        title_back2.draw();
-
-        break;
     }
+
+    PlayerManager::getInstance().draw();
 }

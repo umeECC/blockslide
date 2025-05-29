@@ -6,18 +6,15 @@
 #include "Obj2d.h"
 #include "Audio.h"
 
-int SOelpos;
 VECTOR2 pos2;
-bool wasAKeyPressed = false;
-bool wasBKeyPressed = false;
+bool wasWKeyPressed = false;
+bool wasSKeyPressed = false;
 
 OBJ2D end_back;
-OBJ2D end_back2;
 
 void SceneEnd::init()
 {
     timer = 0;
-    SOelpos = 0;
     pos2 = { 90,250 };
 
     // テクスチャのロード
@@ -43,42 +40,7 @@ void SceneEnd::deinit()
 void SceneEnd::update()
 {
     using namespace GameLib::input;
-    // 現在のキーの状態を取得
-    bool isAKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
-    bool isBKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
-
-    // Wキーが押された瞬間を判定
-    if (isAKeyPressed && !wasAKeyPressed)
-    {
-        AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
-        SOelpos--;
-        if (SOelpos < 0) SOelpos = 1;
-    }
-
-    // Sキーが押された瞬間を判定
-    if (isBKeyPressed && !wasBKeyPressed)
-    {
-        AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
-        SOelpos++;
-        if (SOelpos >= 2) SOelpos = 0;
-    }
-
-    // 現在の状態を次のフレームのために保存
-    wasAKeyPressed = isAKeyPressed;
-    wasBKeyPressed = isBKeyPressed;
-
-    switch (SOelpos)
-    {
-    case 0:
-        pos2 = { 90,440 };
-        if (TRG(0) & PAD_START)
-        {
-            AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
-            setScene(SCENE::GAME);
-        }
-        break;
-    }
-
+    
     AudioManager::getInstance().update();
 
     timer++;
@@ -88,18 +50,6 @@ void SceneEnd::draw()
 {
     GameLib::clear(0, 0, 0);
 
+    end_back.draw();
 
-    switch (SOelpos)
-    {
-    case 0:
-
-        end_back.draw();
-
-        break;
-    case 1:
-
-        end_back2.draw();
-
-        break;
-    }
 }
