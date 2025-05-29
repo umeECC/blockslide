@@ -12,7 +12,7 @@ void SceneTuto::init()
 {
     timer = 0;
     tutoState = 0;
-    
+
 
     if (!AudioManager::getInstance().isPlaying(L"btnSound"))
     {
@@ -30,19 +30,19 @@ void SceneTuto::deinit()
 void SceneTuto::update()
 {
     using namespace GameLib::input;
-    
+
     if (TRG(0) & PAD_START)
     {
         switch (tutoState)
         {
-        case 0: tutoState+=2; break;
+        case 0: tutoState += 2; break;
         case 1: tutoState++; break;
         case 2: tutoState++; break;
         case 3: tutoState++; break;
         case 4: tutoState++; break;
         case 5: tutoState++;  break;
         case 6: setScene(SCENE::TITLE); break;
-        }        
+        }
     }
     /*if (tutoState >= 6)
     {

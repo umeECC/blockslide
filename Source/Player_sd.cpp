@@ -14,7 +14,7 @@ static constexpr float PLAYER_LIMIT_D = 720 - 32;
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    searchSet(player_sd_Update, { 32 + 64 * 9, 32 + 64 * 5 });
+    searchSet(player_sd_Update, { 64 + 64 * 9, 32 + 64 * 5 });
 }
 
 void PlayerManager_sd::update()
