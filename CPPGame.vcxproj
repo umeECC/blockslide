@@ -159,8 +159,6 @@
     <ClInclude Include="Source\SpriteData.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageData_1.h" />
-    <ClInclude Include="Source\Statge1.h" />
-    <ClInclude Include="Source\Statge2.h" />
     <ClInclude Include="Source\Template.h" />
     <ClInclude Include="Source\Wall.h" />
     <ClInclude Include="Source\Warp.h" />

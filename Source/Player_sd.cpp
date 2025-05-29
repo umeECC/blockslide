@@ -14,7 +14,7 @@ static constexpr float PLAYER_LIMIT_D = 720 - 32;
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    searchSet(player_sd_Update, { 64 + 64 * 9, 32 + 64 * 5 });
+    searchSet(player_sd_Update, { 448, 200 });
 }
 
 void PlayerManager_sd::update()
@@ -67,6 +67,11 @@ void player_sd_Move(OBJ2D* obj)
         obj->position += obj->direction;
     }
 
+    if (GetAsyncKeyState('M') & 0x8000)
+    {
+        direction_sd_reset(obj);
+    }
+
 }
 
 //-----------------------------------------------------------------------------------
@@ -82,8 +87,8 @@ void player_sd_Update(OBJ2D* obj)
         obj->speed = 1;
         obj->direction = { 0,0 };
         obj->isMoving = false;
-        obj->position = { 100,300 };
-        obj->hSize = { 64 / 2,64 / 2 };
+        
+        obj->hSize = { 62 / 2,62 / 2 };
         obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];

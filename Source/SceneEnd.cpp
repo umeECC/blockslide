@@ -43,6 +43,15 @@ void SceneEnd::update()
     
     AudioManager::getInstance().update();
 
+    //------------------------------------------------------------
+    //‰¼’u‚«
+    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
+    {
+        setScene(SCENE::STAGESEL);
+    }
+    //------------------------------------------------------------
+
+
     timer++;
 }
 

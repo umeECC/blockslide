@@ -18,7 +18,7 @@ int stage_number;
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 32 + 64 * 10, 32 + 64 * 9 });
+    searchSet(playerUpdate, { 640, 360 });
 }
 void PlayerManager::update()
 {
@@ -60,9 +60,6 @@ void playerMove(OBJ2D* obj)
             if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
 
-            //////////
-            
-            /////////
             //WallManager::getInstance().clearHit();
 
             obj->isMoving = true;
@@ -73,6 +70,11 @@ void playerMove(OBJ2D* obj)
     if (obj->isMoving)
     {
         obj->position += obj->direction;
+    }
+
+    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
+    {
+        direction_reset(obj);
     }
 }
 
@@ -250,7 +252,7 @@ void playerUpdate(OBJ2D* obj)
             obj->speed = 1;
             obj->direction = { 0,0 };
             obj->isMoving = false;
-            obj->position = { 660,360 };
+            
             obj->hSize = { 62 / 2,62 / 2 };
             obj->judge = JUDGE_ALL;
             obj->state++;

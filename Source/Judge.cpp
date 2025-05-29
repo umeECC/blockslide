@@ -116,11 +116,10 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
 						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
-						//overlapX = 1.0;
-						//overlapY = 1.0;
+						overlapX += 1.0;
+						overlapY += 1.0;
 
-							// 重なり方向ごとに判定
-						///////
+					// 重なり方向ごとに判定
 						if (overlapX < overlapY)
 						{
 							if (item1.position.x < item2.position.x)
@@ -151,10 +150,8 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 								item2.hitBottom = true;
 							}
 
-
 							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
 
-							////////
 						}
 					}
 					direction_reset(&item1);
@@ -197,13 +194,9 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
 					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
-					//overlapX = 1.0;
-					//overlapY = 1.0;
+					overlapX += 1.0;
+					overlapY += 1.0;
 
-
-
-
-					/////////////////
 					// より重なりが大きい方向に補正（軸ごとにずらす）
 					if (overlapX < overlapY)
 					{
@@ -233,7 +226,7 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 							item2.hitBottom = true;
 						}*/
 						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
-						///////
+						
 					}
 				}
 				direction_sd_reset(&item1);
