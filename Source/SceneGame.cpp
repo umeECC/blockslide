@@ -14,7 +14,7 @@
 // 変数宣言
 
 // プロトタイプ宣言
-void enemy(OBJ2D* obj);
+
 
 void SceneGame::init()
 {
@@ -35,11 +35,6 @@ void SceneGame::update()
     }
 }
 
-//敵(仮)
-void enemy(OBJ2D* obj)
-{
-    //obj->position = { rand() % 879 + 209, rand() % 700 };
-}
 
 void SceneGame::draw()
 {
