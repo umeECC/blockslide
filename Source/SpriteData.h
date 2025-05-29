@@ -10,7 +10,6 @@ enum TEXNO
     PLAYERSD,
     WALL,
     ENDO,
-
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -48,7 +47,10 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 extern SpriteUpperLeft sprEnd;
 
+extern SpriteCenter sprPush;
+
 extern SpriteCenter sprPlayer;
+extern SpriteCenter PlayerGoal[8];
 extern SpriteCenter P_Up;
 extern SpriteCenter P_Down;
 extern SpriteCenter P_Left;
