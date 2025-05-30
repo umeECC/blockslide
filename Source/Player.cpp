@@ -12,7 +12,6 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
-extern bool player_goaled;
 int currentSceneID;
 int stage_number;
 
@@ -258,7 +257,7 @@ void playerUpdate(OBJ2D* obj)
             obj->hSize = { 62 / 2,62 / 2 };
             obj->judge = JUDGE_ALL;
             obj->timer = 0;
-            player_goaled = false;
+            obj->goaled = false;
             obj->state++;
             [[fallthrough]];
         case 1:
@@ -271,9 +270,9 @@ void playerUpdate(OBJ2D* obj)
             if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
             if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
 
-            if (player_goaled) {
-                obj->state++;
+            if (obj->goaled) {
                 obj->timer = 0;
+                obj->state++;
             }
 
             obj->timer++;
