@@ -92,12 +92,12 @@ void judge()
 		return; // 以降の処理不要
 	}
 	//当たっていたら
-	if(PlayerManager::getInstance().checkhit())
-	{
+	//if(PlayerManager::getInstance().checkhit())
+	//{
 
-		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
-		return; // 以降の処理不要
-	}
+	//	setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
+	//	return; // 以降の処理不要
+	//}
 
 	// プレイヤーVSゴール（追加）
 	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
