@@ -6,8 +6,8 @@
 #include "Effect.h"
 #include "Wall.h"
 #include "Goal.h"
+#include "Toge.h"
 
-bool player_goaled;
 
 class JudgeRect
 {
@@ -91,13 +91,7 @@ void judge()
 		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
 		return; // 以降の処理不要
 	}
-	//当たっていたら
-	//if(PlayerManager::getInstance().checkhit())
-	//{
-
-	//	setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
-	//	return; // 以降の処理不要
-	//}
+	judgeToge(PlayerManager::getInstance(), TogeManager::getInstance());
 
 	// プレイヤーVSゴール（追加）
 	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
@@ -450,7 +444,7 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 					std::abs(goal.position.y - player.position.y) < 0.2f)
 				{
 
-					player_goaled = true;
+					player.goaled = true;
 
 					//setScene(SCENE::OVER);
 					// ここにステージクリア処理などを書く
@@ -463,7 +457,42 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 
 void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
+	for (auto& item1 : manager1)
+	{
+		if (!item1.mover) continue;
 
+		JudgeRect rect1(item1.position, item1.hSize);
+		
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager2)
+		{
+			if (!item2.mover) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			
+			if (!screenRect.isHit(rect2)) continue;
+
+
+
+			if (rect1.isHit(rect2))
+			{
+				
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
+
+				if (lenSq > 0.01f)
+				{
+					setScene(SCENE::OVER);
+					return;
+				}
+
+
+				break;
+			}
+		}
+	}
 
 }
 
