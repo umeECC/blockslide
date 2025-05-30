@@ -14,7 +14,9 @@ static constexpr float PLAYER_LIMIT_D = 720 - 32;
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    searchSet(player_sd_Update, { 448, 200 });
+    searchSet(player_sd_Update, { 769, 360 });
+    searchSet(player_sd_Update, { 502, 232 });
+    
 }
 
 void PlayerManager_sd::update()
@@ -101,6 +103,7 @@ void player_sd_Update(OBJ2D* obj)
         if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_sd_reset(obj); }
         if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_sd_reset(obj); }
         if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_sd_reset(obj); }
+        
         break;
     }
 }
@@ -111,5 +114,6 @@ void direction_sd_reset(OBJ2D* obj)
     obj->isMoving = false;
     obj->sprData = &sprPlayer_sd;
     obj->direction = { 0,0 };
+    obj->velocity = { 0,0 };
     //PlayerManager::getInstance().setIsPlayerSecondMove(false);
 }

@@ -12,6 +12,7 @@ struct StageScript
 
 // スクリプトマクロ
 #define SET_WALL(time,x,y,mover)		{(time),(mover),{(x),(y)}}
+#define SET_KABE(time,x,y,mover)        {(time),(mover),{(x),(y)}}
 #define SET_END						{0,0,{0,0}}
 
 // Stageクラス

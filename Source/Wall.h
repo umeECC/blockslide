@@ -18,3 +18,4 @@ public:
 
 //プロトタイプ宣言
 void set_wall(OBJ2D* obj);  //壁
+void set_hako(OBJ2D* obj);

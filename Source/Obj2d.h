@@ -27,7 +27,7 @@ public:
 
     MOVER mover;    // 移動処理（関数ポインタ）
     int index;
-
+    int prevPad = 0;
     VECTOR2 direction;
     bool isMoving;
 

@@ -18,7 +18,7 @@ int stage_number;
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 640, 360 });
+    searchSet(playerUpdate, { 704, 168 });
 }
 void PlayerManager::update()
 {

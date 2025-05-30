@@ -37,7 +37,10 @@ public:
 
 // プロトタイプ宣言
 void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2);
+void judgeSub2(OBJ2DManager& manager1,OBJ2DManager& manager2);
 void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2);
+void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2);
+
 void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 
 
@@ -54,10 +57,14 @@ void judge()
 	///
 	//プレイヤーVS壁
 	judgeSub(PlayerManager::getInstance(), WallManager::getInstance());
-
+	//プレイヤーVS壁2
+	judgeSub2(PlayerManager::getInstance(), WallManager::getInstance());
 	// プレイヤー2（動く壁）VS壁
 	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
+
+	judgeSub_sd2(PlayerManager_sd::getInstance(), WallManager::getInstance());
+	judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
 	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 
@@ -162,7 +169,98 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 		}
 	}
 }
+void judgeSub2(OBJ2DManager& manager1, OBJ2DManager& manager2)
+{
+	for (auto& item1 : manager1)
+	{
+		if (!item1.mover) continue;
 
+		JudgeRect rect1(item1.position, item1.hSize);
+		// rect1があたり判定エリア外のとき、次のitem1へ
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager2)
+		{
+			if (!item2.mover) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			// rect2があたり判定エリア外のとき、次のitem2へ
+			if (!screenRect.isHit(rect2)) continue;
+
+
+			for (auto& item2 : manager2)
+			{
+				if (!item2.mover) continue;
+				if ((item1.judge & item2.judge) == 0) continue;
+
+				JudgeRect rect2(item2.position, item2.hSize);
+				if (!screenRect.isHit(rect2)) continue;
+
+				if (rect1.isHit(rect2))
+				{
+					// 押し戻す方向を計算
+					VECTOR2 pushDir = item1.position - item2.position;
+					float lenSq = vec2LengthSq(pushDir);
+
+					if (lenSq > 0.01f)
+					{
+						VECTOR2 normal = vec2Normalize(pushDir);
+						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
+
+						overlapX += 1.0;
+						overlapY += 1.0;
+
+						// 重なり方向ごとに判定
+						if (overlapX < overlapY)
+						{
+							if (item1.position.x < item2.position.x)
+							{
+								item1.hitRight = true;
+								item2.hitLeft = true;
+							}
+							else
+
+
+							{
+								item1.hitLeft = true;
+								item2.hitRight = true;
+							}
+							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
+						}
+						else
+						{
+							if (item1.position.y < item2.position.y)
+							{
+								item1.hitBottom = true;
+								item2.hitTop = true;
+							}
+
+							else
+							{
+								item1.hitTop = true;
+								item2.hitBottom = true;
+							}
+
+							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
+
+						}
+					}
+					direction_reset(&item1);
+
+					break;
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+}
 void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
 	for (auto& item1 : manager1)
@@ -236,7 +334,56 @@ void judgeSub_sd(OBJ2DManager& manager1, OBJ2DManager& manager2)
 		}
 	}
 }
+void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2)
+{
+	for (auto& item1 : manager1)
+	{
+		if (!item1.mover) continue;
 
+		JudgeRect rect1(item1.position, item1.hSize);
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager2)
+		{
+			if (!item2.mover) continue;
+
+			// 自分自身との判定はしない
+			if (&item1 == &item2) continue;
+
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			if (!screenRect.isHit(rect2)) continue;
+
+			if (rect1.isHit(rect2))
+			{
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
+
+				if (lenSq > 0.01f)
+				{
+					VECTOR2 normal = vec2Normalize(pushDir);
+					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
+
+					overlapX += 1.0;
+					overlapY += 1.0;
+
+					if (overlapX < overlapY)
+					{
+						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
+					}
+					else
+					{
+						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
+					}
+				}
+				direction_sd_reset(&item1);
+				break;
+			}
+		}
+	}
+}
 void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
 	for (auto& item1 : manager1)
