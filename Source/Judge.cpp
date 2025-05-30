@@ -62,7 +62,7 @@ void judge()
 	// プレイヤー2（動く壁）VS壁
 	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
-	//judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
+	judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
 	
 	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
