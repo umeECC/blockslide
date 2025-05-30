@@ -45,6 +45,8 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 
 void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager);
 
+void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2);
+
 void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2);
 JudgeRect screenRect = {
 	64, 64, SCREEN_WIDTH - 64, SCREEN_HEIGHT - 64,
@@ -77,8 +79,17 @@ void judge()
 	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 
+
+
 	// 挟まれチェック：上下 + 左右の両方が埋まっていたら
 	if (PlayerManager::getInstance().checkpress())
+	{
+
+		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
+		return; // 以降の処理不要
+	}
+	//当たっていたら
+	if(PlayerManager::getInstance().checkhit())
 	{
 
 		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
@@ -453,5 +464,11 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 			}
 		}
 	}
+}
+
+void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2)
+{
+
+
 }
 

@@ -28,10 +28,14 @@ public:
 
 	void update() override;
 
+	bool isWarpmove = false;
+
 	// true...‚Ç‚¿‚ç‚©‚ª“®‚¢‚Ä‚¢‚é	false...—¼•ûŽ~‚Ü‚Á‚Ä‚¢‚é
 	//bool isMoving() { return isPlayerOneMove || isPlayerSecondMove; }
 
 	bool isMoving() { return isMove; }
+
+	bool isWarp() { return isWarpmove; }
 };
 
 

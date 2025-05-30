@@ -29,7 +29,11 @@ public:
     int index;
     int prevPad = 0;
     VECTOR2 direction;
+
     bool isMoving;
+
+    
+
 
     bool hitLeft;
     bool hitRight;
@@ -47,6 +51,7 @@ public:
 
     bool checkpress();
 
+    bool checkhit();
     ////////
     VECTOR2 hSize;
     int judge;
@@ -114,6 +119,8 @@ public:
     void clearHit();
 
     bool checkpress();
+
+    bool checkhit();
     
 
 };

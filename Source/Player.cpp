@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-static constexpr float PLAYER_SPEED = 1.0f;
+static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
@@ -60,6 +60,7 @@ void playerMove(OBJ2D* obj)
             if (down) { obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
             if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+
 
             //WallManager::getInstance().clearHit();
 

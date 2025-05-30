@@ -29,6 +29,15 @@ bool OBJ2D::checkpress()
     return false;
 }
 
+bool OBJ2D::checkhit()
+{
+    if ((hitLeft || hitRight || hitTop || hitBottom))
+    {
+        return true;
+    }
+    return false;
+}
+
 void OBJ2DManager::init()
 {
     for (auto& obj : *this)
@@ -91,4 +100,19 @@ bool OBJ2DManager::checkpress()
 
     }
     return press;
+}
+
+bool OBJ2DManager::checkhit()
+{
+    bool toge = false;
+
+    for (auto& obj : *this)
+    {
+        if (obj.checkhit())
+        {
+            toge = true;
+        }
+
+    }
+    return toge;
 }

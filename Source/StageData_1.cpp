@@ -49,6 +49,7 @@ StageScript stage1Script[] = {
     SET_OBJ(1, 832, 232, set_hako,TYPE_WALL),
     SET_OBJ(1, 616, 488, set_hako,TYPE_WALL),
     
-    SET_WARP(1,330, 300, set_warp,TYPE_WALL),
+    SET_WARP(1,590, 170, set_warp,TYPE_WARP),
+    SET_WARP(1,590, 390, set_warp,TYPE_WARP),
     SET_END
 };
