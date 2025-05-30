@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-static constexpr float PLAYER_SPEED = 10.0f;
+static constexpr float PLAYER_SPEED = 1.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
@@ -256,6 +256,8 @@ void playerUpdate(OBJ2D* obj)
             
             obj->hSize = { 62 / 2,62 / 2 };
             obj->judge = JUDGE_ALL;
+            obj->timer = 0;
+            player_goaled = false;
             obj->state++;
             [[fallthrough]];
         case 1:
