@@ -12,6 +12,9 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::HAKO,L"./Data/Images/hako.png",4U},
     { TEXNO::GOAL, L"./Data/Images/goal.png", 4U},
     { TEXNO::WARP, L"./Data/Images/warp.png", 4U},
+    { TEXNO::TOGE, L"./Data/Images/spike.png", 4U},
+
+
     { -1, nullptr, }, // èIóπÉtÉâÉO
 };
 
@@ -50,3 +53,4 @@ SpriteCenter sprWall(TEXNO::WALL, 0, 0, 64, 64);
 SpriteCenter sprGoal(TEXNO::GOAL, 0, 0, 64, 64);
 SpriteCenter sprHako(TEXNO::HAKO, 0, 0, 64, 64);
 SpriteCenter sprWarp(TEXNO::WARP, 0, 0, 64, 64);
+SpriteCenter sprToge(TEXNO::TOGE, 0, 0, 64, 64);

@@ -8,6 +8,7 @@ enum ScriptType
 	TYPE_WALL,
 	TYPE_GOAL,
 	TYPE_WARP,
+	TYPE_TOGE
 };
 
 // î≠ê∂ÉfÅ[É^
