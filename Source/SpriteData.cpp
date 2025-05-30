@@ -10,6 +10,7 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::SELECT, L"./Data/Images/stage_select.png",4U},
     { TEXNO::PUSH, L"./Data/Images/push_space.png", 4U},
     { TEXNO::HAKO,L"./Data/Images/hako.png",4U},
+    { TEXNO::GOAL, L"./Data/Images/goal.png", 4U},
     { -1, nullptr, }, // èIóπÉtÉâÉO
 };
 

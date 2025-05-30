@@ -38,9 +38,4 @@ void set_hako(OBJ2D* obj)
 	case 1:
 		break;
 	}
-
-
-
-
-
 }

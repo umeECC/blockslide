@@ -12,6 +12,7 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
+extern bool player_goaled;
 int currentSceneID;
 int stage_number;
 
@@ -212,29 +213,29 @@ void playerUpdate(OBJ2D* obj)
             break;
 
         case 2:
-            if (stage_number == 0)
-            {
-                float radius = 300.0f;
+            //if (stage_number == 0)
+            //{
+            //    float radius = 300.0f;
 
-                // 回転角（ラジアン）を時間で増やす
-                float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
+            //    // 回転角（ラジアン）を時間で増やす
+            //    float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
 
-                obj->position.x = 640 + std::cos(angle) * radius;
-                obj->position.y = 370 + std::sin(angle) * radius;
+            //    obj->position.x = 640 + std::cos(angle) * radius;
+            //    obj->position.y = 370 + std::sin(angle) * radius;
 
-                // ランダムカラー（毎フレームチカチカ）
-                obj->color = {
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    1.0f
-                };
+            //    // ランダムカラー（毎フレームチカチカ）
+            //    obj->color = {
+            //        static_cast<float>(rand()) / RAND_MAX,
+            //        static_cast<float>(rand()) / RAND_MAX,
+            //        static_cast<float>(rand()) / RAND_MAX,
+            //        1.0f
+            //    };
 
-                obj->scale = { 2.0f, 2.0f };
-                obj->sprData = &sprPlayer;
+            //    obj->scale = { 2.0f, 2.0f };
+            //    obj->sprData = &sprPlayer;
 
-                obj->timer++;
-            }
+            //    obj->timer++;
+            //}
 
             ssPlayerMove(obj);
 
@@ -266,7 +267,21 @@ void playerUpdate(OBJ2D* obj)
             if (obj->position.x > PLAYER_LIMIT_R) { obj->position.x = PLAYER_LIMIT_R; direction_reset(obj); }
             if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
             if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
+
+            if (player_goaled) {
+                obj->state++;
+                obj->timer = 0;
+            }
+
+            obj->timer++;
+
             break;
+        case 2:
+            goal_moving(obj);
+
+            obj->timer++;
+            break;
+
         }
         break;
     }

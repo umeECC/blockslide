@@ -2,18 +2,25 @@
 #include "Obj2d.h"
 #include "Template.h"
 
-// 敵キャラ発生データ（いずれステージスクリプトになる）
+enum ScriptType
+{
+	TYPE_NONE = 0,
+	TYPE_WALL,
+	TYPE_GOAL,
+};
+
+// 発生データ
 struct StageScript
 {
 	int				time;		// イベント発生時間
+	ScriptType		type;		// 種類
 	OBJ2D::MOVER	mover;		// 移動処理
 	VECTOR2			position;	// 座標
 };
 
 // スクリプトマクロ
-#define SET_WALL(time,x,y,mover)		{(time),(mover),{(x),(y)}}
-#define SET_KABE(time,x,y,mover)        {(time),(mover),{(x),(y)}}
-#define SET_END						{0,0,{0,0}}
+#define SET_OBJ(time,x,y,mover,type)		{(time),(type),(mover),{(x),(y)}}
+#define SET_END						{0,TYPE_NONE,0,{0,0}}
 
 // Stageクラス
 class Stage : public Singleton<Stage>
