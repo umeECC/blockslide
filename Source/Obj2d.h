@@ -32,7 +32,7 @@ public:
 
     bool isMoving;
 
-    
+    bool goaled;
 
 
     bool hitLeft;
