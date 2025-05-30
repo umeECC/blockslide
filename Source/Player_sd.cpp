@@ -111,9 +111,10 @@ void player_sd_Update(OBJ2D* obj)
 
 void direction_sd_reset(OBJ2D* obj)
 {
-    obj->isMoving = false;
-    obj->sprData = &sprPlayer_sd;
-    obj->direction = { 0,0 };
     obj->velocity = { 0,0 };
+    obj->isMoving = false;
+    //obj->sprData = &sprPlayer_sd;
+    obj->direction = { 0,0 };
+    
     //PlayerManager::getInstance().setIsPlayerSecondMove(false);
 }
