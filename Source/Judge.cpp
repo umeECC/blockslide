@@ -46,6 +46,9 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager);
 
 void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2);
+
+bool isPlayerSB(const OBJ2D& item);
+
 JudgeRect screenRect = {
 	64, 64, SCREEN_WIDTH - 64, SCREEN_HEIGHT - 64,
 };
@@ -432,8 +435,8 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 			if (rectP.isHit(rectG))
 			{
 
-				if (std::abs(goal.position.x - player.position.x) < 0.1f &&
-					std::abs(goal.position.y - player.position.y) < 0.1f)
+				if (std::abs(goal.position.x - player.position.x) < 0.2f &&
+					std::abs(goal.position.y - player.position.y) < 0.2f)
 				{
 
 					player_goaled = true;

@@ -42,4 +42,5 @@ void SceneGame::draw()
     GameLib::clear(0, 0, 0);
 
     Stage::getInstance().draw();
+
 }

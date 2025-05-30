@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-static constexpr float PLAYER_SPEED = 5.0f;
+static constexpr float PLAYER_SPEED = 10.0f;
 static constexpr float PLAYER_LIMIT_L = 32;
 static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
@@ -114,7 +114,7 @@ void playerUpdate(OBJ2D* obj)
             obj->direction = { 0,0 };
             obj->isMoving = false;
             obj->position = { 950,660 };
-            obj->hSize = { 64 / 2,64 / 2 };
+            obj->hSize = { 62 / 2,62 / 2 };
             obj->timer = 0;
             obj->state++;
             [[fallthrough]];

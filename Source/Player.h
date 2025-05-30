@@ -44,7 +44,6 @@ void playerUpdate(OBJ2D* obj);
 void direction_reset(OBJ2D* obj);
 void goal_moving(OBJ2D* obj);
 
-
 struct Vector2 {
 	float x, y;
 };
