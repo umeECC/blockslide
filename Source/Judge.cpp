@@ -115,69 +115,61 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 			if (!screenRect.isHit(rect2)) continue;
 
 
-			for (auto& item2 : manager2)
+			
+			if (rect1.isHit(rect2))
 			{
-				if (!item2.mover) continue;
-				if ((item1.judge & item2.judge) == 0) continue;
+				// 押し戻す方向を計算
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
 
-				JudgeRect rect2(item2.position, item2.hSize);
-				if (!screenRect.isHit(rect2)) continue;
-
-				if (rect1.isHit(rect2))
+				if (lenSq > 0.01f)
 				{
-					// 押し戻す方向を計算
-					VECTOR2 pushDir = item1.position - item2.position;
-					float lenSq = vec2LengthSq(pushDir);
+					VECTOR2 normal = vec2Normalize(pushDir);
+					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
-					if (lenSq > 0.01f)
+					overlapX += 1.0;
+					overlapY += 1.0;
+
+				// 重なり方向ごとに判定
+					if (overlapX < overlapY)
 					{
-						VECTOR2 normal = vec2Normalize(pushDir);
-						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
-						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
-
-						overlapX += 1.0;
-						overlapY += 1.0;
-
-					// 重なり方向ごとに判定
-						if (overlapX < overlapY)
+						if (item1.position.x < item2.position.x)
 						{
-							if (item1.position.x < item2.position.x)
-							{
-								item1.hitRight = true;
-								item2.hitLeft = true;
-							}
-							else
-
-							
-				            {
-								item1.hitLeft = true;
-								item2.hitRight = true;
-							}
-							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
+							item1.hitRight = true;
+							item2.hitLeft = true;
 						}
 						else
-						{
-							if (item1.position.y < item2.position.y)
-							{
-								item1.hitBottom = true;
-								item2.hitTop = true;
-							}
 
-							else
-							{
-								item1.hitTop = true;
-								item2.hitBottom = true;
-							}
-
-							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
-
+						
+			            {
+							item1.hitLeft = true;
+							item2.hitRight = true;
 						}
+						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
 					}
-					direction_reset(&item1);
+					else
+					{
+						if (item1.position.y < item2.position.y)
+						{
+							item1.hitBottom = true;
+							item2.hitTop = true;
+						}
 
-					break;
+						else
+						{
+							item1.hitTop = true;
+							item2.hitBottom = true;
+						}
+
+						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
+
+					}
 				}
-			}
+				direction_reset(&item1);
+
+				break;
+			}			
 		}
 	}
 }
