@@ -7,6 +7,7 @@ enum ScriptType
 	TYPE_NONE = 0,
 	TYPE_WALL,
 	TYPE_GOAL,
+	TYPE_WARP
 };
 
 // 発生データ
@@ -20,6 +21,7 @@ struct StageScript
 
 // スクリプトマクロ
 #define SET_OBJ(time,x,y,mover,type)		{(time),(type),(mover),{(x),(y)}}
+#define SET_WARP(time,x,y,mover,type)		{(time),(type),(mover),{(x),(y)}}
 #define SET_END						{0,TYPE_NONE,0,{0,0}}
 
 // Stageクラス

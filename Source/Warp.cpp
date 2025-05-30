@@ -1,18 +1,31 @@
-#include <iostream>
 #include "Warp.h"
+#include "SpriteData.h"
 
-bool isInWarpZone(const Player& player, const WarpZone& zone) {
-    return player.position.x >= zone.topLeft.x &&
-        player.position.x <= zone.bottomRight.x &&
-        player.position.y >= zone.topLeft.y &&
-        player.position.y <= zone.bottomRight.y;
-}
 
-void warpPlayer(Player& player, const WarpZone& zone) {
-    if (isInWarpZone(player, zone)) {
-        player.position = zone.destination;
-        std::cout << "ワープしました！ 新しい座標: ("
-            << player.position.x << ", "
-            << player.position.y << ")" << std::endl;
-    }
+
+void set_warp(OBJ2D* obj)
+{
+	switch (obj->state)
+	{
+	case 0:
+		//当たり判定の設定
+		obj->hSize = { 32, 32 };
+		obj->judge = JUDGE_ALL;
+
+		//各種データ
+		obj->sprData = &sprWarp;
+
+		obj->state++;
+		[[fallthrough]];
+	case 1:
+		//// 衝突判定チェック
+		//if (OBJ2DManager::checkhit(obj, player)) // 衝突していたら
+		//{
+		//	// ワープ先座標
+		//	player->pos.x = 100; // 任意のX座標
+		//	player->pos.y = 200; // 任意のY座標
+		//}
+
+		break;
+	}
 }

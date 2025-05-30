@@ -14,6 +14,7 @@ enum TEXNO
     PUSH,
     GOAL,
     HAKO,
+    WARP,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -69,3 +70,5 @@ extern SpriteCenter P_Right_sd;
 extern SpriteCenter sprWall;
 extern SpriteCenter sprGoal;
 extern SpriteCenter sprHako;
+
+extern SpriteCenter sprWarp;
