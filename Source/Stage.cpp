@@ -52,7 +52,14 @@ void Stage::update()
     while (pScript->mover &&    // 終了コードではなく
         timer == pScript->time) // 現在のタイマーがスクリプトのタイムであれば
     {
-        WallManager::getInstance().searchSet(pScript->mover, pScript->position);
+        switch (pScript->type) {
+        case TYPE_WALL:
+            WallManager::getInstance().searchSet(pScript->mover, pScript->position);
+            break;
+        case TYPE_GOAL:
+            GoalManager::getInstance().searchSet(pScript->mover, pScript->position);
+            break;
+        }
         pScript++;
     }
 

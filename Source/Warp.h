@@ -1,11 +1,20 @@
 #pragma once
-#include "Player.h"
+#include "Obj2d.h"
+#include "Template.h"
 
-struct WarpZone {
-    Vector2 topLeft;
-    Vector2 bottomRight;
-    Vector2 destination;
+class WarpManager :public OBJ2DManager, public Singleton<WarpManager>
+{
+private:
+	static constexpr int OBJ_MAX = 81;
+	OBJ2D objWrap[OBJ_MAX];
+
+public:
+	OBJ2D* begin() override { return &objWrap[0]; }
+	OBJ2D* end() override { return &objWrap[OBJ_MAX]; }
+
+	//void init() override;
+
 };
 
-bool isInWarpZone(const Player& player, const WarpZone& zone);
-void warpPlayer(Player& player, const WarpZone& zone);
+//プロトタイプ宣言
+void set_warp(OBJ2D* obj);  //壁

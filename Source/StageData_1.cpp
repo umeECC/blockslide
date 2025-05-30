@@ -1,6 +1,7 @@
 #include "StageData_1.h"
 #include "Wall.h"
 #include "Goal.h"
+#include "Warp.h"
 
 StageScript stage1Script[] = {
     // è„ï”ÇÃâ°ÉâÉCÉì
@@ -47,6 +48,7 @@ StageScript stage1Script[] = {
 
     SET_OBJ(1, 832, 232, set_hako,TYPE_WALL),
     SET_OBJ(1, 616, 488, set_hako,TYPE_WALL),
-
+    
+    SET_WARP(1,330, 300, set_warp,TYPE_WALL),
     SET_END
 };
