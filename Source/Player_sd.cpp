@@ -104,7 +104,19 @@ void player_sd_Update(OBJ2D* obj)
         if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_sd_reset(obj); }
         if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_sd_reset(obj); }
         
+        if (obj->goaled) {
+            obj->timer = 0;
+            obj->state++;
+        }
+
+        obj->timer++;
+
         break;
+    case 2:
+        
+        obj->timer++;
+        break;
+
     }
 }
 
