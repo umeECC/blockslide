@@ -63,10 +63,6 @@ extern SpriteCenter P_Left;
 extern SpriteCenter P_Right;
 
 extern SpriteCenter sprPlayer_sd;
-extern SpriteCenter P_Up_sd;
-extern SpriteCenter P_Down_sd;
-extern SpriteCenter P_Left_sd;
-extern SpriteCenter P_Right_sd;
 
 extern SpriteCenter sprWall;
 extern SpriteCenter sprGoal;

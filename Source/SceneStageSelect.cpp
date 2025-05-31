@@ -53,7 +53,7 @@ void SceneSelect::update()
         if (!wasAKeyPressed)
         {
             // 押された瞬間
-            AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
+            AudioManager::getInstance().playSound(L"selectSound", 0.1f, false);
             stage_number--;
             if (stage_number < 0) stage_number = 0;
 
@@ -65,7 +65,7 @@ void SceneSelect::update()
             AKeyHoldTimer++;
             if (AKeyHoldTimer >= holdInterval)
             {
-                AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
+                AudioManager::getInstance().playSound(L"selectSound", 0.1f, false);
                 stage_number--;
                 if (stage_number < 0) stage_number = 0;
                 AKeyHoldTimer = 0; // タイマーリセットして連続反応させる
@@ -82,7 +82,7 @@ void SceneSelect::update()
     {
         if (!wasDKeyPressed)
         {
-            AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
+            AudioManager::getInstance().playSound(L"selectSound", 0.1f, false);
             stage_number++;
             if (stage_number > STAGE_MAX) stage_number = STAGE_MAX;
 
@@ -93,7 +93,7 @@ void SceneSelect::update()
             DKeyHoldTimer++;
             if (DKeyHoldTimer >= holdInterval)
             {
-                AudioManager::getInstance().playSound(L"selectSound", 0.5f, false);
+                AudioManager::getInstance().playSound(L"selectSound", 0.1f, false);
                 stage_number++;
                 if (stage_number > STAGE_MAX) stage_number = STAGE_MAX;
                 DKeyHoldTimer = 0;

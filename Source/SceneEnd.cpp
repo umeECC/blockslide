@@ -25,16 +25,15 @@ void SceneEnd::init()
 
     // オーディオエンジンの初期化
     AudioManager::getInstance().init();
-    AudioManager::getInstance().loadSound(L"titleMusic", L"./Data/Musics/make.wav");
-    AudioManager::getInstance().loadSound(L"btnSound", L"./Data/Sounds/btn.wav");
-    AudioManager::getInstance().loadSound(L"selectSound", L"./Data/Sounds/select.wav");
-    AudioManager::getInstance().playSound(L"titleMusic", 0.8f, true);
+    AudioManager::getInstance().loadSound(L"MissMusic", L"./Data/Musics/make.wav");
+    
+    AudioManager::getInstance().playSound(L"MissMusic", 0.1f, true);
 
 }
 
 void SceneEnd::deinit()
 {
-    AudioManager::getInstance().stopSound(L"titleMusic");
+    AudioManager::getInstance().stopSound(L"MissMusic");
 }
 
 void SceneEnd::update()

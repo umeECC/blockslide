@@ -44,10 +44,7 @@ SpriteCenter PlayerGoal[8] = {
 
 //“®‚­” 
 SpriteCenter sprPlayer_sd(TEXNO::PLAYERSD, 0, 0, 64, 64);
-SpriteCenter P_Down_sd(TEXNO::PLAYERSD, 64, 0, 64, 64);
-SpriteCenter P_Right_sd(TEXNO::PLAYERSD, 128, 0, 64, 64);
-SpriteCenter P_Left_sd(TEXNO::PLAYERSD, 192, 0, 64, 64);
-SpriteCenter P_Up_sd(TEXNO::PLAYERSD, 256, 0, 64, 64);
+
 
 SpriteCenter sprWall(TEXNO::WALL, 0, 0, 64, 64);
 SpriteCenter sprGoal(TEXNO::GOAL, 0, 0, 64, 64);
