@@ -94,11 +94,9 @@ void judge()
 	judgeToge(PlayerManager::getInstance(), TogeManager::getInstance());
 
 	// プレイヤーVSゴール（追加）
-	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
-	
-	/*PlayerManager::getInstance().clearHit();
-	PlayerManager_sd::getInstance().clearHit();
-	WallManager::getInstance().clearHit();*/
+	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());	
+	judgeGoal(PlayerManager_sd::getInstance(), GoalManager::getInstance());	
+
 }
 
 
@@ -454,6 +452,7 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 		}
 	}
 }
+
 
 void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2)
 {
