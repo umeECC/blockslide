@@ -9,7 +9,7 @@ StageScript stage1Script[] = {
     SET_OBJ(1, 448, 104, set_wall,TYPE_WALL),
     SET_OBJ(1, 512, 104, set_wall,TYPE_WALL),
     SET_OBJ(1, 576, 104, set_wall,TYPE_WALL),
-    SET_OBJ(1, 640, 104, set_wall,TYPE_WALL),
+    SET_OBJ(1, 640, 104, set_goal,TYPE_GOAL),
     SET_OBJ(1, 704, 104, set_wall,TYPE_WALL),
     SET_OBJ(1, 768, 104, set_wall,TYPE_WALL),
     SET_OBJ(1, 832, 104, set_wall,TYPE_WALL),
@@ -87,8 +87,6 @@ StageScript stage1Script[] = {
     SET_OBJ(1, 320, 552, set_invwall, TYPE_WALL),
     SET_OBJ(1, 320, 616, set_invwall, TYPE_WALL),
     SET_OBJ(1, 320, 680, set_invwall, TYPE_WALL),
-
-
 
     SET_OBJ(1, 448, 168, set_Toge,TYPE_NONE),
 
