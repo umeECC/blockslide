@@ -112,6 +112,10 @@ void SceneSelect::update()
     {
         setScene(SCENE::GAME);
     }
+    if (GameLib::input::TRG(0) & GameLib::input::PAD_SELECT)
+    {
+        setScene(SCENE::TITLE);
+    }
 
     PlayerManager::getInstance().update();
 

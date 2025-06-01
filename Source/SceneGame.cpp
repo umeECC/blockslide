@@ -37,6 +37,10 @@ void SceneGame::update()
     {
         setScene(SCENE::CLEAR);
     }
+    if ((GetAsyncKeyState('O') & 0x8000))
+    {
+        setScene(SCENE::OVER);
+    }
 }
 
 

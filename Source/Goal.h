@@ -16,5 +16,16 @@ public:
 
 };
 
+class Goal {
+public:
+	VECTOR2 position;
+	VECTOR2 hSize;
+	bool isReached = false;
+
+	Goal(const VECTOR2& pos, const VECTOR2& size)
+		: position(pos), hSize(size) {
+	}
+};
+
 //プロトタイプ宣言
 void set_goal(OBJ2D* obj);  //ゴール

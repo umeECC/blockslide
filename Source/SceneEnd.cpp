@@ -7,6 +7,8 @@
 #include "Audio.h"
 
 VECTOR2 pos2;
+OBJ2D over_yaji;
+int OverSelect;
 bool wasWKeyPressed = false;
 bool wasSKeyPressed = false;
 
@@ -22,6 +24,8 @@ void SceneEnd::init()
 
     end_back.position = { 0, 0 };
     end_back.sprData = &sprEnd;
+
+    over_yaji.sprData = &sprYaji;
 
     // オーディオエンジンの初期化
     AudioManager::getInstance().init();
@@ -39,17 +43,69 @@ void SceneEnd::deinit()
 void SceneEnd::update()
 {
     using namespace GameLib::input;
-    
-    AudioManager::getInstance().update();
+    bool isWKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
+    bool isSKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
 
-    //------------------------------------------------------------
-    //仮置き
-    if (GameLib::input::TRG(0) & GameLib::input::PAD_START)
+    // Aキーが押された瞬間を判定
+
+    if (isWKeyPressed)
     {
-        setScene(SCENE::STAGESEL);
+        if (!wasWKeyPressed)
+        {
+            // 押された瞬間
+            OverSelect--;
+            if (OverSelect < 0) OverSelect = 0;
+        }
     }
-    //------------------------------------------------------------
 
+    // Dキーが押された瞬間を判定
+    if (isSKeyPressed)
+    {
+        if (!wasSKeyPressed)
+        {
+            OverSelect++;
+            if (OverSelect > 2) OverSelect = 2;
+           
+        }
+        
+    }
+
+    // 現在の状態を次のフレームのために保存
+    wasWKeyPressed = isWKeyPressed;
+    wasSKeyPressed = isSKeyPressed;
+
+
+    if (GameLib::input::TRG(0)& GameLib::input::PAD_START) {
+        
+        switch (OverSelect)
+        {
+        case 0:
+            setScene(SCENE::STAGESEL);
+            break;
+        case 1:
+            setScene(SCENE::GAME);
+            break;
+        case 2:
+            setScene(SCENE::TITLE);
+            break;
+        }
+    }
+
+
+    switch (OverSelect)
+    {
+    case 0:
+        over_yaji.position = { 390,420 };
+        break;
+    case 1:
+        over_yaji.position = { 390,580 };
+        break;
+    case 2:
+        over_yaji.position = { 1100,650 };
+        break;
+    }   
+
+    AudioManager::getInstance().update();
 
     timer++;
 }
@@ -60,4 +116,5 @@ void SceneEnd::draw()
 
     end_back.draw();
 
+    over_yaji.draw();
 }

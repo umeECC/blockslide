@@ -8,6 +8,12 @@
 #include "Goal.h"
 #include "Toge.h"
 
+extern int goalCount;         // 初期化時に設定するゴールの総数
+int currentGoalFilled = 0; // 現在埋まっているゴール数
+extern bool isPlayer;
+static int clearDelayTimer = 0;
+static bool clearDelayStarted = false;
+
 class JudgeRect
 {
 	float left, top, right, bottom;
@@ -95,7 +101,6 @@ void judge()
 	// プレイヤーVSゴール（追加）
 	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
 	judgeGoal(PlayerManager_sd::getInstance(), GoalManager::getInstance());
-
 }
 
 
@@ -421,6 +426,8 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2)
 
 void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 {
+	currentGoalFilled = 0;
+
 	for (auto& player : playerManager)
 	{
 		if (!player.mover) continue;
@@ -445,14 +452,27 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 				{
 
 					player.goaled = true;
+					++currentGoalFilled;
 
-					//setScene(SCENE::OVER);
-					// ここにステージクリア処理などを書く
+					if (&playerManager == &PlayerManager::getInstance()) {
+						isPlayer = true;
+					}
 
+					break; // このゴールには既に箱があるので次のゴールへ
 				}
 			}
 		}
 	}
+	if (currentGoalFilled >= goalCount && !isPlayer)
+	{
+		if (clearDelayTimer > 60) // 60フレーム遅延（1秒遅延を想定）
+		{
+			clearDelayTimer = 0;
+			setScene(SCENE::CLEAR);
+		}
+		clearDelayTimer++;
+	}
+	
 }
 
 

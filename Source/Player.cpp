@@ -14,10 +14,12 @@ static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
 int currentSceneID;
+bool isPlayer;
 
 void PlayerManager::init()
 {
     OBJ2DManager::init();
+    isPlayer = false;
     switch (stage_number)
     {
     case 0:
@@ -241,7 +243,7 @@ void playerUpdate(OBJ2D* obj)
             obj->speed = 1;
             obj->direction = { 0,0 };
             obj->isMoving = false;
-            
+            isPlayer = false;
             obj->hSize = { 62 / 2,62 / 2 };
             obj->judge = JUDGE_ALL;
             obj->timer = 0;
@@ -269,14 +271,17 @@ void playerUpdate(OBJ2D* obj)
         case 2:
             goal_moving(obj);
 
-            if (obj->timer>90)
-            {
-                setScene(SCENE::CLEAR);
+            if (obj->timer >= 90) {
+                obj->state++;
             }
 
             obj->timer++;
             break;
-
+        case 3:
+            if (isPlayer) {
+                setScene(SCENE::CLEAR);  // ÅŒã‚ªƒvƒŒƒCƒ„[‚Ì‚Æ‚«‚¾‚¯‘JˆÚ
+            }
+            break;
         }
         break;
     case SCENE::CLEAR:
@@ -342,6 +347,7 @@ void goal_moving(OBJ2D* obj)
     if (frame > 7)
     {
         obj->sprData = &PlayerGoal[7];
+        
     }
     else
     {

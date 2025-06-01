@@ -13,7 +13,6 @@ int ClearSelect;
 
 bool wasWKeyPressed_c = false;
 bool wasSKeyPressed_c = false;
-static bool wasPressed_c = false;
 
 // 長押し判定用のタイマー（ミリ秒 or フレーム数）
 int WKeyHoldTimer_c = 0;
@@ -56,7 +55,6 @@ void SceneClear::update()
     // 現在のキーの状態を取得
     bool isWKeyPressed = (GetAsyncKeyState('W') & 0x8000) != 0;
     bool isSKeyPressed = (GetAsyncKeyState('S') & 0x8000) != 0;
-    bool nowPressed = (GetAsyncKeyState(' ') & 0x8000) != 0;
 
     // Aキーが押された瞬間を判定
 
@@ -118,8 +116,8 @@ void SceneClear::update()
     wasWKeyPressed_c = isWKeyPressed;
     wasSKeyPressed_c = isSKeyPressed;
 
-    if (nowPressed && !wasPressed_c) {
-        // 押された瞬間だけ通る
+    if (GameLib::input::TRG(0) & GameLib::input::PAD_START) {
+
         switch (ClearSelect)
         {
         case 0:
@@ -133,7 +131,6 @@ void SceneClear::update()
             break;
         }
     }
-    wasPressed_c = nowPressed; // 前フレーム状態を更新
 
     switch (ClearSelect)
     {

@@ -15,18 +15,24 @@
 #include "Toge.h"
 #include "SceneStageSelect.h"
 
+int goalCount;
+
 void Stage::init()
 {
     timer = 0;
     switch (stage_number)
     {
     case 1:
+        goalCount = 2;
         pScript = stage1Script; break;
     case 2:
+        goalCount = 1;
         pScript = stage2Script; break;
     case 3:
+        goalCount = 1;
         pScript = stage3Script; break;
     case 4:
+
         pScript = stage4Script; break;
     }
 

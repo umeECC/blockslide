@@ -34,7 +34,6 @@ public:
 
     bool goaled;
 
-
     bool hitLeft;
     bool hitRight;
     bool hitTop;
