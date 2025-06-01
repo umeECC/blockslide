@@ -18,7 +18,7 @@ int stage_number;
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 704, 168 });
+    searchSet(playerUpdate, { 544, 456 });
 }
 void PlayerManager::update()
 {
@@ -216,13 +216,13 @@ void playerUpdate(OBJ2D* obj)
             //if (stage_number == 0)
             //{
             //    float radius = 300.0f;
-
+            //
             //    // 回転角（ラジアン）を時間で増やす
             //    float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
-
+            //
             //    obj->position.x = 640 + std::cos(angle) * radius;
             //    obj->position.y = 370 + std::sin(angle) * radius;
-
+            //
             //    // ランダムカラー（毎フレームチカチカ）
             //    obj->color = {
             //        static_cast<float>(rand()) / RAND_MAX,
@@ -230,10 +230,10 @@ void playerUpdate(OBJ2D* obj)
             //        static_cast<float>(rand()) / RAND_MAX,
             //        1.0f
             //    };
-
+            //
             //    obj->scale = { 2.0f, 2.0f };
             //    obj->sprData = &sprPlayer;
-
+            //
             //    obj->timer++;
             //}
 
@@ -316,4 +316,8 @@ void goal_moving(OBJ2D* obj)
     }
 }
 
-
+void player_reset(OBJ2D* obj)
+{
+    obj->isMoving = false;
+    obj->state=0;
+}

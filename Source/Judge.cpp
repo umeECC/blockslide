@@ -8,7 +8,6 @@
 #include "Goal.h"
 #include "Toge.h"
 
-
 class JudgeRect
 {
 	float left, top, right, bottom;
@@ -63,7 +62,7 @@ void judge()
 
 	//プレイヤーVS壁
 	judgeSub(PlayerManager::getInstance(), WallManager::getInstance());
-	
+
 	// プレイヤー2（動く壁）VS壁
 	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
@@ -72,13 +71,13 @@ void judge()
 
 	for (int i = 0; i < 35; ++i) {
 		judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
-	
+
 		// プレイヤーVSプレイヤー2（動く壁）
 		judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 	}
 	judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
-	
-	
+
+
 	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 
@@ -94,8 +93,8 @@ void judge()
 	judgeToge(PlayerManager::getInstance(), TogeManager::getInstance());
 
 	// プレイヤーVSゴール（追加）
-	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());	
-	judgeGoal(PlayerManager_sd::getInstance(), GoalManager::getInstance());	
+	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
+	judgeGoal(PlayerManager_sd::getInstance(), GoalManager::getInstance());
 
 }
 
@@ -291,14 +290,17 @@ void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2)
 						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
 						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
+						overlapX += 1.0f;
+						overlapY += 1.0f;
+
 						// 最小限の補正で見た目だけ直す
 						if (overlapX < overlapY)
 						{
-							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX * 0.5f : overlapX * 0.5f;
+							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX * 0.1f : overlapX * 0.1f;
 						}
 						else
 						{
-							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY * 0.5f : overlapY * 0.5f;
+							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY * 0.1f : overlapY * 0.1f;
 						}
 					}
 

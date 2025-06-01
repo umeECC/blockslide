@@ -30,3 +30,5 @@ void player_sd_Move(OBJ2D* obj);
 void player_sd_Update(OBJ2D* obj);
 
 void direction_sd_reset(OBJ2D* obj);
+
+void player_sd_reset(OBJ2D* obj);
