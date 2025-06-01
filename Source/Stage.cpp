@@ -11,6 +11,7 @@
 #include "SceneGame.h"
 #include "StageData_1.h"
 #include "StageData_2.h"
+#include "StageData_3.h"
 #include "Toge.h"
 #include "SceneStageSelect.h"
 
@@ -23,6 +24,8 @@ void Stage::init()
         pScript = stage1Script; break;
     case 2:
         pScript = stage2Script; break;
+    case 3:
+        pScript = stage3Script; break;
     }
 
 

@@ -34,7 +34,7 @@ void SceneClear::update()
 {
     if (!AudioManager::getInstance().isPlaying(L"clearSound") && !AudioManager::getInstance().isPlaying(L"clearMusic"))
     {
-        AudioManager::getInstance().playSound(L"clearMusic", 0.5f, true);
+        AudioManager::getInstance().playSound(L"clearMusic", 0.1f, true);
     }
     if (timer > 0x40 && GameLib::input::TRG(0))
     {
