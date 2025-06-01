@@ -288,29 +288,26 @@ void playerUpdate(OBJ2D* obj)
             obj->state++;
             [[fallthrough]];
         case 1:
-            if (stage_number == 0)
-            {
-                float radius = 300.0f;
+            float radius = 300.0f;
             
-                // 回転角（ラジアン）を時間で増やす
-                float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
+            // 回転角（ラジアン）を時間で増やす
+            float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
             
-                obj->position.x = 640 + std::cos(angle) * radius;
-                obj->position.y = 370 + std::sin(angle) * radius;
+            obj->position.x = 640 + std::cos(angle) * radius;
+            obj->position.y = 370 + std::sin(angle) * radius;
             
-                // ランダムカラー（毎フレームチカチカ）
-                obj->color = {
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    static_cast<float>(rand()) / RAND_MAX,
-                    1.0f
-                };
+            // ランダムカラー（毎フレームチカチカ）
+            obj->color = {
+                static_cast<float>(rand()) / RAND_MAX,
+                static_cast<float>(rand()) / RAND_MAX,
+                static_cast<float>(rand()) / RAND_MAX,
+                1.0f
+            };
             
-                obj->scale = { 2.0f, 2.0f };
-                obj->sprData = &sprPlayer;
+            obj->scale = { 2.0f, 2.0f };
+            obj->sprData = &sprPlayer;
             
-                obj->timer++;
-            }
+            obj->timer++;
 
             break;
         }
