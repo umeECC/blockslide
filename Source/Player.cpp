@@ -269,7 +269,7 @@ void playerUpdate(OBJ2D* obj)
         case 2:
             goal_moving(obj);
 
-            if (obj->timer>300)
+            if (obj->timer>90)
             {
                 setScene(SCENE::CLEAR);
             }
