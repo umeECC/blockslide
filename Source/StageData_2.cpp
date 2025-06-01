@@ -1,4 +1,4 @@
-#include "StageData_1.h"
+#include "StageData_2.h"
 #include "Wall.h"
 #include "Goal.h"
 #include "Toge.h"

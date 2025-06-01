@@ -25,6 +25,8 @@ void PlayerManager_sd::init()
         break;
     case 2:
         searchSet(player_sd_Update, { 544, 264 }); break;
+    case 3:
+        searchSet(player_sd_Update, { 416, 328 }); break;
 
     }
 }
