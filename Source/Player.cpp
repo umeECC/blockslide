@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "player_sd.h"
 #include "SpriteData.h"
+#include "SceneStageSelect.h"
 #include "WinMain.h"
 #include <cstdlib>
 #include <cmath>
@@ -13,12 +14,20 @@ static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
 int currentSceneID;
-int stage_number;
 
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 544, 456 });
+    switch (stage_number)
+    {
+    case 0:
+        searchSet(playerUpdate, { 544, 431 }); break;
+    case 1:
+        searchSet(playerUpdate, { 544, 431 }); break;
+    case 2:
+        searchSet(playerUpdate, { 480, 200 }); break;
+        
+    }
 }
 void PlayerManager::update()
 {

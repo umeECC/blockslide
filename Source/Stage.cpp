@@ -10,13 +10,20 @@
 #include "Goal.h"
 #include "SceneGame.h"
 #include "StageData_1.h"
+#include "StageData_2.h"
 #include "Toge.h"
-
+#include "SceneStageSelect.h"
 
 void Stage::init()
 {
     timer = 0;
-    pScript = stage1Script;
+    switch (stage_number)
+    {
+    case 1:
+        pScript = stage1Script; break;
+    case 2:
+        pScript = stage2Script; break;
+    }
 
 
     // ”wŒi‰Šúİ’è

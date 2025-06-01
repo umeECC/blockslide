@@ -1,7 +1,7 @@
 #include "Player_sd.h"
-
 #include "player.h"
 #include "SpriteData.h"
+#include "SceneStageSelect.h"
 
 
 static constexpr float PLAYER_SPEED = 10.0f;
@@ -10,13 +10,22 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
+//extern bool sd_reset;
 
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    //searchSet(player_sd_Update, { 769, 360 });
-    //searchSet(player_sd_Update, { 502, 232 });
-    
+    //sd_reset = false;
+    switch (stage_number)
+    {
+    case 0:
+        break;
+    case 1:
+        break;
+    case 2:
+        searchSet(player_sd_Update, { 544, 264 }); break;
+
+    }
 }
 
 void PlayerManager_sd::update()
@@ -92,6 +101,7 @@ void player_sd_Update(OBJ2D* obj)
         
         obj->hSize = { 63 / 2,63 / 2 };
         obj->judge = JUDGE_ALL;
+        //sd_reset = false;
         obj->state++;
         [[fallthrough]];
     case 1:
@@ -113,6 +123,10 @@ void player_sd_Update(OBJ2D* obj)
 
         break;
     case 2:
+        /*if (sd_reset)
+        {
+            obj->state = 0;
+        }*/
         
         obj->timer++;
         break;
