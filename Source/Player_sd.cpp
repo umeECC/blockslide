@@ -10,12 +10,13 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
-//extern bool sd_reset;
+bool sd_reset;
 
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    //sd_reset = false;
+    sd_reset = true;
+
     switch (stage_number)
     {
     case 0:
@@ -101,7 +102,6 @@ void player_sd_Update(OBJ2D* obj)
         
         obj->hSize = { 63 / 2,63 / 2 };
         obj->judge = JUDGE_ALL;
-        //sd_reset = false;
         obj->state++;
         [[fallthrough]];
     case 1:
@@ -123,10 +123,12 @@ void player_sd_Update(OBJ2D* obj)
 
         break;
     case 2:
-        /*if (sd_reset)
+        if (sd_reset)
         {
+            sd_reset = false;
+            obj->goaled = false;
             obj->state = 0;
-        }*/
+        }
         
         obj->timer++;
         break;

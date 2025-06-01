@@ -13,7 +13,7 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::GOAL, L"./Data/Images/goal.png", 4U},
     { TEXNO::WARP, L"./Data/Images/warp.png", 4U},
     { TEXNO::TOGE, L"./Data/Images/spike.png", 4U},
-
+    {TEXNO::CLEAR_B, L"./Data/Images/stage_clear.png", 4U},
 
     { -1, nullptr, }, // èIóπÉtÉâÉO
 };
@@ -22,6 +22,7 @@ SpriteUpperLeft sprBack(TEXNO::BACK01, 0, 0, 1280, 720);
 SpriteUpperLeft sprTitle(TEXNO::TITLE0, 0, 0, 1280, 720);
 SpriteUpperLeft sprStageSelect(TEXNO::SELECT, 0, 0, 1280, 720);
 SpriteUpperLeft sprEnd(TEXNO::ENDO, 0, 0, 1280, 720);
+SpriteUpperLeft sprClear(TEXNO::CLEAR_B, 0, 0, 1280, 720);
 
 SpriteCenter sprPush(TEXNO::PUSH, 0, 0, 310, 100);
 
