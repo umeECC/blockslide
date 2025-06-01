@@ -17,6 +17,7 @@ enum TEXNO
     WARP,
     TOGE,
     CLEAR_B,
+    YAJI,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -56,6 +57,7 @@ extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
 extern SpriteUpperLeft sprClear;
 extern SpriteCenter sprPush;
+extern SpriteCenter sprYaji;
 
 extern SpriteCenter sprPlayer;
 extern SpriteCenter PlayerGoal[8];

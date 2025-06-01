@@ -13,7 +13,8 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::GOAL, L"./Data/Images/goal.png", 4U},
     { TEXNO::WARP, L"./Data/Images/warp.png", 4U},
     { TEXNO::TOGE, L"./Data/Images/spike.png", 4U},
-    {TEXNO::CLEAR_B, L"./Data/Images/stage_clear.png", 4U},
+    { TEXNO::CLEAR_B, L"./Data/Images/stage_clear.png", 4U},
+    { TEXNO::YAJI, L"./Data/Images/yajirushi.png", 4U},
 
     { -1, nullptr, }, // 終了フラグ
 };
@@ -25,6 +26,7 @@ SpriteUpperLeft sprEnd(TEXNO::ENDO, 0, 0, 1280, 720);
 SpriteUpperLeft sprClear(TEXNO::CLEAR_B, 0, 0, 1280, 720);
 
 SpriteCenter sprPush(TEXNO::PUSH, 0, 0, 310, 100);
+SpriteCenter sprYaji(TEXNO::YAJI, 192, 0, 64, 64);
 
 //プレイヤー
 SpriteCenter sprPlayer(TEXNO::PLAYER, 0, 0, 64, 64);
