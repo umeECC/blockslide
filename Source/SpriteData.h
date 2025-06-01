@@ -16,6 +16,7 @@ enum TEXNO
     HAKO,
     WARP,
     TOGE,
+    CLEAR_B,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -53,6 +54,7 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
+extern SpriteUpperLeft sprClear;
 extern SpriteCenter sprPush;
 
 extern SpriteCenter sprPlayer;
