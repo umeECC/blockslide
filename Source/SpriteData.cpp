@@ -12,6 +12,9 @@ GameLib::LoadTexture loadTexture[] = {
     { TEXNO::HAKO,L"./Data/Images/hako.png",4U},
     { TEXNO::GOAL, L"./Data/Images/goal.png", 4U},
     { TEXNO::WARP, L"./Data/Images/warp.png", 4U},
+    { TEXNO::TOGE, L"./Data/Images/spike.png", 4U},
+    {TEXNO::CLEAR_B, L"./Data/Images/stage_clear.png", 4U},
+
     { -1, nullptr, }, // èIóπÉtÉâÉO
 };
 
@@ -19,6 +22,7 @@ SpriteUpperLeft sprBack(TEXNO::BACK01, 0, 0, 1280, 720);
 SpriteUpperLeft sprTitle(TEXNO::TITLE0, 0, 0, 1280, 720);
 SpriteUpperLeft sprStageSelect(TEXNO::SELECT, 0, 0, 1280, 720);
 SpriteUpperLeft sprEnd(TEXNO::ENDO, 0, 0, 1280, 720);
+SpriteUpperLeft sprClear(TEXNO::CLEAR_B, 0, 0, 1280, 720);
 
 SpriteCenter sprPush(TEXNO::PUSH, 0, 0, 310, 100);
 
@@ -41,12 +45,10 @@ SpriteCenter PlayerGoal[8] = {
 
 //ìÆÇ≠î†
 SpriteCenter sprPlayer_sd(TEXNO::PLAYERSD, 0, 0, 64, 64);
-SpriteCenter P_Down_sd(TEXNO::PLAYERSD, 64, 0, 64, 64);
-SpriteCenter P_Right_sd(TEXNO::PLAYERSD, 128, 0, 64, 64);
-SpriteCenter P_Left_sd(TEXNO::PLAYERSD, 192, 0, 64, 64);
-SpriteCenter P_Up_sd(TEXNO::PLAYERSD, 256, 0, 64, 64);
+
 
 SpriteCenter sprWall(TEXNO::WALL, 0, 0, 64, 64);
 SpriteCenter sprGoal(TEXNO::GOAL, 0, 0, 64, 64);
 SpriteCenter sprHako(TEXNO::HAKO, 0, 0, 64, 64);
 SpriteCenter sprWarp(TEXNO::WARP, 0, 0, 64, 64);
+SpriteCenter sprToge(TEXNO::TOGE, 0, 0, 64, 64);

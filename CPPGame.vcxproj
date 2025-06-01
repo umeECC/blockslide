@@ -116,6 +116,9 @@
     <ClCompile Include="Source\SpriteData.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageData_1.cpp" />
+    <ClCompile Include="Source\StageData_2.cpp" />
+    <ClCompile Include="Source\StageData_3.cpp" />
+    <ClCompile Include="Source\Toge.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
     <ClCompile Include="Source\Warp.cpp" />
     <ClCompile Include="Source\WinMain.cpp" />
@@ -161,7 +164,10 @@
     <ClInclude Include="Source\SpriteData.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageData_1.h" />
+    <ClInclude Include="Source\StageData_2.h" />
+    <ClInclude Include="Source\StageData_3.h" />
     <ClInclude Include="Source\Template.h" />
+    <ClInclude Include="Source\Toge.h" />
     <ClInclude Include="Source\Wall.h" />
     <ClInclude Include="Source\Warp.h" />
     <ClInclude Include="Source\WinMain.h" />

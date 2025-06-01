@@ -32,8 +32,8 @@ void SceneTitle::init()
     AudioManager::getInstance().init();
     AudioManager::getInstance().loadSound(L"titleMusic", L"./Data/Musics/titlebgm.wav");
     AudioManager::getInstance().loadSound(L"btnSound", L"./Data/Sounds/btn.wav");
-    AudioManager::getInstance().loadSound(L"selectSound", L"./Data/Sounds/select.wav");
-    AudioManager::getInstance().playSound(L"titleMusic", 20.0f, true);
+    AudioManager::getInstance().loadSound(L"selectSound", L"./Data/Sounds/koukaon.wav");
+    AudioManager::getInstance().playSound(L"titleMusic", 0.1f, true);
 
 }
 
@@ -48,7 +48,7 @@ void SceneTitle::update()
 
     if (TRG(0) & PAD_START)
     {
-        AudioManager::getInstance().playSound(L"btnSound", 0.5f, false);
+        AudioManager::getInstance().playSound(L"btnSound", 0.2f, false);
         setScene(SCENE::STAGESEL);
     }
 

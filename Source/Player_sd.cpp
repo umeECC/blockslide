@@ -1,7 +1,7 @@
 #include "Player_sd.h"
-
 #include "player.h"
 #include "SpriteData.h"
+#include "SceneStageSelect.h"
 
 
 static constexpr float PLAYER_SPEED = 10.0f;
@@ -10,13 +10,25 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
+bool sd_reset;
 
 void PlayerManager_sd::init()
 {
     OBJ2DManager::init();
-    searchSet(player_sd_Update, { 769, 360 });
-    searchSet(player_sd_Update, { 502, 232 });
-    
+    sd_reset = true;
+
+    switch (stage_number)
+    {
+    case 0:
+        break;
+    case 1:
+        break;
+    case 2:
+        searchSet(player_sd_Update, { 544, 264 }); break;
+    case 3:
+        searchSet(player_sd_Update, { 416, 328 }); break;
+
+    }
 }
 
 void PlayerManager_sd::update()
@@ -90,7 +102,7 @@ void player_sd_Update(OBJ2D* obj)
         obj->direction = { 0,0 };
         obj->isMoving = false;
         
-        obj->hSize = { 62 / 2,62 / 2 };
+        obj->hSize = { 63 / 2,63 / 2 };
         obj->judge = JUDGE_ALL;
         obj->state++;
         [[fallthrough]];
@@ -104,7 +116,25 @@ void player_sd_Update(OBJ2D* obj)
         if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_sd_reset(obj); }
         if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_sd_reset(obj); }
         
+        if (obj->goaled) {
+            obj->timer = 0;
+            obj->state++;
+        }
+
+        obj->timer++;
+
         break;
+    case 2:
+        if (sd_reset)
+        {
+            sd_reset = false;
+            obj->goaled = false;
+            obj->state = 0;
+        }
+        
+        obj->timer++;
+        break;
+
     }
 }
 
@@ -117,4 +147,10 @@ void direction_sd_reset(OBJ2D* obj)
     obj->direction = { 0,0 };
     
     //PlayerManager::getInstance().setIsPlayerSecondMove(false);
+}
+
+void player_sd_reset(OBJ2D* obj)
+{
+    obj->isMoving = false;
+    obj->state = 0;
 }

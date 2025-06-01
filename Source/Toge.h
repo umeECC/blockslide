@@ -2,10 +2,10 @@
 #include "Obj2d.h"
 #include "Template.h"
 
-class WallManager :public OBJ2DManager, public Singleton<WallManager>
+class TogeManager :public OBJ2DManager, public Singleton<TogeManager>
 {
 private:
-	static constexpr int OBJ_MAX = 81;
+	static constexpr int OBJ_MAX = 10;
 	OBJ2D objWork[OBJ_MAX];
 
 public:
@@ -17,6 +17,4 @@ public:
 };
 
 //プロトタイプ宣言
-void set_wall(OBJ2D* obj);  //壁
-void set_invwall(OBJ2D* obj); //見えない壁
-void set_hako(OBJ2D* obj);
+void set_Toge(OBJ2D* obj);  //ゴール

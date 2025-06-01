@@ -28,22 +28,25 @@ public:
 
 	void update() override;
 
+	bool isWarpmove = false;
+
 	// true...‚Ç‚¿‚ç‚©‚ª“®‚¢‚Ä‚¢‚é	false...—¼•ûŽ~‚Ü‚Á‚Ä‚¢‚é
 	//bool isMoving() { return isPlayerOneMove || isPlayerSecondMove; }
 
 	bool isMoving() { return isMove; }
+
+	bool isWarp() { return isWarpmove; }
 };
 
 
 void playerMove(OBJ2D* obj);
 void ssPlayerMove(OBJ2D* obj);
 
-
 void playerUpdate(OBJ2D* obj);
 
 void direction_reset(OBJ2D* obj);
 void goal_moving(OBJ2D* obj);
-
+void player_reset(OBJ2D* obj);
 
 struct Vector2 {
 	float x, y;

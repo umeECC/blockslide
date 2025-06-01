@@ -33,6 +33,10 @@ void SceneGame::update()
     {
         setScene(SCENE::STAGESEL);
     }
+    if ((GetAsyncKeyState('P') & 0x8000))
+    {
+        setScene(SCENE::CLEAR);
+    }
 }
 
 
@@ -42,4 +46,5 @@ void SceneGame::draw()
     GameLib::clear(0, 0, 0);
 
     Stage::getInstance().draw();
+
 }

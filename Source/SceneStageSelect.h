@@ -10,3 +10,5 @@ private:
     void draw() override;
 };
 
+extern int stage_number;
+

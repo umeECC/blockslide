@@ -18,15 +18,21 @@ void OBJ2D::draw()
     }
 }
 
-/// 
-/// /////////////////
-/// 
 bool OBJ2D::checkpress()
 {
     //// 挟まれチェック：上下 + 左右の両方が埋まっていたら
     if ((hitLeft && hitRight) || (hitTop && hitBottom))
     {
 
+        return true;
+    }
+    return false;
+}
+
+bool OBJ2D::checkhit()
+{
+    if ((hitLeft || hitRight || hitTop || hitBottom))
+    {
         return true;
     }
     return false;
@@ -94,4 +100,19 @@ bool OBJ2DManager::checkpress()
 
     }
     return press;
+}
+
+bool OBJ2DManager::checkhit()
+{
+    bool toge = false;
+
+    for (auto& obj : *this)
+    {
+        if (obj.checkhit())
+        {
+            toge = true;
+        }
+
+    }
+    return toge;
 }

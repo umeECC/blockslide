@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "player_sd.h"
 #include "SpriteData.h"
+#include "SceneStageSelect.h"
 #include "WinMain.h"
 #include <cstdlib>
 #include <cmath>
@@ -12,14 +13,23 @@ static constexpr float PLAYER_LIMIT_R = 1280 - 32;
 static constexpr float PLAYER_LIMIT_U = 32;
 static constexpr float PLAYER_LIMIT_D = 720 - 32;
 
-extern bool player_goaled;
 int currentSceneID;
-int stage_number;
 
 void PlayerManager::init()
 {
     OBJ2DManager::init();
-    searchSet(playerUpdate, { 704, 168 });
+    switch (stage_number)
+    {
+    case 0:
+        searchSet(playerUpdate, { 544, 431 }); break;
+    case 1:
+        searchSet(playerUpdate, { 544, 431 }); break;
+    case 2:
+        searchSet(playerUpdate, { 480, 200 }); break;
+    case 3:
+        searchSet(playerUpdate, { 800, 136 }); break;
+        
+    }
 }
 void PlayerManager::update()
 {
@@ -60,6 +70,7 @@ void playerMove(OBJ2D* obj)
             if (down) { obj->sprData = &P_Down; obj->direction.y = PLAYER_SPEED; }
             if (left) { obj->sprData = &P_Left; obj->direction.x = -PLAYER_SPEED; }
             if (right) { obj->sprData = &P_Right; obj->direction.x = PLAYER_SPEED; }
+
 
             //WallManager::getInstance().clearHit();
 
@@ -114,7 +125,7 @@ void playerUpdate(OBJ2D* obj)
             obj->direction = { 0,0 };
             obj->isMoving = false;
             obj->position = { 950,660 };
-            obj->hSize = { 64 / 2,64 / 2 };
+            obj->hSize = { 62 / 2,62 / 2 };
             obj->timer = 0;
             obj->state++;
             [[fallthrough]];
@@ -213,29 +224,6 @@ void playerUpdate(OBJ2D* obj)
             break;
 
         case 2:
-            //if (stage_number == 0)
-            //{
-            //    float radius = 300.0f;
-
-            //    // 回転角（ラジアン）を時間で増やす
-            //    float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
-
-            //    obj->position.x = 640 + std::cos(angle) * radius;
-            //    obj->position.y = 370 + std::sin(angle) * radius;
-
-            //    // ランダムカラー（毎フレームチカチカ）
-            //    obj->color = {
-            //        static_cast<float>(rand()) / RAND_MAX,
-            //        static_cast<float>(rand()) / RAND_MAX,
-            //        static_cast<float>(rand()) / RAND_MAX,
-            //        1.0f
-            //    };
-
-            //    obj->scale = { 2.0f, 2.0f };
-            //    obj->sprData = &sprPlayer;
-
-            //    obj->timer++;
-            //}
 
             ssPlayerMove(obj);
 
@@ -256,6 +244,8 @@ void playerUpdate(OBJ2D* obj)
             
             obj->hSize = { 62 / 2,62 / 2 };
             obj->judge = JUDGE_ALL;
+            obj->timer = 0;
+            obj->goaled = false;
             obj->state++;
             [[fallthrough]];
         case 1:
@@ -268,9 +258,9 @@ void playerUpdate(OBJ2D* obj)
             if (obj->position.y < PLAYER_LIMIT_U) { obj->position.y = PLAYER_LIMIT_U; direction_reset(obj); }
             if (obj->position.y > PLAYER_LIMIT_D) { obj->position.y = PLAYER_LIMIT_D; direction_reset(obj); }
 
-            if (player_goaled) {
-                obj->state++;
+            if (obj->goaled) {
                 obj->timer = 0;
+                obj->state++;
             }
 
             obj->timer++;
@@ -284,6 +274,46 @@ void playerUpdate(OBJ2D* obj)
 
         }
         break;
+    case SCENE::CLEAR:
+        switch (obj->state)
+        {
+        case 0:
+            obj->sprData = &sprPlayer;
+            obj->color = { 1,1,1,1 };
+            obj->scale = { 1.5f,1.5f };
+            obj->speed = 5;
+            obj->direction = { 0,0 };
+            obj->isMoving = false;
+            obj->position = { 180,170 };
+            obj->hSize = { 64 / 2,64 / 2 };
+            obj->timer = 0;
+            obj->state++;
+            [[fallthrough]];
+        case 1:
+            float radius = 300.0f;
+            
+            // 回転角（ラジアン）を時間で増やす
+            float angle = obj->timer * 10e+8; // 回転速度（小さくするとゆっくり）
+            
+            obj->position.x = 640 + std::cos(angle) * radius;
+            obj->position.y = 370 + std::sin(angle) * radius;
+            
+            // ランダムカラー（毎フレームチカチカ）
+            obj->color = {
+                static_cast<float>(rand()) / RAND_MAX,
+                static_cast<float>(rand()) / RAND_MAX,
+                static_cast<float>(rand()) / RAND_MAX,
+                1.0f
+            };
+            
+            obj->scale = { 2.0f, 2.0f };
+            obj->sprData = &sprPlayer;
+            
+            obj->timer++;
+
+            break;
+        }
+
     }
 }
 
@@ -314,4 +344,8 @@ void goal_moving(OBJ2D* obj)
     }
 }
 
-
+void player_reset(OBJ2D* obj)
+{
+    obj->isMoving = false;
+    obj->state=0;
+}

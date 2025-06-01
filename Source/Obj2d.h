@@ -6,7 +6,7 @@
 inline constexpr int JUDGE_PLAYER = 0x01;
 inline constexpr int JUDGE_BLOCK = 0x02;
 inline constexpr int JUDGE_GOAL = 0x04;
-inline constexpr int JUDGE_ALL = (JUDGE_PLAYER);
+inline constexpr int JUDGE_ALL = (JUDGE_PLAYER | JUDGE_BLOCK | JUDGE_GOAL);
 
 class OBJ2D
 {
@@ -29,7 +29,11 @@ public:
     int index;
     int prevPad = 0;
     VECTOR2 direction;
+
     bool isMoving;
+
+    bool goaled;
+
 
     bool hitLeft;
     bool hitRight;
@@ -47,6 +51,7 @@ public:
 
     bool checkpress();
 
+    bool checkhit();
     ////////
     VECTOR2 hSize;
     int judge;
@@ -90,9 +95,9 @@ public:
         clearHit();
     }
 
-    ////////
+   
     void clear() { init(); }
-    ////////
+    
     void update();
     void draw();
 };
@@ -110,10 +115,12 @@ public:
 
     OBJ2D* searchSet(OBJ2D::MOVER mover, const VECTOR2& position);
 
-    ///////////
+    
     void clearHit();
 
     bool checkpress();
-    ///////////
+
+    bool checkhit();
+    
 
 };

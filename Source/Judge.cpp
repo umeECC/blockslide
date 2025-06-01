@@ -6,8 +6,7 @@
 #include "Effect.h"
 #include "Wall.h"
 #include "Goal.h"
-
-bool player_goaled;
+#include "Toge.h"
 
 class JudgeRect
 {
@@ -45,7 +44,12 @@ void judgePvP(OBJ2DManager& manager1, OBJ2DManager& manager2);
 
 void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager);
 
+void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2);
+
 void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2);
+
+bool isPlayerSB(const OBJ2D& item);
+
 JudgeRect screenRect = {
 	64, 64, SCREEN_WIDTH - 64, SCREEN_HEIGHT - 64,
 };
@@ -58,7 +62,7 @@ void judge()
 
 	//プレイヤーVS壁
 	judgeSub(PlayerManager::getInstance(), WallManager::getInstance());
-	
+
 	// プレイヤー2（動く壁）VS壁
 	judgeSub_sd(PlayerManager_sd::getInstance(), WallManager::getInstance());
 
@@ -67,15 +71,17 @@ void judge()
 
 	for (int i = 0; i < 35; ++i) {
 		judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
-	
+
 		// プレイヤーVSプレイヤー2（動く壁）
 		judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
 	}
 	judgeSub_sd2(PlayerManager_sd::getInstance(), PlayerManager_sd::getInstance());
-	
-	
+
+
 	// プレイヤーVSプレイヤー2（動く壁）
 	judgePvP(PlayerManager::getInstance(), PlayerManager_sd::getInstance());
+
+
 
 	// 挟まれチェック：上下 + 左右の両方が埋まっていたら
 	if (PlayerManager::getInstance().checkpress())
@@ -84,13 +90,12 @@ void judge()
 		setScene(SCENE::OVER);// ←ゲームオーバー画面に切り替える関数
 		return; // 以降の処理不要
 	}
+	judgeToge(PlayerManager::getInstance(), TogeManager::getInstance());
 
 	// プレイヤーVSゴール（追加）
 	judgeGoal(PlayerManager::getInstance(), GoalManager::getInstance());
-	
-	/*PlayerManager::getInstance().clearHit();
-	PlayerManager_sd::getInstance().clearHit();
-	WallManager::getInstance().clearHit();*/
+	judgeGoal(PlayerManager_sd::getInstance(), GoalManager::getInstance());
+
 }
 
 
@@ -115,69 +120,61 @@ void judgeSub(OBJ2DManager& manager1, OBJ2DManager& manager2)
 			if (!screenRect.isHit(rect2)) continue;
 
 
-			for (auto& item2 : manager2)
+			
+			if (rect1.isHit(rect2))
 			{
-				if (!item2.mover) continue;
-				if ((item1.judge & item2.judge) == 0) continue;
+				// 押し戻す方向を計算
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
 
-				JudgeRect rect2(item2.position, item2.hSize);
-				if (!screenRect.isHit(rect2)) continue;
-
-				if (rect1.isHit(rect2))
+				if (lenSq > 0.01f)
 				{
-					// 押し戻す方向を計算
-					VECTOR2 pushDir = item1.position - item2.position;
-					float lenSq = vec2LengthSq(pushDir);
+					VECTOR2 normal = vec2Normalize(pushDir);
+					float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
+					float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
-					if (lenSq > 0.01f)
+					overlapX += 1.0;
+					overlapY += 1.0;
+
+				// 重なり方向ごとに判定
+					if (overlapX < overlapY)
 					{
-						VECTOR2 normal = vec2Normalize(pushDir);
-						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
-						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
-
-						overlapX += 1.0;
-						overlapY += 1.0;
-
-					// 重なり方向ごとに判定
-						if (overlapX < overlapY)
+						if (item1.position.x < item2.position.x)
 						{
-							if (item1.position.x < item2.position.x)
-							{
-								item1.hitRight = true;
-								item2.hitLeft = true;
-							}
-							else
-
-							
-				            {
-								item1.hitLeft = true;
-								item2.hitRight = true;
-							}
-							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
+							item1.hitRight = true;
+							item2.hitLeft = true;
 						}
 						else
-						{
-							if (item1.position.y < item2.position.y)
-							{
-								item1.hitBottom = true;
-								item2.hitTop = true;
-							}
 
-							else
-							{
-								item1.hitTop = true;
-								item2.hitBottom = true;
-							}
-
-							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
-
+						
+			            {
+							item1.hitLeft = true;
+							item2.hitRight = true;
 						}
+						item1.position.x += (item1.position.x < item2.position.x) ? -overlapX - 0.1f : overlapX + 0.1f;
 					}
-					direction_reset(&item1);
+					else
+					{
+						if (item1.position.y < item2.position.y)
+						{
+							item1.hitBottom = true;
+							item2.hitTop = true;
+						}
 
-					break;
+						else
+						{
+							item1.hitTop = true;
+							item2.hitBottom = true;
+						}
+
+						item1.position.y += (item1.position.y < item2.position.y) ? -overlapY - 0.1f : overlapY + 0.1f;
+
+					}
 				}
-			}
+				direction_reset(&item1);
+
+				break;
+			}			
 		}
 	}
 }
@@ -293,14 +290,17 @@ void judgeSub_sd2(OBJ2DManager& manager1, OBJ2DManager& manager2)
 						float overlapX = (item1.hSize.x + item2.hSize.x) - std::abs(item1.position.x - item2.position.x);
 						float overlapY = (item1.hSize.y + item2.hSize.y) - std::abs(item1.position.y - item2.position.y);
 
+						overlapX += 1.0f;
+						overlapY += 1.0f;
+
 						// 最小限の補正で見た目だけ直す
 						if (overlapX < overlapY)
 						{
-							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX * 0.5f : overlapX * 0.5f;
+							item1.position.x += (item1.position.x < item2.position.x) ? -overlapX * 0.1f : overlapX * 0.1f;
 						}
 						else
 						{
-							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY * 0.5f : overlapY * 0.5f;
+							item1.position.y += (item1.position.y < item2.position.y) ? -overlapY * 0.1f : overlapY * 0.1f;
 						}
 					}
 
@@ -440,11 +440,11 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 			if (rectP.isHit(rectG))
 			{
 
-				if (std::abs(goal.position.x - player.position.x) < 0.1f &&
-					std::abs(goal.position.y - player.position.y) < 0.1f)
+				if (std::abs(goal.position.x - player.position.x) < 0.2f &&
+					std::abs(goal.position.y - player.position.y) < 0.2f)
 				{
 
-					player_goaled = true;
+					player.goaled = true;
 
 					//setScene(SCENE::OVER);
 					// ここにステージクリア処理などを書く
@@ -453,5 +453,47 @@ void judgeGoal(OBJ2DManager& playerManager, OBJ2DManager& goalManager)
 			}
 		}
 	}
+}
+
+
+void judgeToge(OBJ2DManager& manager1, OBJ2DManager& manager2)
+{
+	for (auto& item1 : manager1)
+	{
+		if (!item1.mover) continue;
+
+		JudgeRect rect1(item1.position, item1.hSize);
+		
+		if (!screenRect.isHit(rect1)) continue;
+
+		for (auto& item2 : manager2)
+		{
+			if (!item2.mover) continue;
+			if ((item1.judge & item2.judge) == 0) continue;
+
+			JudgeRect rect2(item2.position, item2.hSize);
+			
+			if (!screenRect.isHit(rect2)) continue;
+
+
+
+			if (rect1.isHit(rect2))
+			{
+				
+				VECTOR2 pushDir = item1.position - item2.position;
+				float lenSq = vec2LengthSq(pushDir);
+
+				if (lenSq > 0.01f)
+				{
+					setScene(SCENE::OVER);
+					return;
+				}
+
+
+				break;
+			}
+		}
+	}
+
 }
 

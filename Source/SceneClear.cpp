@@ -7,28 +7,22 @@
 #include "Player.h" 
 #include "Player_sd.h"
 
-//void setScore(OBJ2D* obj);
-
-OBJ2D score;
-int Score;
+OBJ2D clear;
 
 void SceneClear::init()
 {
     timer = 0;
 
-    Score = 0;
-    score.position = { 1000,300 };
-    score.scale = { 2,2 };
-    //score.mover = setScore;
-    for (auto& player : PlayerManager::getInstance())
-    {
-        Score += player.score;
-    }
+    clear.sprData = &sprClear;
+    clear.position = { 0,0 };
 
+    PlayerManager::getInstance().init();
+    
     AudioManager::getInstance().init();
     AudioManager::getInstance().loadSound(L"clearSound", L"./Data/Sounds/GameClear.wav");
     AudioManager::getInstance().loadSound(L"clearMusic", L"./Data/Musics/418_BPM168.wav");
-    AudioManager::getInstance().playSound(L"clearSound", 0.8f, false);
+    AudioManager::getInstance().playSound(L"clearSound", 0.1f, false);
+    AudioManager::getInstance().loadSound(L"btnSound", L"./Data/Sounds/btn.wav");
 }
 
 void SceneClear::deinit()
@@ -38,11 +32,9 @@ void SceneClear::deinit()
 
 void SceneClear::update()
 {
-    score.update();
-
     if (!AudioManager::getInstance().isPlaying(L"clearSound") && !AudioManager::getInstance().isPlaying(L"clearMusic"))
     {
-        AudioManager::getInstance().playSound(L"clearMusic", 0.5f, true);
+        AudioManager::getInstance().playSound(L"clearMusic", 0.1f, true);
     }
     if (timer > 0x40 && GameLib::input::TRG(0))
     {
@@ -50,6 +42,9 @@ void SceneClear::update()
         setScene(SCENE::TITLE);
 
     }
+
+    PlayerManager::getInstance().update();
+
     AudioManager::getInstance().update();
 
     timer++;
@@ -59,16 +54,14 @@ void SceneClear::draw()
 {
     GameLib::clear(0, 0, 0);
 
-    std::string scoreText = std::to_string(Score);
-    GameLib::font::textOut(3, scoreText, { 300, 300 }, { 10,10 },
-        { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE_LEFT, 0.0f, false);
-
-    score.draw();
+    clear.draw();
 
     if (timer & 0x20)
     {
         GameLib::font::textOut(4, "Push spase key", { 640, 540 }, { 2, 2 },
             { 1, 1, 0, 1 }, GameLib::TEXT_ALIGN::MIDDLE, 0.0f, false);
     }
+
+    PlayerManager::getInstance().draw();
 }
 

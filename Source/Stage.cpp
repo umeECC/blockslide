@@ -10,12 +10,23 @@
 #include "Goal.h"
 #include "SceneGame.h"
 #include "StageData_1.h"
-
+#include "StageData_2.h"
+#include "StageData_3.h"
+#include "Toge.h"
+#include "SceneStageSelect.h"
 
 void Stage::init()
 {
     timer = 0;
-    pScript = stage1Script;
+    switch (stage_number)
+    {
+    case 1:
+        pScript = stage1Script; break;
+    case 2:
+        pScript = stage2Script; break;
+    case 3:
+        pScript = stage3Script; break;
+    }
 
 
     // 背景初期設定
@@ -30,6 +41,7 @@ void Stage::init()
     WallManager::getInstance().init();
     GoalManager::getInstance().init();
 
+    TogeManager::getInstance().init();
     // エフェクト初期設定
     EffectManager::getInstance().init();
 
@@ -42,7 +54,7 @@ void Stage::init()
         AudioManager::getInstance().init();
     }
     AudioManager::getInstance().loadSound(L"gameMusic", L"./Data/Musics/y015.wav");
-    AudioManager::getInstance().playSound(L"gameMusic", 0.8f, true);
+    AudioManager::getInstance().playSound(L"gameMusic", 0.1f, true);
 
 }
 
@@ -75,6 +87,7 @@ void Stage::update()
     WallManager::getInstance().update();
     GoalManager::getInstance().update();
 
+    TogeManager::getInstance().update();
     // エフェクト更新
     EffectManager::getInstance().update();
 
@@ -114,7 +127,7 @@ void Stage::draw()
     //枠の描画
     WallManager::getInstance().draw();
 
-
+    TogeManager::getInstance().draw();
 
     // UI描画
 

@@ -15,6 +15,8 @@ enum TEXNO
     GOAL,
     HAKO,
     WARP,
+    TOGE,
+    CLEAR_B,
 };
 
 struct SpriteUpperLeft : public GameLib::SpriteData
@@ -52,6 +54,7 @@ extern SpriteUpperLeft sprTitle;
 extern SpriteUpperLeft sprStart;
 extern SpriteUpperLeft sprStageSelect;
 extern SpriteUpperLeft sprEnd;
+extern SpriteUpperLeft sprClear;
 extern SpriteCenter sprPush;
 
 extern SpriteCenter sprPlayer;
@@ -62,13 +65,11 @@ extern SpriteCenter P_Left;
 extern SpriteCenter P_Right;
 
 extern SpriteCenter sprPlayer_sd;
-extern SpriteCenter P_Up_sd;
-extern SpriteCenter P_Down_sd;
-extern SpriteCenter P_Left_sd;
-extern SpriteCenter P_Right_sd;
 
 extern SpriteCenter sprWall;
 extern SpriteCenter sprGoal;
 extern SpriteCenter sprHako;
 
 extern SpriteCenter sprWarp;
+
+extern SpriteCenter sprToge;
