@@ -65,7 +65,7 @@ StageScript stage4Script[] = {
     // çs7
     //SET_OBJ(1, 288, 520, set_invwall, TYPE_WALL),
     SET_OBJ(1, 352, 520, set_wall, TYPE_WALL),
-    //SET_OBJ(1, 736, 520, set_wall, TYPE_WALL),
+    SET_OBJ(1, 736, 520, set_wall, TYPE_WALL),
     //SET_OBJ(1, 800, 520, set_invwall, TYPE_WALL),
     //SET_OBJ(1, 928, 520, set_invwall, TYPE_WALL),
     SET_OBJ(1, 864, 520, set_wall, TYPE_WALL),
