@@ -33,7 +33,7 @@ void SceneTitle::init()
     AudioManager::getInstance().loadSound(L"titleMusic", L"./Data/Musics/titlebgm.wav");
     AudioManager::getInstance().loadSound(L"btnSound", L"./Data/Sounds/btn.wav");
     AudioManager::getInstance().loadSound(L"selectSound", L"./Data/Sounds/koukaon.wav");
-    AudioManager::getInstance().playSound(L"titleMusic", 0.1f, true);
+    AudioManager::getInstance().playSound(L"titleMusic", 1.0f, true);
 
 }
 
