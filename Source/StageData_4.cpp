@@ -60,12 +60,12 @@ StageScript stage4Script[] = {
     SET_OBJ(1, 416, 456, set_wall, TYPE_WALL),
     SET_OBJ(1, 544, 456, set_hako, TYPE_WALL),
     SET_OBJ(1, 864, 456, set_goal, TYPE_GOAL),
-    //SET_OBJ(1, 928, 456, set_invwall, TYPE_WALL),
+    SET_OBJ(1, 928, 456, set_invwall, TYPE_WALL),
 
     // çs7
     //SET_OBJ(1, 288, 520, set_invwall, TYPE_WALL),
     SET_OBJ(1, 352, 520, set_wall, TYPE_WALL),
-    //SET_OBJ(1, 736, 520, set_wall, TYPE_WALL),
+    SET_OBJ(1, 736, 520, set_wall, TYPE_WALL),
     //SET_OBJ(1, 800, 520, set_invwall, TYPE_WALL),
     //SET_OBJ(1, 928, 520, set_invwall, TYPE_WALL),
     SET_OBJ(1, 864, 520, set_wall, TYPE_WALL),
