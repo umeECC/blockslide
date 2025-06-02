@@ -37,6 +37,7 @@ void Stage::init()
         pScript = stage4Script; break;
 
     case 5:
+        goalCount = 2;
         pScript = stage5Script; break;
     }
 
