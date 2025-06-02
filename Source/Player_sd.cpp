@@ -29,7 +29,7 @@ void PlayerManager_sd::init()
         searchSet(player_sd_Update, { 352, 328 }); break;
     case 4:
         searchSet(player_sd_Update, { 416, 216 }); break;
-        searchSet(player_sd_Update, { 416, 328 }); break;// 2人目のプレイヤー
+        searchSet(player_sd_Update, { 416, 456 }); break;// 2人目のプレイヤー
     case 5:
         searchSet(player_sd_Update, { 544, 168 }); break;
         searchSet(player_sd_Update, { 352, 360 }); break;// 2人目のプレイヤー
