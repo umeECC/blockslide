@@ -12,6 +12,7 @@
 #include "StageData_2.h"
 #include "StageData_3.h"
 #include "StageData_4.h"
+#include "StageData_6.h"
 #include "Toge.h"
 #include "SceneStageSelect.h"
 #include "StageData_5.h"
@@ -24,7 +25,7 @@ void Stage::init()
     switch (stage_number)
     {
     case 1:
-        goalCount = 2;
+        goalCount = 1;
         pScript = stage1Script; break;
     case 2:
         goalCount = 1;
@@ -39,6 +40,9 @@ void Stage::init()
     case 5:
         goalCount = 2;
         pScript = stage5Script; break;
+    case 6:
+        goalCount = 2;
+        pScript = stage6Script; break;
     }
 
 

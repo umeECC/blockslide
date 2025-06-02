@@ -5,7 +5,7 @@
 class PlayerManager_sd :public OBJ2DManager, public Singleton<PlayerManager_sd>
 {
 private:
-	static constexpr int OBJ_MAX = 2;
+	static constexpr int OBJ_MAX = 5;
 	OBJ2D objWork[OBJ_MAX];
 
 	bool isMove = false;
