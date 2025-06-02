@@ -71,7 +71,7 @@ void Stage::init()
         AudioManager::getInstance().init();
     }
     AudioManager::getInstance().loadSound(L"gameMusic", L"./Data/Musics/y015.wav");
-    AudioManager::getInstance().playSound(L"gameMusic", 0.1f, true);
+    AudioManager::getInstance().playSound(L"gameMusic", 1.0f, true);
 
 }
 

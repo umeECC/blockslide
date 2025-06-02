@@ -35,7 +35,7 @@ void SceneClear::init()
     AudioManager::getInstance().init();
     AudioManager::getInstance().loadSound(L"clearSound", L"./Data/Sounds/GameClear.wav");
     AudioManager::getInstance().loadSound(L"clearMusic", L"./Data/Musics/418_BPM168.wav");
-    AudioManager::getInstance().playSound(L"clearSound", 0.1f, false);
+    AudioManager::getInstance().playSound(L"clearSound", 1.0f, false);
     AudioManager::getInstance().loadSound(L"btnSound", L"./Data/Sounds/btn.wav");
 }
 

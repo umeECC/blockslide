@@ -31,7 +31,7 @@ void SceneEnd::init()
     AudioManager::getInstance().init();
     AudioManager::getInstance().loadSound(L"MissMusic", L"./Data/Musics/make.wav");
     
-    AudioManager::getInstance().playSound(L"MissMusic", 0.1f, true);
+    AudioManager::getInstance().playSound(L"MissMusic", 1.0f, true);
 
 }
 
