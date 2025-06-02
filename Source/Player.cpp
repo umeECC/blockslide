@@ -91,10 +91,6 @@ void playerMove(OBJ2D* obj)
         obj->position += obj->direction;
     }
 
-    if (GameLib::input::STATE(0) & GameLib::input::PAD_START)
-    {
-        direction_reset(obj);
-    }
 }
 
 void ssPlayerMove(OBJ2D* obj) //ステージセレクトシーンでの動き

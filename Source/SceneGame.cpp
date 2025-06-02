@@ -33,14 +33,7 @@ void SceneGame::update()
     {
         setScene(SCENE::STAGESEL);
     }
-    if ((GetAsyncKeyState('P') & 0x8000))
-    {
-        setScene(SCENE::CLEAR);
-    }
-    if ((GetAsyncKeyState('O') & 0x8000))
-    {
-        setScene(SCENE::OVER);
-    }
+    
 }
 
 

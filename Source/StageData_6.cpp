@@ -27,7 +27,6 @@ StageScript stage6Script[] = {
     // Row 3
     SET_OBJ(1, 352, 294, set_wall, TYPE_WALL),
     SET_OBJ(1, 416, 294, set_hako, TYPE_WALL),
-    SET_OBJ(1, 738, 294, set_hako, TYPE_WALL),
     SET_OBJ(1, 864, 294, set_wall, TYPE_WALL),
 
     // Row 4

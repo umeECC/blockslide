@@ -93,11 +93,7 @@ void player_sd_Move(OBJ2D* obj)
         obj->position += obj->direction;
     }
 
-    if (GetAsyncKeyState('M') & 0x8000)
-    {
-        direction_sd_reset(obj);
-    }
-
+    
 }
 
 //-----------------------------------------------------------------------------------
