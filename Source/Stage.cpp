@@ -33,7 +33,7 @@ void Stage::init()
         goalCount = 1;
         pScript = stage3Script; break;
     case 4:
-        
+        goalCount = 1;
         pScript = stage4Script; break;
 
     case 5:
