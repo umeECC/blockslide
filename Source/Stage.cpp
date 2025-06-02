@@ -14,6 +14,7 @@
 #include "StageData_4.h"
 #include "Toge.h"
 #include "SceneStageSelect.h"
+#include "StageData_5.h"
 
 int goalCount;
 
@@ -32,8 +33,11 @@ void Stage::init()
         goalCount = 1;
         pScript = stage3Script; break;
     case 4:
-
+        
         pScript = stage4Script; break;
+
+    case 5:
+        pScript = stage5Script; break;
     }
 
 
@@ -69,6 +73,8 @@ void Stage::init()
 void Stage::update()
 {
     //オブジェクト出現
+
+
     while (pScript->mover &&    // 終了コードではなく
         timer == pScript->time) // 現在のタイマーがスクリプトのタイムであれば
     {

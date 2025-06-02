@@ -119,6 +119,7 @@
     <ClCompile Include="Source\StageData_2.cpp" />
     <ClCompile Include="Source\StageData_3.cpp" />
     <ClCompile Include="Source\StageData_4.cpp" />
+    <ClCompile Include="Source\Stage_Data_5.cpp" />
     <ClCompile Include="Source\Toge.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
     <ClCompile Include="Source\Warp.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Source\StageData_2.h" />
     <ClInclude Include="Source\StageData_3.h" />
     <ClInclude Include="Source\StageData_4.h" />
+    <ClInclude Include="Source\StageData_5.h" />
     <ClInclude Include="Source\Template.h" />
     <ClInclude Include="Source\Toge.h" />
     <ClInclude Include="Source\Wall.h" />
