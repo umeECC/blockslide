@@ -25,16 +25,18 @@ void PlayerManager::init()
     case 0:
         searchSet(playerUpdate, { 544, 431 }); break;
     case 1:
-        searchSet(playerUpdate, { 544, 431 }); break;
+        searchSet(playerUpdate, { 544, 470 }); break;
     case 2:
         searchSet(playerUpdate, { 480, 200 }); break;
     case 3:
-        searchSet(playerUpdate, { 672, 200 }); break;
+        searchSet(playerUpdate, { 672, 180 }); break;
     case 4:
-        searchSet(playerUpdate, { 736,152 }); break;
+        searchSet(playerUpdate, { 736,136 }); break;
     case 5:
-        searchSet(playerUpdate, { 736,360 }); break;
+        searchSet(playerUpdate, { 864,536 }); break;
     case 6:
+        searchSet(playerUpdate, { 736,136 }); break;
+    case 7:
         searchSet(playerUpdate, { 736,136 }); break;
     }
 }

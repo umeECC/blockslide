@@ -28,7 +28,7 @@ StageScript stage4Script[] = {
     SET_OBJ(1,352,200,set_wall,TYPE_WALL),
     //SET_OBJ(1, 352, 200, set_invwall, TYPE_WALL),
     //SET_OBJ(1, 416, 200, set_wall, TYPE_WALL),
-    //SET_OBJ(1, 800, 200, set_hako, TYPE_WALL),
+    SET_OBJ(1, 800, 200, set_hako, TYPE_WALL),
     //SET_OBJ(1, 864, 200, set_invwall, TYPE_WALL),
     SET_OBJ(1, 352, 200, set_wall, TYPE_WALL),
     //SET_OBJ(1, 416, 200, set_wall, TYPE_WALL),
@@ -40,7 +40,7 @@ StageScript stage4Script[] = {
     SET_OBJ(1, 352, 264, set_wall, TYPE_WALL),
     SET_OBJ(1, 864, 264, set_wall, TYPE_WALL),
    // SET_OBJ(1, 928, 264, set_invwall, TYPE_WALL),
-
+    //SET_OBJ(1, 416, 456, set_hako, TYPE_WALL),
     // çs4
    // SET_OBJ(1, 288, 328, set_invwall, TYPE_WALL),
     SET_OBJ(1, 352, 328, set_wall, TYPE_WALL),
