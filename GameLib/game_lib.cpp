@@ -108,10 +108,10 @@ namespace GameLib
         // 乱数系列の設定
         srand((unsigned int)time(NULL));
 
-#ifdef _DEBUG
+
         // フルスクリーンの設定（念のためデバッグモードでは不可）
-        isFullscreen = false;
-#endif
+        isFullscreen = true;
+
 
         // ウインドウの初期設定
         m.hwnd = window::init(caption, width, height);
