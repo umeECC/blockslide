@@ -42,7 +42,10 @@ void PlayerManager_sd::init()
         searchSet(player_sd_Update, { 800, 136 });
         searchSet(player_sd_Update, { 480, 456 }); break;*/
 
-
+    case 8:
+        
+        searchSet(player_sd_Update, { 512, 264 });
+        searchSet(player_sd_Update, { 448, 520 }); break;// 2人目のプレイヤー
     }
 }
 

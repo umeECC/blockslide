@@ -13,6 +13,7 @@
 #include "StageData_3.h"
 #include "StageData_4.h"
 #include "StageData_6.h"
+#include "StageData_8.h"
 #include "Toge.h"
 #include "SceneStageSelect.h"
 #include "StageData_5.h"
@@ -43,6 +44,9 @@ void Stage::init()
     case 6:
         goalCount = 2;
         pScript = stage6Script; break;
+    case 8:
+        goalCount = 2;
+        pScript = stage8Script; break;
     }
 
 

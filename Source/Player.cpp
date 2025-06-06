@@ -38,6 +38,8 @@ void PlayerManager::init()
         searchSet(playerUpdate, { 736,136 }); break;
     case 7:
         searchSet(playerUpdate, { 736,136 }); break;
+    case 8:
+        searchSet(playerUpdate, { 448,328 }); break;
     }
 }
 void PlayerManager::update()
