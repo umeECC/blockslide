@@ -105,4 +105,5 @@ StageScript stage6Script[] = {
     SET_OBJ(1, 928,  486, set_invwall, TYPE_WALL),
     SET_OBJ(1, 928,  550, set_invwall, TYPE_WALL),
     SET_OBJ(1, 928,  614, set_invwall, TYPE_WALL),
+    SET_END
 };
