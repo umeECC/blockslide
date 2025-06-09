@@ -110,7 +110,7 @@ namespace GameLib
 
 
         // フルスクリーンの設定（念のためデバッグモードでは不可）
-        isFullscreen = true;
+        isFullscreen = false;
 
 
         // ウインドウの初期設定
